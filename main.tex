@@ -1,0 +1,175 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+%\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out
+                                                          % if you need a4paper
+\documentclass[letterpaper, 10pt, conference]{ieeeconf}      % Use this line for a4
+                                                          % paper
+
+\IEEEoverridecommandlockouts                              % This command is only
+                                                          % needed if you want to
+                                                          % use the \thanks command
+\overrideIEEEmargins
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+%\setlength{\topmargin}{0.46in}
+
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage[dvips]{graphicx} % for eps
+\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{wasysym}
+\usepackage{color}
+\usepackage{algorithmic}
+\usepackage{tensor}
+\usepackage{leftidx}
+
+%\usepackage[dvips, bookmarks=false, colorlinks=true, pdftitle={Hak-Humanoids2010}]{hyperref}
+\input{./macros.tex}
+
+\title{\LARGE \bf
+Reverse engineering task recognition and disambiguation on humanoid robot
+}
+
+\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond% <-this % stops a space
+  \thanks{7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP,
+    ISAE: {\tt\small sovannara.hak@laas.fr, nicolas.mansard@laas.fr, jpl@laas.fr}.}
+  \thanks{This work was supported by a grant from the R-Blink Project, Contract
+    ANR-08JCJC-0075-01.}  }
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+Reverse engineering the motion.
+\end{abstract}
+
+\section{Experimentation on the robot}
+
+\subsection{Experimental setup}
+Robot HRP2
+Motion capture system: markers, skeleton, joint angle trajectory
+
+A motion capture system is used in order to have an external observation of the robot.
+The motion capture system used is composed of 10 digital cameras. A set of 50 markers
+are placed on the robot to record a motion (see figure~\ref{fig:hrp2Markers}). The data collected from those markers
+are used to build a virtual skeleton that match the kinematic structure of the robot.
+\begin{figure}[t]
+\centering
+\begin{tabular}{cc}
+\parbox[c]{3.6cm}{\includegraphics[width=\linewidth]{img/hrp2Markers.ps}} &
+\parbox[c]{3.45cm}{\includegraphics[width=\linewidth]{img/skel.ps}} \\
+\end{tabular}
+\caption{Markers set and virtual skeleton of HRP2.}
+\label{fig:hrp2Markers}
+\end{figure}
+
+The computation of the trajectory of the motion in the joint angle space
+of the robot is done by optimization.
+\begin{equation}
+\mbf{q}^*_i = \underset{\mbf{q}_i}\argmin \Vert K_W\tensor[^{0M}]{R}{_{iM}}K_i \ominus \tensor[^W]{R}{_{iQ}}(\mbf{q}_i) \Vert ^2\\
+\label{mocapOpti}
+\end{equation}
+
+Joint angle trajectory are needed by the algorithm.
+
+In this experimentation, the robot has to move both of his
+hands toward desired positions.
+
+
+\begin{itemize}
+\item Both hands versus one hand
+\item Grab blind, Grab and look
+\item Grab, screw
+\end{itemize}
+
+\subsection{Right hand VS Both hands motion}
+\begin{figure*}[t]
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskCom_0}
+    }                           &
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskCom_0}
+    }\\
+  $r = 0.245544 $ & $r = 0.103142$\\
+\end{tabular*}
+\caption{Comparison of the fitting for the center of masses regulation task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+The residues $r$ of the optimizations are showed in the second row.}
+\label{fig:exp1:taskCom0}
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskHead_0}
+    }                           &
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskHead_0}
+    }\\
+  $r = 0.439323 $ & $r = 0.771167$\\
+\end{tabular*}
+\caption{Comparison of the fitting for the head task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+The residues $r$ of the optimizations are showed in the second row.}
+\label{fig:exp1:taskHead0}
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskLhand_0}
+    }                           &
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskLhand_0}
+    }\\
+  $r = 0.590588 $ & $r = 0.147667$\\
+\end{tabular*}
+\caption{Comparison of the fitting for the left hand task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+The residues $r$ of the optimizations are showed in the second row.}
+\label{fig:exp1:taskLhand00}
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskRhand_0}
+    }                           &
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskRhand_0}
+    }\\
+  $r = 0.11796 $ & $r = 0.0931476$\\
+\end{tabular*}
+\caption{Comparison of the fitting for the right hand task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+The residues $r$ of the optimizations are showed in the second row.}
+\label{fig:exp1:taskRhand0}
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskTwofeet_0}
+    }                           &
+  \resizebox{.4\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskTwofeet_0}
+    }\\
+  $r = 0.530217 $ & $r = 0.394636$\\
+\end{tabular*}
+\caption{Comparison of the fitting for the \emph{two feet} task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+The residues $r$ of the optimizations are showed in the second row.}
+\label{fig:exp1:taskTwofeet0}
+\end{figure*}
+
+\end{document}
