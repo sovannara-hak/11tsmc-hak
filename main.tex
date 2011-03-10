@@ -30,6 +30,13 @@
 \usepackage{algorithmic}
 \usepackage{tensor}
 \usepackage{leftidx}
+\usepackage{subfigure}
+\usepackage{supertabular}
+%\renewcommand{\thesubfigure}{\thefigure.\arabic{subfigure}}
+%\makeatletter
+%\renewcommand{\p@subfigure}{}
+%\renewcommand{\@thesubfigure}{\thesubfigure:\hskip\subfiglabelskip}
+%\makeatother
 
 %\usepackage[dvips, bookmarks=false, colorlinks=true, pdftitle={Hak-Humanoids2010}]{hyperref}
 \input{./macros.tex}
@@ -64,14 +71,22 @@ Robot HRP2
 Motion capture system: markers, skeleton, joint angle trajectory
 
 A motion capture system is used in order to have an external observation of the robot.
-The motion capture system used is composed of 10 digital cameras. A set of 50 markers
-are placed on the robot to record a motion (see figure~\ref{fig:hrp2Markers}). The data collected from those markers
+The motion capture system used is composed of 10 digital cameras (see Fig.~\ref{fig:camera}). 
+\begin{figure}[t]
+\centering
+\includegraphics[height=0.4\linewidth]{img/camIR.ps} 
+\caption{Camera of the motion capture system.}
+\label{fig:camera}
+\end{figure}
+
+A set of 50 markers
+are placed on the robot to record a motion (see Fig.~\ref{fig:hrp2Markers}). The data collected from those markers
 are used to build a virtual skeleton that match the kinematic structure of the robot.
 \begin{figure}[t]
 \centering
 \begin{tabular}{cc}
-\parbox[c]{3.6cm}{\includegraphics[width=\linewidth]{img/hrp2Markers.ps}} &
-\parbox[c]{3.45cm}{\includegraphics[width=\linewidth]{img/skel.ps}} \\
+\includegraphics[height=0.7\linewidth]{img/hrp2Markers.ps} &
+\includegraphics[height=0.7\linewidth]{img/skel.ps} \\
 \end{tabular}
 \caption{Markers set and virtual skeleton of HRP2.}
 \label{fig:hrp2Markers}
@@ -79,16 +94,24 @@ are used to build a virtual skeleton that match the kinematic structure of the r
 
 The computation of the trajectory of the motion in the joint angle space
 of the robot is done by optimization.
+In order to estimate the joint angle trajectory of the robot, a mapping between
+the kinematic model of the robot and the kinematic model of the virtual skeleton
+has to be made. Then the joint angle that would bring the robot to the same posture
+as the skeleton is the joint angle that minimize the distance between
+the transformation from the measured skeleton kinematic transformation to the robot kinematic model.
 \begin{equation}
 \mbf{q}^*_i = \underset{\mbf{q}_i}\argmin \Vert K_W\tensor[^{0M}]{R}{_{iM}}K_i \ominus \tensor[^W]{R}{_{iQ}}(\mbf{q}_i) \Vert ^2\\
 \label{mocapOpti}
 \end{equation}
+where $K_W$ is the transformation matrix from the origin of the reference of the robot model to the reference of the 
+motion capture data. $\tensor[^{0M}]{R}{_{iM}}$ is the transformation matrix from the root of the virtual bone to
+the bone $i$ in the motion capture reference. $K_i$ is the transformation matrix from the virtual bone $i$ to
+the corresponding joint of the robot model and $\tensor[^W]{R}{_{iQ}}$ is the transformation matrix from 
+the origin of the reference of the robot model to the joint $i$ in the robot model reference.
+$K_W$ and $K_i$ are constant and are computed in a calibration step where both real joint angle and
+measured skeleton are known.
 
 Joint angle trajectory are needed by the algorithm.
-
-In this experimentation, the robot has to move both of his
-hands toward desired positions.
-
 
 \begin{itemize}
 \item Both hands versus one hand
@@ -97,79 +120,412 @@ hands toward desired positions.
 \end{itemize}
 
 \subsection{Right hand VS Both hands motion}
+On the real robot, the flexibility of the ankles interfer with the motion at the very beginning as the acceleration
+of the joint angle increase quickly. The flexibility is not modeled in our algorithm, so
+in order to bypass the influence of the flexibility, the motion analysis is done after the first 100ms.
+
+Tab.~\ref{tab:spotDiffReal1} shows the result of the identification algorithm run on
+the motion data of the \emph{right hand} and \ emph{both hands} motion.
+\begin{table}[t]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
+\hline
+\begin{tabular}{c}
+Com\\
+Right Hand\\
+Twofeet\\
+\end{tabular}
+
+&
+
+\begin{tabular}{c}
+Com\\
+Right Hand\\
+Twofeet\\
+\end{tabular}
+
+& 0.104835 & 0.0482885 \\
+\hline
+\begin{tabular}{c}
+Com\\
+Left Hand\\
+Right Hand\\
+Twofeet\\
+\end{tabular}
+
+&
+\begin{tabular}{c}
+Com\\
+Left Hand\\
+Right Hand\\
+Twofeet\\
+\end{tabular}
+
+& 0.142293  & 0.0541836 \\
+\hline
+\end{tabular}
+\caption{Results of the task selection algorithm from the analysis of the \emph{right-only} motion and the \emph{both hands} motion on the real robot.}
+\label{tab:spotDiffReal1}
+\vspace{-20pt}
+\end{table}
+
+Fig.~\ref{fig:exp1:taskCom0}-\ref{fig:exp1:taskTwofeet0} shows the
+fitting at the first iteration of the algorithm. For the \emph{right
+hand} motion, the projection in the task of the right hand have a good
+fit (Fig.~\ref{fig:exp1:taskRhand0:R}) with the model of the
+task, whereas the left hand projection have a poor fitting
+(Fig.~\ref{fig:exp1:taskLhand0:R}).
+
+%%%%%%%%%%%%%%%%%%%%%
+
 \begin{figure*}[t]
-\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
-  \resizebox{.4\textwidth}{!} {
+  \centering
+  \subfigure[Right hand motion - iteration 0]{
+      \resizebox{.48\textwidth}{!} {
 	\input{img/exp1/R/invJerror_taskCom_0}
-    }                           &
-  \resizebox{.4\textwidth}{!} {
+      }
+      \label{fig:exp1:taskCom0:R}
+  }
+  \subfigure[Both hands motion - iteration 0]{
+      \resizebox{.48\textwidth}{!} {
 	\input{img/exp1/RL/invJerror_taskCom_0}
-    }\\
-  $r = 0.245544 $ & $r = 0.103142$\\
-\end{tabular*}
+      }
+      \label{fig:exp1:taskCom0:RL}
+  }
 \caption{Comparison of the fitting for the center of masses regulation task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-The residues $r$ of the optimizations are showed in the second row.}
+$r$ are the residues of the optimizations.}
 \label{fig:exp1:taskCom0}
 \end{figure*}
 
 \begin{figure*}[t]
-\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/R/invJerror_taskHead_0}
-    }                           &
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/RL/invJerror_taskHead_0}
-    }\\
-  $r = 0.439323 $ & $r = 0.771167$\\
-\end{tabular*}
-\caption{Comparison of the fitting for the head task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-The residues $r$ of the optimizations are showed in the second row.}
-\label{fig:exp1:taskHead0}
+  \centering
+  \subfigure[Right hand motion - iteration 0]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/R/invJerror_taskHead_0}
+    }                           
+    \label{fig:exp1:taskHead0:R}
+  }
+  \subfigure[Both hands motion - iteration 0]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/RL/invJerror_taskHead_0}
+    }
+    \label{fig:exp1:taskHead0:RL}
+  }
+  \caption{Comparison of the fitting for the head task for the
+    \emph{both hands} and \emph{right hand} motion at the first
+    iteration of the identification algorithm.  $r$ are
+    the residues of the optimizations.}
+  \label{fig:exp1:taskHead0}
 \end{figure*}
 
 \begin{figure*}[t]
-\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/R/invJerror_taskLhand_0}
-    }                           &
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/RL/invJerror_taskLhand_0}
-    }\\
-  $r = 0.590588 $ & $r = 0.147667$\\
-\end{tabular*}
-\caption{Comparison of the fitting for the left hand task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-The residues $r$ of the optimizations are showed in the second row.}
-\label{fig:exp1:taskLhand00}
+  \centering
+  \subfigure[Right hand motion - iteration 0]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/R/invJerror_taskLhand_0}
+    }
+    \label{fig:exp1:taskLhand0:R}
+  }
+  \subfigure[Both hands motion - iteration 0]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/RL/invJerror_taskLhand_0}
+    }
+    \label{fig:exp1:taskLhand0:RL}
+  }
+  \caption{Comparison of the fitting for the left hand task for the
+    \emph{both hands} and \emph{right hand} motion at the first
+    iteration of the identification algorithm.  $r$ are
+    the residues of the optimizations.}
+  \label{fig:exp1:taskLhand0}
 \end{figure*}
 
 \begin{figure*}[t]
-\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/R/invJerror_taskRhand_0}
-    }                           &
-  \resizebox{.4\textwidth}{!} {
-	\input{img/exp1/RL/invJerror_taskRhand_0}
-    }\\
-  $r = 0.11796 $ & $r = 0.0931476$\\
-\end{tabular*}
-\caption{Comparison of the fitting for the right hand task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-The residues $r$ of the optimizations are showed in the second row.}
-\label{fig:exp1:taskRhand0}
-\end{figure*}
-
-\begin{figure*}[t]
-\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
-  \resizebox{.4\textwidth}{!} {
+  \centering
+  \subfigure[Right hand motion - iteration 0]{
+  \resizebox{.48\textwidth}{!} {
 	\input{img/exp1/R/invJerror_taskTwofeet_0}
-    }                           &
-  \resizebox{.4\textwidth}{!} {
+    }
+    \label{fig:exp1:taskTwofeet0:R}
+  }
+  \subfigure[Both hands motion - iteration 0]{
+  \resizebox{.48\textwidth}{!} {
 	\input{img/exp1/RL/invJerror_taskTwofeet_0}
-    }\\
-  $r = 0.530217 $ & $r = 0.394636$\\
-\end{tabular*}
-\caption{Comparison of the fitting for the \emph{two feet} task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-The residues $r$ of the optimizations are showed in the second row.}
+    }
+    \label{fig:exp1:taskTwofeet0:RL}
+  }
+\caption{Comparison of the fitting for the \emph{two feet} task for the
+   \emph{both hands} and \emph{right hand} motion at the first
+   iteration of the identification algorithm.  $r$ are the
+   residues of the optimizations.}
 \label{fig:exp1:taskTwofeet0}
 \end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskCom_1}
+    }
+    \label{fig:exp1:taskCom1:R}
+  }
+  \subfigure[Both hands motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskCom_1}
+    }
+    \label{fig:exp1:taskCom1:RL}
+  }
+\caption{Comparison of the fitting for the center of masses regulation task for the \emph{both hands} and \emph{right hand} motion at the second iteration of the identification algorithm.
+$r$ are the residues of the optimizations.}
+\label{fig:exp1:taskCom1}
+\end{figure*}
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskHead_1}
+    } 
+    \label{fig:exp1:taskHead1:R}
+  }
+  \subfigure[Both hands motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskHead_1}
+    }
+    \label{fig:exp1:taskHead1:RL}
+  }
+\caption{Comparison of the fitting for the head task for the \emph{both hands} and \emph{right hand} motion at the second iteration of the identification algorithm.
+$r$ are the residues of the optimizations.}
+\label{fig:exp1:taskHead1}
+\end{figure*}
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 1]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/R/invJerror_taskLhand_1}
+    }
+    \label{fig:exp1:taskLhand1:R}
+  }
+  \subfigure[Both hands motion - iteration 1]{
+    \resizebox{.48\textwidth}{!} {
+      \input{img/exp1/RL/invJerror_taskLhand_1}
+    }
+    \label{fig:exp1:taskLhand1:RL}
+  }
+  \caption{Comparison of the fitting for the left hand task for the
+    \emph{both hands} and \emph{right hand} motion at the second
+    iteration of the identification algorithm.  $r$ are
+    the residues of the optimizations.}
+  \label{fig:exp1:taskLhand1}
+\end{figure*}
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskTwofeet_1}
+    }
+    \label{fig:exp1:taskTwofeet1:R}
+  }
+  \subfigure[Both hands motion - iteration 1]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskTwofeet_1}
+    }
+    \label{fig:exp1:taskTwofeet1:RL}
+  }
+\caption{Comparison of the fitting for the \emph{two feet} task for the \emph{both hands} and \emph{right hand} motion at the second iteration of the identification algorithm. $r$ are the residues of the optimizations.}
+\label{fig:exp1:taskTwofeet1}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskHead_2}
+    } 
+    \label{fig:exp1:taskHead2:R}
+  }
+  \subfigure[Both hands motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskHead_2}
+    }
+    \label{fig:exp1:taskHead2:RL}
+  }
+\caption{Comparison of the fitting for the head task for the \emph{both hands} and \emph{right hand} motion at the third iteration of the identification algorithm.
+$r$ are the residues of the optimizations.}
+\label{fig:exp1:taskHead2}
+\end{figure*}
+
+\begin{figure*}[t]
+  \centering
+  \subfigure[Right hand motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/R/invJerror_taskLhand_2}
+    } 
+    \label{fig:exp1:taskLhand2:R}
+  }
+  \subfigure[Both hands motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+	\input{img/exp1/RL/invJerror_taskLhand_2}
+    }
+    \label{fig:exp1:taskLhand2:RL}
+  }
+\caption{Comparison of the fitting for the left hand task for the \emph{both hands} and \emph{right hand} motion at the third iteration of the identification algorithm.
+$r$ are the residues of the optimizations.}
+\label{fig:exp1:taskLhand2}
+\end{figure*}
+
+\begin{figure}[t]
+  \centering
+  %\subfigure[Both hands motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+  \begin{tabular}{c}
+	\input{img/exp1/R/invJerror_taskCom_2}\\
+  Right hand motion - iteration 2
+  \end{tabular}
+  }
+  %\label{fig:exp1:taskCom2:R}
+  %}
+\caption{Fitting for the com task for the \emph{right hand} motion at the third iteration of the identification algorithm.
+$r$ is the residue of the optimization.}
+\label{fig:exp1:taskCom2}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  %\subfigure[Both hands motion - iteration 2]{
+  \resizebox{.48\textwidth}{!} {
+  \begin{tabular}{c}
+	\input{img/exp1/RL/invJerror_taskTwofeet_2}\\
+  Both hands motion - iteration 2
+  \end{tabular}
+    }
+  %\label{fig:exp1:taskTwofweet2:RL}
+  %}
+\caption{Fitting for the twofeet task for the \emph{both hands} motion at the third iteration of the identification algorithm.
+$r$ is the residue of the optimization.}
+\label{fig:exp1:taskTwofeet2}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[t]
+  %\subfigure[Both hands motion - iteration 3]{
+  \resizebox{.48\textwidth}{!} {
+  \begin{tabular}{c}
+	\input{img/exp1/RL/invJerror_taskHead_3}\\
+  Both hands motion - iteration 3
+  \end{tabular}
+    }
+    %\label{fig:exp1:taskHead3:RL}
+  %}
+\caption{Comparison of the fitting for the head task for the \emph{both hands} motion at the fourth iteration of the identification algorithm.
+$r$ is the residue of the optimization.}
+\label{fig:exp1:taskHead3}
+\end{figure*}
+
+\begin{figure}[t]
+  \centering
+  \subfigure[Both hands motion - iteration 3]{
+  \resizebox{.48\textwidth}{!} {
+        \input{img/exp1/RL/invJerror_taskLhand_3}
+    }
+    %\label{fig:exp1:taskLhand3:RL}
+  }
+\caption{Comparison of the fitting for the left hand task for the \emph{both hands} motion at the fourth iteration of the identification algorithm.
+$r$ are the residues of the optimizations.}
+\label{fig:exp1:taskLhand3}
+\end{figure}
+
+\begin{figure*}[t]
+\centering
+\begin{tabular}{|c|c|}
+  \hline
+  Right hand motion & Both hands motion\\
+  \hline
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/R/invJerror_taskRhand_0}
+    }
+  &
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/RL/invJerror_taskRhand_0}
+    }\\
+  \hline
+\end{tabular}
+\caption{Right hand task fiting for \emph{right hand} and \emph{both hands} motion.}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\begin{tabular}{|c|c|}
+  \hline
+  Right hand motion & Both hands motion\\
+  \hline
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/R/invJerror_taskLhand_0}
+    }
+  }
+  &
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/RL/invJerror_taskLhand_0}
+    }
+  }\\
+  \hline
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/R/invJerror_taskLhand_1}
+    }
+  }
+  &
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/RL/invJerror_taskLhand_1}
+    }
+  }\\
+  \hline
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/R/invJerror_taskLhand_2}
+    } 
+  }
+  &
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/RL/invJerror_taskLhand_2}
+    }
+  }\\ 
+  \hline
+  &
+  \subfigure{
+    \resizebox{.43\textwidth}{!}{
+      \input{img/exp1/RL/invJerror_taskLhand_3}
+    }
+  }\\
+  \hline
+\end{tabular}
+\caption{Left hand task fiting.}
+\end{figure*}
+
+\begin{figure*}[t]
+\input{img/exp1/R/PqdotNormsR}
+\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+the \emph{right hand} motion.}
+\label{fig:exp1:PqdotNormsR}
+\end{figure*}
+
+\begin{figure*}[t]
+\input{img/exp1/RL/PqdotNormsRL}
+\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+the \emph{both hands} motion.}
+\label{fig:exp1:PqdotNormsRL}
+\end{figure*}
+
 
 \end{document}
