@@ -1,9 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-
-%\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out
-                                                          % if you need a4paper
 \documentclass[letterpaper, 10pt, conference]{ieeeconf}      % Use this line for a4
                                                           % paper
 
@@ -42,7 +36,7 @@
 \input{./macros.tex}
 
 \title{\LARGE \bf
-Reverse engineering task recognition and disambiguation on humanoid robot
+Reverse engineering the motion to perform task recognition and disambiguation on humanoid robot.
 }
 
 \author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond% <-this % stops a space
@@ -64,6 +58,154 @@ Reverse engineering task recognition and disambiguation on humanoid robot
 Reverse engineering the motion.
 \end{abstract}
 
+\section{Introduction}
+\subsection{Motivation: what are you moving for?}
+
+The current promising development of servicing robotics stimulates the
+research in human-robot interaction. In that context, understanding
+robot actions from observation is a challenge per se. While the
+intentional action originates at a planning level, its realization takes
+place in the real world via motions. How to recognize an action from
+observed motions? Defining methods to automatically recognize the goal
+pursued by a robot performing a given motion is a critical issue. If we
+consider mobile manipulators (e.g., PR2 robots\footnote{{http://www.willowgarage.com/pages/pr2/overview}})
+there is a clear separation between navigation functions and
+manipulation functions. The question of action recognition may be rather
+simple. This may be not the case for humanoid robots whose
+anthropomorphic shape entirely embodies complex actions. 
+
+\subsection{Problem statement: disambiguating motions in embodied actions.}
+\begin{figure*}[t]
+  \centering
+  \makeatletter
+  \renewcommand{\@thesubfigure}{Scenario \thesubfigure:\hskip\subfiglabelskip}
+  \makeatother
+
+  \subfigure[The global task \emph{Give me the ball} is decomposed into a
+  sequence of sub-tasks \lbrack locate the ball\rbrack, \lbrack walk to the ball\rbrack, \lbrack grasp the
+  ball\rbrack, \lbrack locate the operator\rbrack, \lbrack walk to the operator\rbrack, and \lbrack give the
+  ball\rbrack. The motions \lbrack walk to\rbrack, \lbrack grasp\rbrack, \lbrack give\rbrack~appear as a sequence
+  structuring the action.]{
+  \makebox[\linewidth]{
+  \begin{tabular}{c@{}c@{}c@{}c@{}c@{}}
+    \includegraphics[height=2.4cm]{img/purpleBall1.ps}&
+    \includegraphics[height=2.4cm]{img/purpleBall2.ps}&
+    \includegraphics[height=2.4cm]{img/purpleBall3.ps}&
+    \includegraphics[height=2.4cm]{img/purpleBall4.ps}&
+    \includegraphics[height=2.4cm]{img/purpleBall5.ps}\\
+  \end{tabular}
+  \label{fig:introExample:purpleBall}
+  }
+  }
+  \subfigure[To grasp the ball between its feet, the robot has to step
+  away from the ball. In this experiment \emph{stepping away} is not a software
+  module. It is an integral part of the embodied action \emph{grasping}]{
+  \makebox[\linewidth]{
+  \begin{tabular}{c@{}c@{}}
+    \includegraphics[height=2cm]{img/graspFeet1.ps}&
+    \includegraphics[height=2cm]{img/graspFeet2.ps}\\
+  \end{tabular}
+  \label{fig:introExample:graspFeet}
+  }
+  }
+  \subfigure[To grasp the ball between in front of it (left), the robot
+  reaches a posture where the left arm is used to maintain its balance. In
+  the figure on the right, the robot performs two actions simultaneously:
+  grasping a ball in front of it while grasping a ball behind (of course
+  the ball behind has been intentionally placed at the end
+  position of the left hand depicted on the left side). It
+  is not possible to spot the difference between both postures. However,
+  the question we address is: Is it possible to spot the difference
+  between both \emph{motions}?]{
+  \makebox[\linewidth]{
+  \includegraphics[height=2.4cm]{img/spotDiff1H.ps}
+  }
+  \label{fig:introExample:spotDiff}
+  }
+  \caption{Introductory examples of embodied intelligence.}
+  \label{fig:introExample}
+\end{figure*}
+
+As an introductory example, let us consider the three actions performed by the
+humanoid robot HRP-2 at LAAS-CNRS (Fig.~\ref{fig:introExample}). In the first scenario the robot
+answers a single order: \emph{Give me the purple ball}~\cite{yoshida07}. To reach the assigned
+objective, HRP-2 decomposes its task into elementary sub-tasks
+(Fig.~\ref{fig:introExample:purpleBall}). A dedicated software module addresses each
+sub-task. For instance,
+to reach the ball, the robot has to walk to the ball. \emph{Walking} appears as an
+elementary action that is a resource to solve the problem. It is processed by a
+dedicated locomotion module. In the second scenario (Fig.~\ref{fig:introExample:graspFeet}),
+HRP-2 has to grasp the ball that is located between its feet. To reach the
+objective, the robot has to step away from the ball and then grasp it. In this
+experiment~\cite{kanoun} there is no dedicated module in charge of \emph{stepping}. \emph{Stepping} is
+a direct consequence of \emph{grasping}. The grasping action is totally embedded in
+the body, allowing the legs to naturally contribute to the action. Grasping
+appears as an embodied action generating a complex motion. Finally Fig.~\ref{fig:introExample:spotDiff}
+introduces the purpose of this paper. In the case on the left side, the robot
+performs a single grasping task. In the case on the right side, the robot
+performs two grasping tasks simultaneously. The ambiguity to distinguish both
+cases comes from the role played by the left arm. In the first case, the left
+arm contributes to the single grasping action by maintaining the balance of the
+robot. In the second one, the left arm performs another grasping task. Both
+motions are very similar. 
+
+The purpose of the paper is to show that it is possible to disambiguate both
+cases.
+
+\section{Related work}
+In the quest of robot autonomy, research and development in Robotics is
+dominated by the stimulating competition between computer science and
+control theory, between abstract symbol manipulation and physical signal
+processing, between discrete data structures and continuous variables.\\
+
+The pioneering researches addressing the possible autonomy of machines
+start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
+were the first researchers to consider that computational logic can be
+applied to machines to provide them with decision-making capabilities.
+This paved the route to consider robotics as a way to stimulate research
+in the, then nascent, Artificial Intelligence. Starting from logical
+reasoning~\cite{ghallab04} the approach imposes a top-down perspective (from symbol to
+signal) of system intelligence with the famous paradigm
+\emph{perception-decision-action}. During the eighties, under the impulsion
+of R. Brooks~\cite{brooks86}, a new line of research independently developed the idea
+that intelligence \emph{emerges} from a bottom-up organization of behaviors.
+This gave rise to the so-called bio-inspired robotics. All these
+approaches can be viewed as dominated by computer science at large. They
+aim at being generic. They address mobile robots as well as articulated
+mechanical systems. They tend to be independent from the mechanical
+dimensions of the system.\\
+
+In this paper we take another point of view: the control theory based
+one. Control theory constitutes the second corpus that accompanies
+robotics development. Originating from mechanics and applied
+mathematics, it focuses on robot motion control~\cite{murray94,
+siciliano10}. Among all the
+contributions on linear and non-linear systems, robot control theory has
+provided efficient concepts for motion generation. The research
+initiated by A. Li\'egeois~\cite{liegeois77} on redundant robots (i.e. robots that have
+more degrees of freedom than necessary to perform a given task), and
+then developed by Y. Nakamura~\cite{nakamura91}, B. Siciliano, J.J. Slotine~\cite{siciliano91} and O.
+Khatib~\cite{khatib87} introduce mathematical machinery based on linear algebra and
+numerical optimization that allows for clever ways to model the symbolic
+notion of \emph{task}~\cite{samson91}.\\
+
+In that framework we have developed the stack of task concept. BLA BLA
+BLA et REFERENCES ADEQUATES.\\
+
+The originality of our approach to action recognition is to perform
+reverse engineering on the stack of tasks. BLA BLA BLA POUR RESUMER LA
+METHODE DE PROJECTION.\\
+
+Statistics constitute another corpus that has been successfully applied
+to to action recognition motion analysis. The introduction of Partially
+Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
+renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
+techniques and related ones are now applied to motor skill learning~\cite{peters08} in
+general, and to motion segmentation~\cite{calinon10, inamura04} in particular. With respect to
+these statistics-based methods, our approach takes advantage of the
+knowledge of the way the action is generated. It allows more powerful
+disambiguation than pure statistic non-informed methods.
+
 \section{Experimentation on the robot}
 
 \subsection{Experimental setup}
@@ -73,23 +215,23 @@ Motion capture system: markers, skeleton, joint angle trajectory
 A motion capture system is used in order to have an external observation of the robot.
 The motion capture system used is composed of 10 digital cameras (see Fig.~\ref{fig:camera}). 
 \begin{figure}[t]
-\centering
-\includegraphics[height=0.4\linewidth]{img/camIR.ps} 
-\caption{Camera of the motion capture system.}
-\label{fig:camera}
+  \centering
+  \includegraphics[height=0.4\linewidth]{img/camIR.ps} 
+  \caption{Camera of the motion capture system.}
+  \label{fig:camera}
 \end{figure}
 
 A set of 50 markers
 are placed on the robot to record a motion (see Fig.~\ref{fig:hrp2Markers}). The data collected from those markers
 are used to build a virtual skeleton that match the kinematic structure of the robot.
 \begin{figure}[t]
-\centering
-\begin{tabular}{cc}
-\includegraphics[height=0.7\linewidth]{img/hrp2Markers.ps} &
-\includegraphics[height=0.7\linewidth]{img/skel.ps} \\
-\end{tabular}
-\caption{Markers set and virtual skeleton of HRP2.}
-\label{fig:hrp2Markers}
+  \centering
+  \begin{tabular}{cc}
+    \includegraphics[height=0.7\linewidth]{img/hrp2Markers.ps} &
+    \includegraphics[height=0.7\linewidth]{img/skel.ps} \\
+  \end{tabular}
+  \caption{Markers set and virtual skeleton of HRP2.}
+  \label{fig:hrp2Markers}
 \end{figure}
 
 The computation of the trajectory of the motion in the joint angle space
@@ -100,8 +242,8 @@ has to be made. Then the joint angle that would bring the robot to the same post
 as the skeleton is the joint angle that minimize the distance between
 the transformation from the measured skeleton kinematic transformation to the robot kinematic model.
 \begin{equation}
-\mbf{q}^*_i = \underset{\mbf{q}_i}\argmin \Vert K_W\tensor[^{0M}]{R}{_{iM}}K_i \ominus \tensor[^W]{R}{_{iQ}}(\mbf{q}_i) \Vert ^2\\
-\label{mocapOpti}
+  \mbf{q}^*_i = \underset{\mbf{q}_i}\argmin \Vert K_W\tensor[^{0M}]{R}{_{iM}}K_i \ominus \tensor[^W]{R}{_{iQ}}(\mbf{q}_i) \Vert ^2\\
+  \label{mocapOpti}
 \end{equation}
 where $K_W$ is the transformation matrix from the origin of the reference of the robot model to the reference of the 
 motion capture data. $\tensor[^{0M}]{R}{_{iM}}$ is the transformation matrix from the root of the virtual bone to
@@ -114,9 +256,9 @@ measured skeleton are known.
 Joint angle trajectory are needed by the algorithm.
 
 \begin{itemize}
-\item Both hands versus one hand
-\item Grab blind, Grab and look
-\item Grab, screw
+  \item Both hands versus one hand
+  \item Grab blind, Grab and look
+  \item Grab, screw
 \end{itemize}
 
 \subsection{Right hand VS Both hands motion}
@@ -127,48 +269,48 @@ in order to bypass the influence of the flexibility, the motion analysis is done
 Tab.~\ref{tab:spotDiffReal1} shows the result of the identification algorithm run on
 the motion data of the \emph{right hand} and \ emph{both hands} motion.
 \begin{table}[t]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
-\hline
-\begin{tabular}{c}
-Com\\
-Right Hand\\
-Twofeet\\
-\end{tabular}
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
+    \hline
+    \begin{tabular}{c}
+      Com\\
+      Right Hand\\
+      Twofeet\\
+    \end{tabular}
 
-&
+    &
 
-\begin{tabular}{c}
-Com\\
-Right Hand\\
-Twofeet\\
-\end{tabular}
+    \begin{tabular}{c}
+      Com\\
+      Right Hand\\
+      Twofeet\\
+    \end{tabular}
 
-& 0.104835 & 0.0482885 \\
-\hline
-\begin{tabular}{c}
-Com\\
-Left Hand\\
-Right Hand\\
-Twofeet\\
-\end{tabular}
+    & 0.104835 & 0.0482885 \\
+    \hline
+    \begin{tabular}{c}
+      Com\\
+      Left Hand\\
+      Right Hand\\
+      Twofeet\\
+    \end{tabular}
 
-&
-\begin{tabular}{c}
-Com\\
-Left Hand\\
-Right Hand\\
-Twofeet\\
-\end{tabular}
+    &
+    \begin{tabular}{c}
+      Com\\
+      Left Hand\\
+      Right Hand\\
+      Twofeet\\
+    \end{tabular}
 
-& 0.142293  & 0.0541836 \\
-\hline
-\end{tabular}
-\caption{Results of the task selection algorithm from the analysis of the \emph{right-only} motion and the \emph{both hands} motion on the real robot.}
-\label{tab:spotDiffReal1}
-\vspace{-20pt}
+    & 0.142293  & 0.0541836 \\
+    \hline
+  \end{tabular}
+  \caption{Results of the task selection algorithm from the analysis of the \emph{right-only} motion and the \emph{both hands} motion on the real robot.}
+  \label{tab:spotDiffReal1}
+  \vspace{-20pt}
 \end{table}
 
 Fig.~\ref{fig:exp1:taskCom0}-\ref{fig:exp1:taskTwofeet0} shows the
@@ -183,86 +325,108 @@ task, whereas the left hand projection have a poor fitting
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 0]{
-      \resizebox{.48\textwidth}{!} {
-	\input{img/exp1/R/invJerror_taskCom_0}
-      }
-      \label{fig:exp1:taskCom0:R}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/R/invJerror_taskCom_0}
+  }
+  \label{fig:exp1:taskCom0:R}
   }
   \subfigure[Both hands motion - iteration 0]{
-      \resizebox{.48\textwidth}{!} {
-	\input{img/exp1/RL/invJerror_taskCom_0}
-      }
-      \label{fig:exp1:taskCom0:RL}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/RL/invJerror_taskCom_0}
   }
-\caption{Comparison of the fitting for the center of masses regulation task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
-$r$ are the residues of the optimizations.}
-\label{fig:exp1:taskCom0}
+  \label{fig:exp1:taskCom0:RL}
+  }
+  \caption{Comparison of the fitting for the center of masses regulation task for the \emph{both hands} and \emph{right hand} motion at the first iteration of the identification algorithm.
+  $r$ are the residues of the optimizations.}
+  \label{fig:exp1:taskCom0}
 \end{figure*}
+
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 0]{
-    \resizebox{.48\textwidth}{!} {
-      \input{img/exp1/R/invJerror_taskHead_0}
-    }                           
-    \label{fig:exp1:taskHead0:R}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/R/invJerror_taskHead_0}
+  }                           
+  \label{fig:exp1:taskHead0:R}
   }
   \subfigure[Both hands motion - iteration 0]{
-    \resizebox{.48\textwidth}{!} {
-      \input{img/exp1/RL/invJerror_taskHead_0}
-    }
-    \label{fig:exp1:taskHead0:RL}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/RL/invJerror_taskHead_0}
+  }
+  \label{fig:exp1:taskHead0:RL}
   }
   \caption{Comparison of the fitting for the head task for the
-    \emph{both hands} and \emph{right hand} motion at the first
-    iteration of the identification algorithm.  $r$ are
-    the residues of the optimizations.}
+  \emph{both hands} and \emph{right hand} motion at the first
+  iteration of the identification algorithm.  $r$ are
+  the residues of the optimizations.}
   \label{fig:exp1:taskHead0}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 0]{
-    \resizebox{.48\textwidth}{!} {
-      \input{img/exp1/R/invJerror_taskLhand_0}
-    }
-    \label{fig:exp1:taskLhand0:R}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/R/invJerror_taskLhand_0}
+  }
+  \label{fig:exp1:taskLhand0:R}
   }
   \subfigure[Both hands motion - iteration 0]{
-    \resizebox{.48\textwidth}{!} {
-      \input{img/exp1/RL/invJerror_taskLhand_0}
-    }
-    \label{fig:exp1:taskLhand0:RL}
+  \resizebox{.48\textwidth}{!} {
+  \input{img/exp1/RL/invJerror_taskLhand_0}
+  }
+  \label{fig:exp1:taskLhand0:RL}
   }
   \caption{Comparison of the fitting for the left hand task for the
-    \emph{both hands} and \emph{right hand} motion at the first
-    iteration of the identification algorithm.  $r$ are
-    the residues of the optimizations.}
+  \emph{both hands} and \emph{right hand} motion at the first
+  iteration of the identification algorithm.  $r$ are
+  the residues of the optimizations.}
   \label{fig:exp1:taskLhand0}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 0]{
   \resizebox{.48\textwidth}{!} {
-	\input{img/exp1/R/invJerror_taskTwofeet_0}
-    }
-    \label{fig:exp1:taskTwofeet0:R}
+  \input{img/exp1/R/invJerror_taskTwofeet_0}
+  }
+  \label{fig:exp1:taskTwofeet0:R}
   }
   \subfigure[Both hands motion - iteration 0]{
   \resizebox{.48\textwidth}{!} {
-	\input{img/exp1/RL/invJerror_taskTwofeet_0}
-    }
-    \label{fig:exp1:taskTwofeet0:RL}
+  \input{img/exp1/RL/invJerror_taskTwofeet_0}
   }
-\caption{Comparison of the fitting for the \emph{two feet} task for the
-   \emph{both hands} and \emph{right hand} motion at the first
-   iteration of the identification algorithm.  $r$ are the
-   residues of the optimizations.}
-\label{fig:exp1:taskTwofeet0}
+  \label{fig:exp1:taskTwofeet0:RL}
+  }
+  \caption{Comparison of the fitting for the \emph{two feet} task for the
+  \emph{both hands} and \emph{right hand} motion at the first
+  iteration of the identification algorithm.  $r$ are the
+  residues of the optimizations.}
+  \label{fig:exp1:taskTwofeet0}
 \end{figure*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
   \centering
@@ -283,6 +447,12 @@ $r$ are the residues of the optimizations.}
 \label{fig:exp1:taskCom1}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 1]{
@@ -301,6 +471,14 @@ $r$ are the residues of the optimizations.}
 $r$ are the residues of the optimizations.}
 \label{fig:exp1:taskHead1}
 \end{figure*}
+
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
   \centering
@@ -323,6 +501,16 @@ $r$ are the residues of the optimizations.}
   \label{fig:exp1:taskLhand1}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 1]{
@@ -342,6 +530,11 @@ $r$ are the residues of the optimizations.}
 \end{figure*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
   \centering
@@ -362,6 +555,14 @@ $r$ are the residues of the optimizations.}
 \label{fig:exp1:taskHead2}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
+
 \begin{figure*}[t]
   \centering
   \subfigure[Right hand motion - iteration 2]{
@@ -381,6 +582,15 @@ $r$ are the residues of the optimizations.}
 \label{fig:exp1:taskLhand2}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
+
 \begin{figure}[t]
   \centering
   %\subfigure[Both hands motion - iteration 2]{
@@ -396,6 +606,18 @@ $r$ are the residues of the optimizations.}
 $r$ is the residue of the optimization.}
 \label{fig:exp1:taskCom2}
 \end{figure}
+
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
 
 \begin{figure}[t]
   \centering
@@ -413,6 +635,18 @@ $r$ is the residue of the optimization.}
 \label{fig:exp1:taskTwofeet2}
 \end{figure}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
   %\subfigure[Both hands motion - iteration 3]{
@@ -429,6 +663,18 @@ $r$ is the residue of the optimization.}
 \label{fig:exp1:taskHead3}
 \end{figure*}
 
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure}[t]
   \centering
   \subfigure[Both hands motion - iteration 3]{
@@ -441,6 +687,22 @@ $r$ is the residue of the optimization.}
 $r$ are the residues of the optimizations.}
 \label{fig:exp1:taskLhand3}
 \end{figure}
+
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
 \centering
@@ -459,6 +721,22 @@ $r$ are the residues of the optimizations.}
 \end{tabular}
 \caption{Right hand task fiting for \emph{right hand} and \emph{both hands} motion.}
 \end{figure*}
+
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
 
 \begin{figure*}[t]
 \centering
@@ -513,12 +791,41 @@ $r$ are the residues of the optimizations.}
 \caption{Left hand task fiting.}
 \end{figure*}
 
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+
 \begin{figure*}[t]
 \input{img/exp1/R/PqdotNormsR}
 \caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
 the \emph{right hand} motion.}
 \label{fig:exp1:PqdotNormsR}
 \end{figure*}
+
+satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
 
 \begin{figure*}[t]
 \input{img/exp1/RL/PqdotNormsRL}
@@ -527,5 +834,20 @@ the \emph{both hands} motion.}
 \label{fig:exp1:PqdotNormsRL}
 \end{figure*}
 
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan satan satan satan satan satan satan satan satan satan satan
+satan
+
+\bibliographystyle{unsrt}
+\bibliography{biblio}
 
 \end{document}

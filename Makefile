@@ -10,6 +10,7 @@ PS2PDF := ps2pdf -dCompatibilityLevel=1.4 -dMAxSubsetPct=100 -dSubsetFonts=true 
 tsmca2011: $(TEX_FILE)
 	latex $(TEX_FILE)
 	latex $(TEX_FILE)
+	bibtex $(FILE)
 	latex $(TEX_FILE)
 	dvips -Ppdf -G0 -t letter $(FILE).dvi -o $@.ps
 	$(PS2PDF) $@.ps $@.pdf
