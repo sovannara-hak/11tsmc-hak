@@ -39,11 +39,14 @@
 Reverse engineering the motion to perform task recognition and disambiguation on humanoid robot.
 }
 
-\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond% <-this % stops a space
-  \thanks{7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP,
-    ISAE: {\tt\small sovannara.hak@laas.fr, nicolas.mansard@laas.fr, jpl@laas.fr}.}
-  \thanks{This work was supported by a grant from the R-Blink Project, Contract
-    ANR-08JCJC-0075-01.}  }
+%\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond, Olivier Stasse% <-this % stops a space
+  %\thanks{7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP,
+  %  ISAE: {\tt\small sovannara.hak@laas.fr, nicolas.mansard@laas.fr, jpl@laas.fr}. Olivier
+  %  Stasse, CNRS-AIST, JRL (Joint Robotics Laboratory), UMI 3218/CRT,
+  %  Intelligent Systems Research Institute AIST Central 2, Umezono 1-1-1
+  %  Tsukuba, Ibaraki 305-8568 Japan: {\tt\small olivier.stasse@aist.go.jp}}
+  %\thanks{This work was supported by a grant from the R-Blink Project, Contract
+  %  ANR-08JCJC-0075-01.}  }
 
 
 \begin{document}
@@ -191,7 +194,7 @@ mechanical systems. They tend to be independent from the mechanical
 dimensions of the system.\\
 
 Statistics constitute another corpus that has been successfully applied
-to to action recognition motion analysis. The introduction of Partially
+to action recognition motion analysis. The introduction of Partially
 Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
 renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
 techniques and related ones are now applied to motor skill learning~\cite{peters08} in
@@ -320,14 +323,14 @@ Each iteration consists in first, extracting the most significant task in the mo
 and then, removing the effect of this task using the properties of the null space projector.
 
 The aim of the task selection algorithm is to reconstruct the set of tasks corresponding
-to the reference motion, and the corresponding parameters.
+to the observed motion, and the corresponding parameters.
 The tasks are iteratively selected until it can be considered that all the tasks
 have been detected.
 This stop criterion is based on the
 null space projection: if the projection of a motion
 leads to a null motion, then no more tasks are involved.
 
-Each time a task is selected, the reference motion is projected
+Each time a task is selected, the observed motion is projected
 onto the null space of that task, canceling its relative motion. 
 The projected motion is then used to select another task.
 The task selection algorithm is shown below :
