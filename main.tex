@@ -36,7 +36,7 @@
 \input{./macros.tex}
 
 \title{\LARGE \bf
-Reverse engineering the motion to perform task recognition and disambiguation on humanoid robot.
+Reverse Engineering the Motion to Perform Task Recognition\\ and Disambiguation on Humanoid Robot.
 }
 
 %\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond, Olivier Stasse% <-this % stops a space
@@ -58,16 +58,27 @@ Reverse engineering the motion to perform task recognition and disambiguation on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-Statistical approaches are widely used for motion recognition.
-However, the use of purely statistical methods cannot leads to
-the identification of the purpose of the motion. Being able to explain
-the motion makes sense when working with a humanoid robot for example,
-because the effectors of that kind of robot can be used to achieve various goal in
-a meaning point of view. The robot can move its hand, in order to grasp
-an object or to maintain balance. The method presented here
+%Statistical approaches are widely used for motion recognition.
+%However, those statistical methods need to be applied in a \emph{suitable} space.
+Efficient methods to perform motion recognition have been developped
+using statistical tools. Those methods rely on primitives learning
+in a suitable \emph{space}, for example the latent space of the joint angle and/or the task space.
+The learned primitives are sequential : a motion is segmented according to the time axis.
+When working with a humanoid robot, a motion can be decomposed into
+independant tasks for example in a waiter scenario,
+the robot has to keep some plates horizontal with one of his arms, while placing a plate
+on the table with his free hand.
+In order to be able to recognize each combination of those kind of independant task,
+the statistical approaches need to learn the primitives from the demonstrations of each
+combinations of tasks.
+%Being able to explain the motion makes sense when working with a humanoid robot for example,
+%because the effectors of that kind of robot can be used to achieve various goal in
+%a meaning point of view. The robot can move its hand, in order to grasp
+%an object or to maintain balance.
+The method presented here
 takes advantage of the knowledge of what tasks the robot is able to do and how
 the motion is generated from a known set of controllers to perform a reverse engineering of an
-observed motion. This analysis is intended to recognize the controllers that
+observed motion. This analysis is intended to recognize the simultaneous tasks that
 have been used to generate the motion. The method relies
 on the task-function formalism and the projection operation into the null space of a task to decouple
 the controllers.
@@ -79,7 +90,7 @@ different purposes.
 \section{Introduction}
 \subsection{Motivation: what are you moving for?}
 
-The current promising development of servicing robotics stimulates the
+The current promising development of service robotics stimulates the
 research in human-robot interaction. In that context, understanding
 robot actions from observation is a challenge per se. While the
 intentional action originates at a planning level, its realization takes
