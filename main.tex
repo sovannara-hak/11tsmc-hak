@@ -183,9 +183,17 @@ cases.
 
 \section{Related work}
 In the quest of robot autonomy, research and development in Robotics is
-dominated by the stimulating competition between computer science and
-control theory, between abstract symbol manipulation and physical signal
-processing, between discrete data structures and continuous variables.\\
+dominated by the stimulating competition between abstract symbol manipulation and physical signal
+processing, between discrete data structures and continuous variables. Indeed
+finding a proper way to relate the discrete space of symbols and the continuous space
+of controllers is a challenge.\\
+
+%%%
+In the task recognition method presented in~\cite{nakaoka07}, a task is
+a motion within a time segment associated to some \emph{skills parameters}.
+The task recognition consists in segmenting a global motion, each segment 
+will be associated with a task. Then for each segment, the \emph{skills parameters}
+are estimated.
 
 The pioneering researches addressing the possible autonomy of machines
 start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
