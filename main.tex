@@ -256,8 +256,6 @@ With respect to these statistics-based methods, our approach takes advantage of 
 knowledge of the way the action is generated. It allows more powerful
 disambiguation than pure statistic non-informed methods.\\
 
-\section{Contribution}
-
 In this paper we take another point of view: the control theory based
 one. Control theory constitutes the second corpus that accompanies
 robotics development. Originating from mechanics and applied
@@ -283,6 +281,11 @@ the control law is obtained by a \emph{stack of tasks}
 (SoT)~\cite{mansard07} ie hierarchical inverse kinematics
 \cite{siciliano91}.\\
 
+\section{Contribution}
+
+The analyzed motion is not seen as a sequence of motion primitive but as a
+superimposition of controllers. The recognition of sequences
+is out of the scope of the paper.
 The task function is generally used to generate a motion but
 the originality of our approach to action recognition is to perform
 reverse engineering on the stack of tasks. 
@@ -297,7 +300,7 @@ that are not used by the main command will be used to achieve other commands.
 Instead of using the projector onto the nullspace of a task to generate a new control law that takes into
 account some lower priorities commands, the projector is used on a joint angle trajectory
 to remove the part of the motion that correspond to a detected task, removing
-ambiguity produced by combination of tasks.\\  
+ambiguity produced by combination of tasks.\\
 
 \section{Tasks and stack of tasks}
 A task function~\cite{samson91} is an elegant approach to produce intuitively
