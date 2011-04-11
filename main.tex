@@ -22,6 +22,7 @@
 \usepackage{wasysym}
 \usepackage{color}
 \usepackage{algorithmic}
+\usepackage{algorithm}
 \usepackage{tensor}
 \usepackage{leftidx}
 \usepackage{subfigure}
@@ -62,7 +63,7 @@ Reverse Engineering the Motion to Perform Task Recognition\\ and Disambiguation 
 %However, those statistical methods need to be applied in a \emph{suitable} space.
 Efficient methods to perform motion recognition have been developped
 using statistical tools. Those methods rely on primitives learning
-in a suitable \emph{space}, for example the latent space of the joint angle and/or the task space.
+in a \emph{suitable space}, for example the latent space of the joint angle and/or the task space.
 The learned primitives are sequential : a motion is segmented according to the time axis.
 When working with a humanoid robot, a motion can be decomposed into
 independant tasks for example in a waiter scenario,
@@ -166,7 +167,7 @@ elementary action that is a resource to solve the problem. It is processed by a
 dedicated locomotion module. In the second scenario (Fig.~\ref{fig:introExample:graspFeet}),
 HRP-2 has to grasp the ball that is located between its feet. To reach the
 objective, the robot has to step away from the ball and then grasp it. In this
-experiment~\cite{kanoun} there is no dedicated module in charge of \emph{stepping}. \emph{Stepping} is
+experiment~\cite{kanoun10} there is no dedicated module in charge of \emph{stepping}. \emph{Stepping} is
 a direct consequence of \emph{grasping}. The grasping action is totally embedded in
 the body, allowing the legs to naturally contribute to the action. Grasping
 appears as an embodied action generating a complex motion. Finally Fig.~\ref{fig:introExample:spotDiff}
@@ -184,40 +185,62 @@ cases.
 \section{Related work}
 In the quest of robot autonomy, research and development in Robotics is
 dominated by the stimulating competition between abstract symbol manipulation and physical signal
-processing, between discrete data structures and continuous variables. Indeed
-finding a proper way to relate the discrete space of symbols and the continuous space
+processing, between discrete data structures and continuous variables.
+Indeed finding a proper way to relate the discrete space of symbols and the continuous space
 of controllers is a challenge.\\
 
 %%%
 In the task recognition method presented in~\cite{nakaoka07}, a task is
-a motion within a time segment associated to some \emph{skills parameters}.
-The task recognition consists in segmenting a global motion, each segment 
-will be associated with a task. Then for each segment, the \emph{skills parameters}
-are estimated.
+a complete motion within a temporal segment and each tasks have their own
+parameters called \emph{skills parameters}. Indeed, a global motion is a sequence of
+tasks. The considered The task recognition method is decomposed in two step: 
+first, for each tasks, find all the temporal segments corresponding to that task.
+The second step is the estimation of the skill parameters for each segment.
+Each task are detected by the analysis of the trajectory in a specific space:
+for example the stepping task is detected by analyzing the trajectory  of a foot,
+and a squatting task is detected by analyzing the vertical trajectory of the waist.
+This is similar to the method introduced in this paper: each tasks are described in a particular
+space, therefore the best way to detect those task is to analyze
+those particular space.
 
-The pioneering researches addressing the possible autonomy of machines
-start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
-were the first researchers to consider that computational logic can be
-applied to machines to provide them with decision-making capabilities.
-This paved the route to consider robotics as a way to stimulate research
-in the, then nascent, Artificial Intelligence. Starting from logical
-reasoning~\cite{ghallab04} the approach imposes a top-down perspective (from symbol to
-signal) of system intelligence with the famous paradigm
-\emph{perception-decision-action}. During the eighties, under the impulsion
-of R. Brooks~\cite{brooks86}, a new line of research independently developed the idea
-that intelligence \emph{emerges} from a bottom-up organization of behaviors.
-This gave rise to the so-called bio-inspired robotics. All these
-approaches can be viewed as dominated by computer science at large. They
-aim at being generic. They address mobile robots as well as articulated
-mechanical systems. They tend to be independent from the mechanical
-dimensions of the system.\\
-
+%The pioneering researches addressing the possible autonomy of machines
+%start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
+%were the first researchers to consider that computational logic can be
+%applied to machines to provide them with decision-making capabilities.
+%This paved the route to consider robotics as a way to stimulate research
+%in the, then nascent, Artificial Intelligence. Starting from logical
+%reasoning~\cite{ghallab04} the approach imposes a top-down perspective (from symbol to
+%signal) of system intelligence with the famous paradigm
+%\emph{perception-decision-action}. During the eighties, under the impulsion
+%of R. Brooks~\cite{brooks86}, a new line of research independently developed the idea
+%that intelligence \emph{emerges} from a bottom-up organization of behaviors.
+%This gave rise to the so-called bio-inspired robotics. All these
+%approaches can be viewed as dominated by computer science at large. They
+%aim at being generic. They address mobile robots as well as articulated
+%mechanical systems. They tend to be independent from the mechanical
+%dimensions of the system.\\
+%
 Statistics constitute another corpus that has been successfully applied
-to action recognition motion analysis. The introduction of Partially
+to action recognition motion analysis as it can be inferred 
+from~\cite{schaal03} which quickly reviews the statistical and mathematical 
+tools used to tackle motion imitation problems (which includes the recognition problem).
+Statistical tools are used to create symbols, and by extension, detect those
+symbols in a motion. For example, a method for behavior-based control 
+is proposed in~\cite{drumwright03, drumwright04}. Those behaviors are defined 
+as a motion symbol (e.g. jab, hook, elbow, shield and uppercut). 
+The behaviors are modeled by learning from joint trajectories examples.
+A dimensional reduction is then applied to have a significant
+clusterization.  The recognition part is handled by a Bayesian classifier which
+recognize a trajectory in joint or Cartesian space. The imitation is then
+performed by interpolating known examples to obtain feasible trajectory.  This
+method is not adapted for reactive behavior if the robot have a lot of degrees
+of freedom or a large vocabulary of motion.
+The introduction of Partially
 Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
 renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
 techniques and related ones are now applied to motor skill learning~\cite{peters08} in
 general, and to motion segmentation~\cite{calinon10, inamura04} in particular. 
+
 In~\cite{muhlig09} observations of a movement from sensors (camera, or motion capture system)
 are mapped to a task space that will best represent and generalize the movement in order to focus
 a learning technique into that particular space. The task space selection is
@@ -231,8 +254,9 @@ belong to that task space.\\
 
 With respect to these statistics-based methods, our approach takes advantage of the
 knowledge of the way the action is generated. It allows more powerful
-disambiguation than pure statistic non-informed methods.
+disambiguation than pure statistic non-informed methods.\\
 
+\section{Contribution}
 
 In this paper we take another point of view: the control theory based
 one. Control theory constitutes the second corpus that accompanies
@@ -261,12 +285,19 @@ the control law is obtained by a \emph{stack of tasks}
 
 The task function is generally used to generate a motion but
 the originality of our approach to action recognition is to perform
-reverse engineering on the stack of tasks. Knowing the set of
-all tasks that can appear in a motion and their associated behaviors, 
+reverse engineering on the stack of tasks. 
+Knowing the set of all tasks that can appear in a motion and their associated behaviors, 
 the motion that is supposed to be generated by a stack of tasks is processed in order to
-seek the known behaviors. The mathematical properties of the task function (ie. the projector onto
-the nullspace of a task) are used to decouple the task control from the motion, removing
-ambiguity produced by combination of tasks.\\
+seek the known behaviors.
+The control law associated to a task function approach can be decomposed in two component:
+a main command and a secondary command.
+The secondary command is computed so as to not interfere with the main command. This is achieved by
+projecting a secondary command into the nullspace of the main command. All degrees of freedom
+that are not used by the main command will be used to achieve other commands.
+Instead of using the projector onto the nullspace of a task to generate a new control law that takes into
+account some lower priorities commands, the projector is used on a joint angle trajectory
+to remove the part of the motion that correspond to a detected task, removing
+ambiguity produced by combination of tasks.\\  
 
 \section{Tasks and stack of tasks}
 A task function~\cite{samson91} is an elegant approach to produce intuitively
@@ -328,9 +359,15 @@ most relevant is selected and canceled in the original demonstration (Section~\r
 The algorithm finally stops when the original
 motion is totally canceled by the successive task extraction. Deciding which
 task is the most relevant is done by a curve fitting score. 
+
+\subsection{Hypothesis}
 It is assumed that the model behavior of a task is known, so the distance between
 the theoretical and the actual trajectory represent how much a trajectory
 was generated by a controllers (Section~\ref{sec:alg2:proj}).
+The model of the robot and all tasks that may appear in a motion (the tasks pool) are known.
+It is also assumed that all the tasks involved in a motion are compatible:
+each tasks are completely fullfilled. As a consequence, all
+tasks have the same priority order. 
 
 \subsection{Task selection algorithm} \label{sec:alg1:selec}
 The observed motion is generated by a SoT.  The idea is to identify which of the possible controllers are in the stack of tasks. 
@@ -357,7 +394,10 @@ The task selection algorithm is shown below :
 \newcommand{\shOUTPUT}{\textbf{Output: }}
 \newcommand{\shINPUT}{\textbf{Input: }}
 
-\begin{algorithmic}
+\begin{algorithm}
+  \caption{Task selection algorithm}
+  \label{alg:taskSelection}
+\begin{algorithmic}[1]
 \STATE \shINPUT $\dot{q}^{*}(t)$
 \STATE \shOUTPUT $activePool$
 \STATE $P\dot{q}(t)\gets \dot{q}^{*}(t)$
@@ -370,11 +410,12 @@ The task selection algorithm is shown below :
   \STATE $P\dot{q}(t) \gets \mathrm{projection}(i_{select}, P\dot{q}(t))$
 \ENDWHILE
 \end{algorithmic}
+\end{algorithm}
 where  $\dot{q}^{*}(t)$ is the joint angles velocities trajectory of the motion to analyze,
 $P$ is a projector, $\dot{q}(t)$ the angle velocity trajectory
 of the reference motion, $r_i$ is the score of the cost function of the optimization, $activePool$
 the set of tasks selected during the algorithm, $\epsilon$ is the threshold
-of the norm of the motion below which the algorithm stops. The task fitting is described
+of the motion norm below which the algorithm stops. The task fitting is described
 in the following section. The procedure $\mathrm{projection}(i, \dot{q}(t))$ compute the projector onto
 the null space of the task $i$ and apply the projection to the motion.
 
