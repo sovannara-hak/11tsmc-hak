@@ -463,6 +463,7 @@ of the robot reaches a point defined in the Cartesian space
 has to be reached with a defined orientation.
   \item \emph{Head} : is reaching task constrained in position and orientation with the head of the
     robot.
+  \item \emph{Chest} : the chest of the robot is constrained in orientation.  
 \end{itemize}
 \begin{figure}[t]
 \begin{center}
@@ -580,6 +581,36 @@ The motion generated for the experiments are summed up in Table~\ref{tab:motion}
 	  \hline
 	\end{tabular} 
       \\
+    & &
+    \\
+    \hline
+    & &
+    \\
+    Motion 5 &
+    \begin{tabular}{|c|}
+      \hline
+      \emph{Right grab}\\
+      \hline
+      \emph{Gaze}\\
+      \hline
+      \emph{Com}\\
+      \hline
+      \emph{Twofeet}\\
+      \hline
+    \end{tabular}
+    &
+    \begin{tabular}{|c|}
+      \hline
+      \emph{Right grab}\\
+      \hline
+      \emph{Chest}\\
+      \hline
+      \emph{Com}\\
+      \hline
+      \emph{Twofeet}\\
+      \hline
+    \end{tabular}
+    \\
     & &
     \\
     \hline
@@ -1404,6 +1435,69 @@ This time the extracted task are : \emph{right grab},  \emph{com}, \emph{Twofeet
 \caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
 the \emph{motion 2.a} and the \emph{motion 2.b}.}
 \end{figure*}
+
+\subsection{Gaze VS Chest}
+The motion considered are the \emph{motion 5.a} and \emph{motion 5.b}.
+In the first one, the robot is looking at his right hand while grabbing something.
+In the second one, the robot is grabbing something with his right hand while
+maintaining his chest in its current orientation. Fig.~\ref{fig:motion5}
+shows the final posture of the robot for those motions.
+\begin{figure}[t]
+  \centering
+  \begin{tabular}{cc}
+    \includegraphics[width=0.48\linewidth]{img/realRobot/5a/5aFinal1.ps} &
+    \includegraphics[width=0.48\linewidth]{img/realRobot/5b/5bFinal1.ps} \\
+  \end{tabular}
+  \caption{Final position for \emph{motion 5.a} and \emph{motion 5.b}.}
+  \label{fig:motion5}
+\end{figure}
+
+Table~\ref{tab:result5} summarize the results of the task selection algorithm.
+\begin{table}[t]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
+    \hline
+    \begin{tabular}{c}
+      Com\\
+      Gaze\\
+      Right grab\\
+      Twofeet\\
+    \end{tabular}
+
+    &
+
+    \begin{tabular}{c}
+      Com\\
+      Gaze\\
+      Right grab\\
+      Twofeet\\
+    \end{tabular}
+
+    & 0.320001 & 0.0785168 \\
+    \hline
+    \begin{tabular}{c}
+      Chest\\
+      Com\\
+      Right grab\\
+      Twofeet\\
+    \end{tabular}
+
+    &
+    \begin{tabular}{c}
+      Chest\\
+      Com\\
+      Right grab\\
+      Twofeet\\
+    \end{tabular}
+
+    & 0.216742 & 0.0516134 \\
+    \hline
+  \end{tabular}
+  \caption{Results of the task selection algorithm from the analysis of the \emph{motion 5.a} and the \emph{motion 5.b} on the real robot.}
+  \label{tab:result5}
+\end{table}
 
 \section{Conclusion}
 The work presented in this article described a method to identify what tasks are involved in a movement.
