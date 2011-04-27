@@ -37,7 +37,7 @@
 \input{./macros.tex}
 
 \title{\LARGE \bf
-Reverse Engineering the Motion to Perform Task Recognition\\ and Disambiguation on Humanoid Robot.
+Task Recognition and Disambiguation on a Humanoid Robot by Reverse Engineering.
 }
 
 %\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond, Olivier Stasse% <-this % stops a space
@@ -89,7 +89,7 @@ different purposes.
 \end{abstract}
 
 \section{Introduction}
-\subsection{Motivation: what are you moving for?}
+%\subsection{Motivation: what are you moving for?}
 
 The current promising development of service robotics stimulates the
 research in human-robot interaction. In that context, understanding
@@ -98,11 +98,12 @@ intentional action originates at a planning level, its realization takes
 place in the real world via motions. How to recognize an action from
 observed motions? Defining methods to automatically recognize the goal
 pursued by a robot performing a given motion is a critical issue. If we
-consider mobile manipulators (e.g., PR2 robots\footnote{{http://www.willowgarage.com/pages/pr2/overview}})
+consider mobile manipulators (e.g., PR2 robots)
 there is a clear separation between navigation functions and
 manipulation functions. The question of action recognition may be rather
-simple. This may be not the case for humanoid robots whose
-anthropomorphic shape entirely embodies complex actions. 
+simple. Similarly humanoid robot can be divided in two distinctive parts,
+legs and upper body, which corresponds to the navigation and manipulation
+functions.
 
 \subsection{Problem statement: disambiguating motions in embodied actions.}
 \begin{figure*}[t]
@@ -156,9 +157,8 @@ anthropomorphic shape entirely embodies complex actions.
   \label{fig:introExample}
 \end{figure*}
 
-As an introductory example, let us consider the three actions performed by the
-humanoid robot HRP-2 at LAAS-CNRS (Fig.~\ref{fig:introExample}). In the first scenario the robot
-answers a single order: \emph{Give me the purple ball}~\cite{yoshida07}. To reach the assigned
+For example, consider the \emph{Give me the purple ball} scenario~\cite{yoshida07}
+performed by the humanoid robot HRP-2 at LAAS-CNRS (Fig.~\ref{fig:introExample}). To reach the assigned
 objective, HRP-2 decomposes its task into elementary sub-tasks
 (Fig.~\ref{fig:introExample:purpleBall}). A dedicated software module addresses each
 sub-task. For instance,
@@ -179,8 +179,10 @@ arm contributes to the single grasping action by maintaining the balance of the
 robot. In the second one, the left arm performs another grasping task. Both
 motions are very similar. 
 
-The purpose of the paper is to show that it is possible to disambiguate both
-cases.
+The works presented here tackles the problem of motion recognition and 
+show that it is possible to disambiguate both cases by focusing
+the analysis of the motion in the task spaces and on
+the behaviors of the controllers of the robot.
 
 \section{Related work}
 %In the quest of robot autonomy, research and development in Robotics is
@@ -189,19 +191,47 @@ cases.
 %Indeed finding a proper way to relate the discrete space of symbols and the continuous space
 %of controllers is a challenge.\\
 %%%
+Statistics have been successfully applied
+to action recognition and motion analysis as it can be inferred 
+from~\cite{schaal03} which quickly reviews the statistical and mathematical 
+tools that have been used. 
+Statistical tools are used to create symbols, and by extension, detect those
+symbols in a motion. For example, a method for behavior-based control 
+is proposed in~\cite{drumwright03, drumwright04}. Those behaviors are defined 
+as a motion symbol (e.g. jab, hook, elbow, shield and uppercut). 
+The behaviors are modeled by learning from joint trajectories examples.
+A dimensional reduction is then applied to have a significant
+clusterization.  The recognition part is handled by a Bayesian classifier which
+recognize a trajectory in joint or Cartesian space. The extension to the recognition
+is to perform an imitation. This is performed by interpolating known examples to obtain feasible trajectories.  
+The introduction of Partially
+Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
+renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
+techniques and related ones are now applied to motor skill learning~\cite{peters08} in
+general, and to motion segmentation~\cite{calinon10, inamura04} in particular. 
+Generally speaking, the efficiency of statistics based recognition is ruled by the quality of the dataset built
+in the learning phase.
+Several demonstrations for each particular cases is needed to be able to extract
+the invariants that will discriminate the tasks (the sparsity of the demonstrations
+can also limits the efficiency of the recognition). Finally, the sets of demonstrations
+have to be associated with the correct symbols.
+
 In the task recognition method presented in~\cite{nakaoka07}, a task is
-a complete motion within a temporal segment and each tasks have their own
-parameters called \emph{skills parameters}. Indeed, a global motion is a sequence of
-tasks. The considered task recognition method is decomposed in two step: 
+a complete motion within a temporal segment. The global motion
+is a sequence of tasks. Each tasks have their own
+parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps: 
 first, for each tasks, find all the temporal segments in the observed motion
 corresponding to that task.
 The second step is the estimation of the skill parameters for each segment.
-Each task are detected by the analysis of the trajectory in a specific space:
-for example the stepping task is detected by analyzing the trajectory  of a foot,
-and a squatting task is detected by analyzing the vertical trajectory of the waist.
-This is similar to the method introduced in this paper: each tasks are described in a particular
-space, therefore the best way to detect those task is to make the analysis in
-those particular space.
+Each task are detected by the analysis of a trajectory in a specific space.
+The criteria of the detection is based on specific behaviors in the dedicated space.
+For example the stepping task is detected by analyzing the trajectory (in position and velocities) 
+of a foot, and a squatting task is detected by analyzing the vertical trajectory of the waist.
+Although the method is specifically applied to a sequence of tasks,
+the approach of the recognition is similar to the method 
+introduced in this paper: each tasks are best described in a particular
+space, therefore the best way to detect those tasks is to perform the analysis in
+those particular spaces in order to detect expected behaviors.
 
 %The pioneering researches addressing the possible autonomy of machines
 %start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
@@ -220,27 +250,6 @@ those particular space.
 %mechanical systems. They tend to be independent from the mechanical
 %dimensions of the system.\\
 %
-Statistics constitute another corpus that has been successfully applied
-to action recognition and motion analysis as it can be inferred 
-from~\cite{schaal03} which quickly reviews the statistical and mathematical 
-tools used to tackle motion imitation problems (which includes the recognition problem).
-Statistical tools are used to create symbols, and by extension, detect those
-symbols in a motion. For example, a method for behavior-based control 
-is proposed in~\cite{drumwright03, drumwright04}. Those behaviors are defined 
-as a motion symbol (e.g. jab, hook, elbow, shield and uppercut). 
-The behaviors are modeled by learning from joint trajectories examples.
-A dimensional reduction is then applied to have a significant
-clusterization.  The recognition part is handled by a Bayesian classifier which
-recognize a trajectory in joint or Cartesian space. An imitation can then be
-performed by interpolating known examples to obtain feasible trajectory.  
-%This method is not adapted for reactive behavior if the robot have a lot of degrees 
-%of freedom or a large vocabulary of motion.
-The introduction of Partially
-Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
-renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
-techniques and related ones are now applied to motor skill learning~\cite{peters08} in
-general, and to motion segmentation~\cite{calinon10, inamura04} in particular. 
-
 In~\cite{muhlig09} observations of a movement from sensors (camera, or motion capture system)
 are mapped to the union of task spaces that will best represent and generalize the movement in order to focus
 a learning technique into that new space. The task space selection is
@@ -250,73 +259,89 @@ of a space during several demonstrations, and some heuristics that express that
 uncomfortable or exhausting motions are more relevant to a task. Those heuristics
 address the problem of how to spot tasks that involve no motion. The method
 presented add some higher level information to a purely statistical analysis. 
-But what is learned are features that implicitly merge different tasks.\\
+But what is learned are features that implicitly merge different tasks and
+the efficiency of the task space selection depends on the strength
+of the heuristics.
 
 With respect to these statistics-based methods, our approach takes advantage of the
 knowledge of the way the action is generated. It allows more powerful
 disambiguation than pure statistic non-informed methods.\\
 
-In this paper another point of view is taken: the control theory based
-one. Control theory constitutes the second corpus that accompanies
-robotics development. Originating from mechanics and applied
-mathematics, it focuses on robot motion control~\cite{murray94,
-siciliano10}. Among all the
-contributions on linear and non-linear systems, robot control theory has
-provided efficient concepts for motion generation. The research
-initiated by A. Li\'egeois~\cite{liegeois77} on redundant robots (i.e. robots that have
-more degrees of freedom than necessary to perform a given task), and
-then developed by Y. Nakamura~\cite{nakamura91}, B. Siciliano, J.J. Slotine~\cite{siciliano91} and O.
-Khatib~\cite{khatib87} introduce mathematical machinery based on linear algebra and
-numerical optimization that allows for clever ways to model the symbolic
-notion of \emph{task}~\cite{samson91}.\\
+%In this paper another point of view is taken: the control theory based
+%one. Control theory constitutes the second corpus that accompanies
+%robotics development. Originating from mechanics and applied
+%mathematics, it focuses on robot motion control~\cite{murray94,
+%siciliano10}. Among all the
+%contributions on linear and non-linear systems, robot control theory has
+%provided efficient concepts for motion generation. The research
+%initiated by A. Li\'egeois~\cite{liegeois77} on redundant robots (i.e. robots that have
+%more degrees of freedom than necessary to perform a given task), and
+%then developed by Y. Nakamura~\cite{nakamura91}, B. Siciliano, J.J. Slotine~\cite{siciliano91} and O.
+%Khatib~\cite{khatib87} introduce mathematical machinery based on linear algebra and
+%numerical optimization that allows for clever ways to model the symbolic
+%notion of \emph{task}~\cite{samson91}.\\
 
-Those \emph{tasks} are defined by their tasks spaces (eg. position of the hand
-in an arbitrary frame\cite{nakamura86a,khatib87}, or position of a visual feature in the image
-plane \cite{espiau92,hutchinson96a}), a reference behavior in those tasks spaces
-(eg. exponential decrease to zero) and by the differential link between
-the task space and the actuator space, typically the task Jacobian.
-Given a set of active task, the corresponding control law can be
-obtained by inverting the equation of motion of the robot. In this work
-the control law is obtained by a \emph{stack of tasks}
-(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
-\cite{siciliano91}.\\
-
-\section{Contribution}
+%Those \emph{tasks} are defined by their tasks spaces (eg. position of the hand
+%in an arbitrary frame\cite{nakamura86a,khatib87}, or position of a visual feature in the image
+%plane \cite{espiau92,hutchinson96a}), a reference behavior in those tasks spaces
+%(eg. exponential decrease to zero) and by the differential link between
+%the task space and the actuator space, typically the task Jacobian.
+%Given a set of active task, the corresponding control law can be
+%obtained by inverting the equation of motion of the robot. In this work
+%the control law is obtained by a \emph{stack of tasks}
+%(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
+%\cite{siciliano91}.\\
 
 In this work, the analyzed motion is not seen as a sequence of motion primitives but as a
 superimposition of controllers. The recognition of sequences
 is out of the scope of the paper.
-The task function is generally used to generate a motion, and
-the originality of the method presented in this paper, is to use the properties of
-task function to perform a recognition. The main idea is to
+The task-function is generally used to generate a motion\cite{siciliano91, mansard07}, and
+the originality of the method presented in this paper is to use the properties of the
+task-function to perform a recognition. The main idea is
 to perform a reverse engineering of an observed motion based on the knowledge
-of the task function properties. Knowing the set of all tasks that can appear 
-in a motion and their associated behaviors, 
+of the task-function properties. Knowing the set of all tasks that can appear 
+in a motion and their characteristic behaviors, 
 the motion that is supposed to be generated by a stack of tasks is processed in order to
-seek the known behaviors.
-The control law associated to the task function approach can be decomposed in two components:
-a main command and a secondary command.
-The secondary command is computed so as to not interfere with the main command. This is classically achieved by
-projecting secondary commands into the nullspace of the main command. All degrees of freedom
-that are not used by the main command will be used to achieve other commands.
-In this work, instead of using the projector onto the nullspace of a task to generate a new control law that takes into
-account some lower priorities commands, the projector is used on a joint angle trajectory
-to remove the part of the motion that corresponds to a detected task, removing
-ambiguity produced by combination of tasks. Furthermore, the recognition method is
-performed in each known task spaces in order to analyze trajectories in appropriate spaces.\\
+seek the known behaviors. The analysis is performed in each spaces mapped to a task while projections
+of the motion in their orthogonal spaces ensure an efficient decoupling of the tasks performed
+by the robot.
+%The control law associated to the task function approach can be decomposed in two components:
+%a main command and a secondary command.
+%The secondary command is computed so as to not interfere with the main command. This is classically achieved by
+%projecting secondary commands into the nullspace of the main command. All degrees of freedom
+%that are not used by the main command will be used to achieve other commands.
+%In this work, instead of using the projector onto the nullspace of a task to generate a new control law that takes into
+%%account some lower priorities commands, the projector is used on a joint angle trajectory
+%to remove the part of the motion that corresponds to a detected task, removing
+%ambiguity produced by combination of tasks. Furthermore, the recognition method is
+%performed in each known task spaces in order to analyze trajectories in appropriate spaces.\\
+The next section sum up the notions related to the task-function
+formalism used throughout this paper. The proposed algorithm for the task recognition
+is detailed in section~\ref{section:algorithm}. Section~\ref{section:simu} and~\ref{section:real}
+illustrates the method respectively in simulation and on the real robot followed
+by concluding remarks.
 
 \section{Tasks and stack of tasks}
-A task function~\cite{samson91} is an elegant approach to produce intuitively
-sensor-based robot objectives. Based on the redundancy of the system, the
+A task function~\cite{samson91} is an elegant approach to describe intuitively
+sensor-based control objectives. Based on the redundancy of the system, the
 approach can be extended to consider a hierarchical set of
 tasks~\cite{siciliano91}.  Defining the motion of the robot in terms of tasks
 consists in choosing several control laws to be applied each on a different
-subspace of the robot degrees of freedom. A task is defined by a space vector
-$\mbf{e}$ (eg. the error between a signal $\mbf{s}$ and its desired value
-$\mbf{e}=\mbf{s}^* - \mbf{s}$) and by reference behavior $\mbf{\dot{e}}$ to be
+subspace of the robot degrees of freedom. 
+
+A task is defined by a vector space 
+$\mbf{e}$ and by the reference behavior $\mbf{\dot{e}}$ to be
 executed in the task space. The Jacobian of the task is noted
 $\mbf{J}=\dpartial{\mbf{e}}{\mbf{q}}$ where $\mbf{q}$ is the robot
-configuration vector.  We consider that the robot input control is the velocity
+configuration vector. 
+For a reaching task in three dimensions, $\mbf{e}$ is the error 
+between a signal $\mbf{s}$ and its desired value
+\begin{eqnarray*}
+  \mbf{e} & = & \mbf{s}^* - \mbf{s} = \mbf{p}_3^* - \mbf{p}_3\\
+  \mbf{J} & = & \dpartial{\mbf{p}}{\mbf{q}}\\
+  \mbf{\dot{e}}^* & = & -\lambda \mbf{e}, \text{with } \lambda>0
+\end{eqnarray*}
+We consider that the robot input control is the velocity
 $\mbf{\dot{q}}$.  The control law is given by the least-square solution:
 \begin{equation}
 \dot{\mbf{q}} = \mbf{J}^+ \mbf{\dot{e}}^* + \mbf{P}\mbf{z}
@@ -325,7 +350,8 @@ $\mbf{\dot{q}}$.  The control law is given by the least-square solution:
 \noindent where $\mbf{J}^+$ is the least-square inverse of $\mbf{J}$,
 $\mbf{P} = \mbf{I} - \mbf{J}^+ \mbf{J}$ is the null space
 of $\mbf{J}$ and $\mbf{z}$ is any secondary criterion. $\mbf{P}$ ensures
-a decoupling of the task with respect to $\mbf{z}$, which can be extended
+a decoupling of the task with respect to $\mbf{z}$. 
+using $\mbf{z}$ as a secondary input, the control can be extended
 recursively to a set of \emph{n} tasks. Those \emph{n} tasks
 are ordered by priority : task number 1 being the highest priority task,
 and task number \emph{n}, the lowest priority.
@@ -342,38 +368,25 @@ joint velocity realizing all the tasks is $\dot{\mbf{q}}^* = \dot{\mbf{q}}_n$.
 A complete implementation of this approach is proposed in~\cite{mansard07} under the
 name \emph{Stack of Tasks} (SoT). 
 
-The recursive formula proposed by~\cite{baerlocher98} is used to compute
-the null space projector:
-\begin{equation}
-  \left\{
-      \begin{array}{rl}
-        \mbf{P}_0 &= \mbf{I}\\
-        \mbf{P}_i &= \mbf{P}_{i-1} - (\mbf{J}_i \mbf{P}_{i-1})^+(\mbf{J}_i \mbf{P}_{i-1})\\
-      \end{array}
-    \right.
-\end{equation}
-
-\noindent where $\mbf{I}$ is the identity matrix, $\mbf{J}_i$ is the Jacobian matrix
-of the task $i$. In this work, the projector is used on
-the joint angle trajectory to cancel the sub-part of the robot involved in the task.
-
 \section{Reverse engineering the stack of tasks} \label{sec:detect}
-
-The input of the algorithm is the joint trajectories, and a set of candidate
-tasks. The algorithm is iterative: at each iteration, the task that seems the
-most relevant is selected and canceled in the original demonstration (Section~\ref{sec:alg1:selec}).
-The algorithm finally stops when the original
-motion is totally canceled by the successive task extraction. Deciding which
-task is the most relevant is done by a curve fitting score. 
+\label{section:algorithm}
 
 \subsection{Hypothesis}
 It is assumed that the model behavior of a task is known, so the distance between
 the theoretical and the actual trajectory represent how much a trajectory
-was generated by a controllers (Section~\ref{sec:alg2:proj}).
+was generated by a controllers.
 The model of the robot and all tasks that may appear in a motion (the tasks pool) are known.
 It is also assumed that all the tasks involved in a motion are compatible:
 each tasks are completely fulfilled. As a consequence, all
 tasks have the same priority order. 
+
+\subsection{Overview}
+The input of the algorithm is the joint trajectories, and a set of candidate
+tasks. The algorithm is iterative: at each iteration, the task that seems the
+most relevant is selected. It is then canceled in the original demonstration.
+The algorithm finally stops when the original
+motion is totally canceled by the successive task extraction. Deciding which
+task is the most relevant is done by a curve fitting score. 
 
 \subsection{Task selection algorithm} \label{sec:alg1:selec}
 The observed motion is generated by a SoT.  The idea is to identify which of the possible controllers were in the stack of tasks. 
@@ -1498,6 +1511,27 @@ Table~\ref{tab:result5} summarize the results of the task selection algorithm.
   \caption{Results of the task selection algorithm from the analysis of the \emph{motion 5.a} and the \emph{motion 5.b} on the real robot.}
   \label{tab:result5}
 \end{table}
+
+Fig.~\ref{fig:exp6:PqdotNorms5} shows the evolution of the norm of the motions after the projection
+into the null space of the tasks : \emph{right grab},  \emph{gaze}, \emph{Twofeet} and \emph{com} for
+the \emph{motion 5.a}. And \emph{right grab}, \emph{Twofeet}, \emph{com} and \emph{chest} for the
+\emph{motion 5.b}.
+\begin{figure*}[t]
+  \centering
+  \subfigure[Motion 5.a]{
+  \resizebox{.48\textwidth}{!} {
+    \input{img/realRobot/5a/PqdotNorms5a}
+  }
+  }
+  \subfigure[Motion 5.b]{
+  \resizebox{.48\textwidth}{!} {
+    \input{img/realRobot/5b/PqdotNorms5b}
+  }
+}
+\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+the \emph{motion 5.a} and the \emph{motion 5.b}.}
+\label{fig:exp6:PqdotNorms5}
+\end{figure*}
 
 \section{Conclusion}
 The work presented in this article described a method to identify what tasks are involved in a movement.
