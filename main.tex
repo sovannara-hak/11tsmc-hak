@@ -37,7 +37,7 @@
 \input{./macros.tex}
 
 \title{\LARGE \bf
-Task Recognition and Disambiguation on a Humanoid Robot by Reverse Engineering.
+Motion Analysis by Reverse Control for a Humanoid Robot
 }
 
 %\author{Sovannara Hak, Nicolas Mansard, Jean-Paul Laumond, Olivier Stasse% <-this % stops a space
@@ -105,7 +105,7 @@ simple. Similarly humanoid robot can be divided in two distinctive parts,
 legs and upper body, which corresponds to the navigation and manipulation
 functions.
 
-\subsection{Problem statement: disambiguating motions in embodied actions.}
+%\subsection{Problem statement: disambiguating motions in embodied actions.}
 \begin{figure*}[t]
   \centering
   \makeatletter
@@ -192,80 +192,70 @@ the behaviors of the controllers of the robot.
 %of controllers is a challenge.\\
 %%%
 Statistics have been successfully applied
-to action recognition and motion analysis as it can be inferred 
-from~\cite{schaal03} which quickly reviews the statistical and mathematical 
-tools that have been used. 
+to action recognition and motion analysis~\cite{schaal03}.
 Statistical tools are used to create symbols, and by extension, detect those
 symbols in a motion. For example, a method for behavior-based control 
-is proposed in~\cite{drumwright03, drumwright04}. Those behaviors are defined 
+is proposed in~\cite{drumwright03, drumwright04}. Behaviors are defined 
 as a motion symbol (e.g. jab, hook, elbow, shield and uppercut). 
-The behaviors are modeled by learning from joint trajectories examples.
+The behaviors are modeled by learning from series of examples.
 A dimensional reduction is then applied to have a significant
 clusterization.  The recognition part is handled by a Bayesian classifier which
 recognize a trajectory in joint or Cartesian space. The extension to the recognition
-is to perform an imitation. This is performed by interpolating known examples to obtain feasible trajectories.  
-The introduction of Partially
-Observable Markov Decision Process (POMDP) or Bayesian inference~\cite{pearl88} has
+is to perform an imitation. This is performed by interpolating known examples to obtain
+feasible trajectories. The introduction of Partially
+Observable Markov Decision Process or Bayesian inference~\cite{pearl88} has
 renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
 techniques and related ones are now applied to motor skill learning~\cite{peters08} in
 general, and to motion segmentation~\cite{calinon10, inamura04} in particular. 
 Generally speaking, the efficiency of statistics based recognition is ruled by the quality of the dataset built
 in the learning phase.
 Several demonstrations for each particular cases is needed to be able to extract
-the invariants that will discriminate the tasks (the sparsity of the demonstrations
-can also limits the efficiency of the recognition). Finally, the sets of demonstrations
-have to be associated with the correct symbols.
+the invariants that will discriminate the tasks. The sparsity of the demonstrations
+can also limits the efficiency of the recognition. Finally, the sets of demonstrations
+have to be associated with the correct symbols, which is generally given to the learning algorithm.
 
-In the task recognition method presented in~\cite{nakaoka07}, a task is
+Alternatively, recognition can be based on specific criteria that are given as 
+a priori to the system. In~\cite{nakaoka07}, only the robot trajectories
+are used to distiguish between various phases of motion. A task is
 a complete motion within a temporal segment. The global motion
-is a sequence of tasks. Each tasks have their own
+is a sequence of tasks. Each task has its own
 parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps: 
 first, for each tasks, find all the temporal segments in the observed motion
 corresponding to that task.
 The second step is the estimation of the skill parameters for each segment.
-Each task are detected by the analysis of a trajectory in a specific space.
-The criteria of the detection is based on specific behaviors in the dedicated space.
-For example the stepping task is detected by analyzing the trajectory (in position and velocities) 
-of a foot, and a squatting task is detected by analyzing the vertical trajectory of the waist.
-Although the method is specifically applied to a sequence of tasks,
-the approach of the recognition is similar to the method 
-introduced in this paper: each tasks are best described in a particular
-space, therefore the best way to detect those tasks is to perform the analysis in
-those particular spaces in order to detect expected behaviors.
+Each task are detected by the analysis of a trajectory projected in a specific space.
+For example, the stepping task is detected by analyzing the trajectory 
+of a foot; a squatting task is detected by analyzing the vertical trajectory of the waist.
+However, the criteria used for detection and the associated dedicated projection spaces
+are ad-hoc, built manually for a particular motion that has to be imitated by the robot.
 
-%The pioneering researches addressing the possible autonomy of machines
-%start in the seventies with the mobile robot Shakey: Fikes and Nilsson~\cite{fikes71}
-%were the first researchers to consider that computational logic can be
-%applied to machines to provide them with decision-making capabilities.
-%This paved the route to consider robotics as a way to stimulate research
-%in the, then nascent, Artificial Intelligence. Starting from logical
-%reasoning~\cite{ghallab04} the approach imposes a top-down perspective (from symbol to
-%signal) of system intelligence with the famous paradigm
-%\emph{perception-decision-action}. During the eighties, under the impulsion
-%of R. Brooks~\cite{brooks86}, a new line of research independently developed the idea
-%that intelligence \emph{emerges} from a bottom-up organization of behaviors.
-%This gave rise to the so-called bio-inspired robotics. All these
-%approaches can be viewed as dominated by computer science at large. They
-%aim at being generic. They address mobile robots as well as articulated
-%mechanical systems. They tend to be independent from the mechanical
-%dimensions of the system.\\
-%
-In~\cite{muhlig09} observations of a movement from sensors (camera, or motion capture system)
+Similarly,~\cite{muhlig09} uses a set of specific spaces
+in which the observed motion is projected and where ad-hoc criteria
+can be computed to perform the recognition.
+%%%%%%%%%%% whaaat?
+Observations of a movement from sensors (camera, or motion capture system)
 are mapped to the union of task spaces that will best represent and generalize the movement in order to focus
 a learning technique into that new space. The task space selection is
-done by computing score functions inspired by neuroscience. The proposed criteria are
-the saliency of the object that is manipulated, the variance of the dimension
+done by computing score functions inspired by neuroscience: the proposed criteria are
+the saliency of the object that is manipulated, a variance of the dimension
 of a space during several demonstrations, and some heuristics that express that
 uncomfortable or exhausting motions are more relevant to a task. Those heuristics
 address the problem of how to spot tasks that involve no motion. The method
-presented add some higher level information to a purely statistical analysis. 
-But what is learned are features that implicitly merge different tasks and
+presented add some higher level information to a purely statistical analysis. However
 the efficiency of the task space selection depends on the strength
 of the heuristics.
 
-With respect to these statistics-based methods, our approach takes advantage of the
-knowledge of the way the action is generated. It allows more powerful
-disambiguation than pure statistic non-informed methods.\\
+The common approach of these last works are to project the observed motion in some specific reduced spaces,
+where the recognition is easier. These spaces can be chosen arbitrary~\cite{nakaoka07}, 
+automatically selected~\cite{muhlig09} or learned~\cite{peters08}. Similarly, in control,
+smaller-size spaces are used to define the control objectives and modulate the robot behavior.
+A task function~\cite{samson91} expresses a control objective as a regulation to zero function.
+The approach has been extended to handle a hierarchical set of tasks~\cite{siciliano91, nakamura87},
+and to the operational space control~\cite{khatib87} using the redundancy of a system.
+
+%In this work the control law is obtained by a \emph{stack of tasks}
+%(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
+%\cite{siciliano91}.\\                                       
 
 %In this paper another point of view is taken: the control theory based
 %one. Control theory constitutes the second corpus that accompanies
@@ -287,23 +277,22 @@ disambiguation than pure statistic non-informed methods.\\
 %(eg. exponential decrease to zero) and by the differential link between
 %the task space and the actuator space, typically the task Jacobian.
 %Given a set of active task, the corresponding control law can be
-%obtained by inverting the equation of motion of the robot. In this work
-%the control law is obtained by a \emph{stack of tasks}
-%(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
-%\cite{siciliano91}.\\
+%obtained by inverting the equation of motion of the robot. 
 
-In this work, the analyzed motion is not seen as a sequence of motion primitives but as a
-superimposition of controllers. The recognition of sequences
-is out of the scope of the paper.
-The task-function is generally used to generate a motion\cite{siciliano91, mansard07}, and
-the originality of the method presented in this paper is to use the properties of the
+%In this work, the analyzed motion is not seen as a sequence of motion primitives but as a
+%superimposition of controllers. The recognition of sequences
+%is out of the scope of the paper.
+%The task-function is generally used to generate a motion\cite{siciliano91, mansard07}, and
+The originality of the method presented in this paper is to use the properties of the
 task-function to perform a recognition. The main idea is
-to perform a reverse engineering of an observed motion based on the knowledge
-of the task-function properties. Knowing the set of all tasks that can appear 
-in a motion and their characteristic behaviors, 
-the motion that is supposed to be generated by a stack of tasks is processed in order to
-seek the known behaviors. The analysis is performed in each spaces mapped to a task while projections
-of the motion in their orthogonal spaces ensure an efficient decoupling of the tasks performed
+to perform a reverse engineering of an observed motion knowing the set of all possible tasks that can appear 
+in a motion using their reference behaviors as characteristic trajectories. 
+The motion that is supposed to be generated by a stack of tasks is processed in order to
+seek the known behaviors. The analysis is performed in each task spaces. 
+Moreover, while all the approaches presented above can only deal with non-simultaneous task to recognize,
+we can rely on the redundancy-control principles to recognize sets of simultaneous tasks.
+Projections of the motion in orthogonal spaces of already detected tasks
+ensure an efficient decoupling of the tasks performed
 by the robot.
 %The control law associated to the task function approach can be decomposed in two components:
 %a main command and a secondary command.
@@ -317,7 +306,7 @@ by the robot.
 %performed in each known task spaces in order to analyze trajectories in appropriate spaces.\\
 The next section sum up the notions related to the task-function
 formalism used throughout this paper. The proposed algorithm for the task recognition
-is detailed in section~\ref{section:algorithm}. Section~\ref{section:simu} and~\ref{section:real}
+is detailed in section~\ref{section:algorithm}. Section~\ref{sec:simu} and~\ref{section:real}
 illustrates the method respectively in simulation and on the real robot followed
 by concluding remarks.
 
@@ -368,7 +357,8 @@ joint velocity realizing all the tasks is $\dot{\mbf{q}}^* = \dot{\mbf{q}}_n$.
 A complete implementation of this approach is proposed in~\cite{mansard07} under the
 name \emph{Stack of Tasks} (SoT). 
 
-\section{Reverse engineering the stack of tasks} \label{sec:detect}
+\section{Reverse engineering the stack of tasks} 
+\label{sec:detect}
 \label{section:algorithm}
 
 \subsection{Hypothesis}
@@ -377,10 +367,10 @@ the theoretical and the actual trajectory represent how much a trajectory
 was generated by a controllers.
 The model of the robot and all tasks that may appear in a motion (the tasks pool) are known.
 It is also assumed that all the tasks involved in a motion are compatible:
-each tasks are completely fulfilled. As a consequence, all
-tasks have the same priority order. 
+each tasks are completely fulfilled. 
 
 \subsection{Overview}
+\label{sec:alg1:selec}
 The input of the algorithm is the joint trajectories, and a set of candidate
 tasks. The algorithm is iterative: at each iteration, the task that seems the
 most relevant is selected. It is then canceled in the original demonstration.
@@ -388,8 +378,8 @@ The algorithm finally stops when the original
 motion is totally canceled by the successive task extraction. Deciding which
 task is the most relevant is done by a curve fitting score. 
 
-\subsection{Task selection algorithm} \label{sec:alg1:selec}
-The observed motion is generated by a SoT.  The idea is to identify which of the possible controllers were in the stack of tasks. 
+The observed motion is generated by a SoT.  The idea is to identify which of 
+the possible controllers were in the stack of tasks. 
 In order to identify all the
 tasks being performed in the observed motion, an iterative method is used where
 the null space projectors have a central role, the projection
@@ -430,16 +420,14 @@ The task selection algorithm is in Alg.~\ref{alg:taskSelection}.
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
-where  $\mathbf{\dot{q}}^{*}(t)$ is the joint angles velocities trajectory of the motion to analyze,
-$\mathbf{P}$ is a projector, $\mathbf{\dot{q}}(t)$ the angle velocity trajectory
-of the reference motion, $r_i$ is the score of the cost function of the optimization, $activePool$
-the set of tasks selected during the algorithm, $\epsilon$ is the threshold
+in the following, the joint angles velocities trajectory
+of the motion to analyze is denoted $\mathbf{\dot{q}}^{*}(t)$,
+$\mathbf{P}$ denotes a projector, $\mathbf{\dot{q}}(t)$ the angle velocity trajectory
+of the reference motion, $r_i$ the score of the cost function of the optimization, $activePool$
+the set of tasks selected during the algorithm and $\epsilon$ the threshold
 of the motion norm below which the algorithm stops. The task fitting is described
 in the following section. The procedure $\mathrm{projection}(i, \mathbf{\dot{q}}(t))$ compute the projector onto
 the null space of the task $i$ and apply the projection to the motion.
-
-The stop criterion will allow the discrimination of very close motions as it is illustrated in
-the section~\ref{sec:distinc}.
 
 \subsection{Task fitting by optimization} \label{sec:alg2:proj}
 The point of this step is to quantify the relevance of a given task with respect to
@@ -455,15 +443,38 @@ of the reference behavior :
 generated by the model using the parameters $\mbf{x}$. The CFSQP solver has been used in this work~\cite{lawrence97}.
 It has to be noted that all trajectories lie in the relevant task space.
 
-\section{Results on simulation}
-The demonstrations used in the experiments are generated by using the model
-of the humanoid robot HRP-2 having 30 actuated degrees of freedom (plus 6 degrees of freedom on the
-free-flyer). All reference motions start from the half-sitting pose showed in Fig.~\ref{fig:halfSit} and
-the left foot is fixed to the ground.
+The task reference behavior $\mbf{\dot{e}}$ can, for example, be defined by an exponential regulation.
+For the humanoid robot, the characteristic trajectory in the task
+space is modeled by an
+exponential decrease with 3 input parameters :
 
+\begin{equation}
+p_{\mbf x}(t) = x_1 \mathrm{e}^{(-x_2 t)} + x_3
+\label{eqTask}
+\end{equation}
+
+This is motivated by the nature of the control of the
+robot.\\
+
+\subsection{Projection}
+
+\section{Results in simulation}
+\label{sec:simu}
 The aim of those experiments is to illustrate the ability of the
 task selection algorithm to distinguish two similar looking reference motions.
+In a first time, we prove the validity of the approach for both detection 
+and projection without any noise, by performing the motion in simulation.
+In a second time, we will experimentally demonstrate the validity of the approach
+in realistic situation in presence of noise by observing the reference motion on the
+real HRP-2 using a motion capture system.
 
+The demonstrations used in the experiments are generated by using the model
+of the humanoid robot HRP-2 having 30 actuated degrees of freedom (plus 6 degrees of freedom on the
+freeflyer). All reference motions start from the half-sitting pose showed in Fig.~\ref{fig:halfSit}.
+As classically done in inverse kinematics, the under-actuation of the freeflyer is resolved by constraining
+the left foot to be on the ground.
+
+\subsection{Notations}
 The set of tasks considered in those experiments are :
 
 \begin{itemize}
@@ -487,6 +498,10 @@ has to be reached with a defined orientation.
 \end{figure}
 
 The motion generated for the experiments are summed up in Table~\ref{tab:motion}.
+Each experimentation will involve two motions (\emph{motion a} and \emph{motion b}) 
+that have a small difference in the
+stack of tasks used to generate the motion in order to illustrate
+the efficiency of the disambiguation.
 
 \begin{table}
   \centering
@@ -632,29 +647,15 @@ The motion generated for the experiments are summed up in Table~\ref{tab:motion}
   \label{tab:motion}
 \end{table}
 
-\subsection{Application of the task recognition with exponential decrease behavior}
-A reference behavior $\mbf{\dot{e}}$ can, for example, be defined by an exponential regulation.
-For the humanoid robot, the characteristic trajectory in the task
-space is modeled by an
-exponential decrease with 3 input parameters :
-
-\begin{equation}
-p_{\mbf x}(t) = x_1 \mathrm{e}^{(-x_2 t)} + x_3
-\label{eqTask}
-\end{equation}
-
-This is motivated by the nature of the control of the
-robot.\\
-
-\subsection{Experiment 1 : The projection of the motion}
-In this experiment, a composed motion is generated, then the recognition by fitting
+\subsection{Experiment 1 : Preliminary validation}
+In this experiment, a basic composed motion is generated. Then the recognition by fitting
 and the termination condition of the algorithm are validated.
-The reference motion is the \emph{motion 1.a}.
+The reference motion is the \emph{motion 1.a} (see~\ref{tab:motion}).
 
 The motion is given to the detection program
 which select the tasks that are fitted the best by the optimization.
 
-Fig.~\ref{fig:snapshotXpqdot} shows samples of posture during the original motion,
+Fig.~\ref{fig:snapshotXpqdot} shows snapshots during the original motion,
 and the motions after successive projections
 in the null spaces of the detected
 tasks : \emph{right grab}, \emph{Com}, \emph{gaze}, \emph{Twofeet} and \emph{left grab}.
@@ -717,14 +718,11 @@ The remaining rows represent the successive projections of the motion in the nul
 (b) Right grab, (c) Com, (d) Gaze, (e) Twofeet, (f) Left grab.}
 \label{fig:snapshotXpqdot}
 \end{figure*}
-Each projection cancels a part of the motion, and the robot's motion becomes null when all
+Each projection cancels a part of the motion, and the robots motion becomes null when all
 projections are applied,
 which means that all relevant tasks have been detected.
 Fig.~\ref{fig:xp3Pqdot} shows the evolution of the norm of the motion,
 defined by the sum square of the joint-angle velocity of the robot.
-It has to be noted that the tasks involved in the motion are completely fulfilled,
-therefore they have the same level of priority, and as a consequence, the projection
-order is not important.
 \begin{figure}[t]
 \begin{center}
 %\includegraphics[height=0.9\linewidth, angle = -90]{img/PqdotNorms.ps}
@@ -741,29 +739,37 @@ order is not important.
 \label{sec:distinc}
 An interesting challenge in motion detection,
 is to make the distinction between two motions
-involving different tasks but still \emph{look} close.
+involving different tasks but that produces very similar joint trajectory.
+Anthropomorphic algorithm would use the context to perform the disambiguation.
+The work presented in this paper shows that the fitting criteria
+are sufficient to disambiguate similar looking motion.
 
 \subsubsection{Reaching motions}
 \label{sec:distinc1}
 In this section, two motions are considered: \emph{motion 2.a} and \emph{motion 2.b}.
 The first one is a far-reaching task motion with the right hand.
-The reaching motion of the right hand has an influence on the left hand.
+The reaching motion of the right hand has an influence on the left hand through the \emph{Com} task.
 The second motion is the same reaching task motion for the right hand, added with a
 second reaching task on the left hand. The desired position of the left
 hand is artificially set to the final position of the left hand obtained at the first motion.
 
-A video showing those two motions on the HRP-2 is available\footnote{{http://homepages.laas.fr/shak/videos/}}.
 The final states of the robot for the two motions are showed in the Fig.~\ref{fig:introExample:spotDiff}.
-The two motions looks very similar, and it is, as shown on the video, very difficult
+A video showing those two motions on the HRP-2 is available\footnote{{http://homepages.laas.fr/shak/videos/}}.
+The two motions look very similar, and it is very difficult
 to tell which motion involves a left and right hand task without the context.
 In the first case, the motion of the left hand is part of the \emph{com} task
 motion, as it is a side effect to compensate the motion of the right hand.
 In the second case, the motion of the left hand is independent,
 because the left hand has been driven by its own goal.
-However, in the task space, those motions are very different.
+However, in the proper task spaces, those motions are very different.
 Fig.~\ref{fig:XP2RFit} shows the result of the task fitting for the \emph{motion 2.a}.
-The residue $r = \int{\frac{\Vert p^*(t) - p(t) \Vert^2}{\Vert p^*(t) \Vert^2} \mathrm{dt}}$ of the optimization shows that the task fitting performs poorly for the left hand task space
+The residue (see equation~\ref{eq:residue}) of the optimization shows that the task fitting
+performs poorly for the left hand task space
 compared to the fitting on the right hand.
+\begin{equation}
+  r = \int{\frac{\Vert p^*(t) - p(t) \Vert^2}{\Vert p^*(t) \Vert^2} \mathrm{dt}} 
+  \label{eq:residue}
+\end{equation}
 \begin{figure*}[t]
 \centering
 \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
@@ -795,7 +801,6 @@ Whereas Fig.~\ref{fig:XP2RLFit} shows the task fitting for the \emph{motion 2.b}
 \end{figure*}
 The results of the detection algorithm
 applied to those motion are showed in Table~\ref{tab:spotDiff1}.
-
 \begin{table}[t]
 \centering
 \begin{tabular}{|c|c|c|c|}
@@ -852,14 +857,11 @@ Fig.~\ref{fig:RbeforeAfterProj} shows how the norm of the joint angles velocitie
 \emph{right grab} and \emph{left grab} evolve after the projection of the motion.
 Projecting the \emph{motion 2.a} into the null spaces of
 the \emph{right grab} task will decrease its associated theoritical joint angles velocities while leaving the
-\emph{left grab} one unchanged. The original theoretical joint angles velocities norm of the \emph{right grab}
-and \emph{left grab} are ploted respectively in dark green and dark blue and
-the theoretical joint angles velocities norm of the \emph{right grab} and \emph{left grab} after projection
-into the nullspace of the \emph{right grab} task is ploted in medium green and medium blue
-in Fig.~\ref{fig:RbeforeAfterProj}. The theoretical joint angles velocities associated to the 
+\emph{left grab} one unchanged. Fig.~\ref{fig:RbeforeAfterProj} shows
+that the theoretical joint angles velocities associated to the
 \emph{left grab} task is decreased after the projection of the motion in
-the nullspace of the \emph{com} task (the norm of the joint angles velocities are ploted in light green and light blue).
-That means that the left arm of the robot was controlled by the \emph{com} task.
+the nullspace of the \emph{com} task.  That means that
+the left arm of the robot was controlled by the \emph{com} task.
 
 On the other hand, when projecting the \emph{motion 2.b} into the nullspace of the \emph{right grab}
 and \emph{com} task the joint angle velocities associated to the \emph{left grab} task
@@ -1018,6 +1020,7 @@ Twofeet\\
 \end{table}
 
 \section{Experimentation on the robot}
+\label{section:real}
 
 \subsection{Experimental setup}
 A motion generated with the Stack of Tasks is executed on the Robot HRP-2 and
