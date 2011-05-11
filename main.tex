@@ -63,28 +63,23 @@ Motion Analysis by Reverse Control for a Humanoid Robot
 %However, those statistical methods need to be applied in a \emph{suitable} space.
 Efficient methods to perform motion recognition have been developed
 using statistical tools. Those methods rely on primitives learning
-in a \emph{suitable space}, for example the latent space of the joint angle and/or the task space.
-The learned primitives are sequential : a motion is segmented according to the time axis.
+in a \emph{suitable space}, for example the latent space of the joint angle and/or adequate task spaces.
+The learned primitives are often sequential : a motion is segmented according to the time axis.
 When working with a humanoid robot, a motion can be decomposed into
-independent tasks for example in a waiter scenario,
+simultaneous sub-tasks. For example in a waiter scenario,
 the robot has to keep some plates horizontal with one of his arms, while placing a plate
-on the table with his free hand.
-In order to be able to recognize each combination of those kind of independent task,
-the statistical approaches need to learn the primitives from the demonstrations of each
-combinations of tasks.
-%Being able to explain the motion makes sense when working with a humanoid robot for example,
-%because the effectors of that kind of robot can be used to achieve various goal in
-%a meaning point of view. The robot can move its hand, in order to grasp
-%an object or to maintain balance.
+on the table with its free hand.
+Recognition can thus not be limited to one task per consecutive segment of 
+time.
 The method presented here
 takes advantage of the knowledge of what tasks the robot is able to do and how
-the motion is generated from a known set of controllers to perform a reverse engineering of an
-observed motion. This analysis is intended to recognize the simultaneous tasks that
-have been used to generate a short motion. The method relies
+the motion is generated from this set of known controllers to perform a reverse engineering of an
+observed motion. This analysis is intended to recognize simultaneous tasks that
+have been used to generate a motion. The method relies
 on the task-function formalism and the projection operation into the null space of a task to decouple
 the controllers.
-The approach is successfully applied in simulation and on a real robot
-to disambiguate motion in different scenarios where two motions look similar and have
+The approach is successfully applied on a real robot
+to disambiguate motion in different scenarios where two motions look similar but have
 different purposes.
 \end{abstract}
 
@@ -104,7 +99,6 @@ manipulation functions. The question of action recognition may be rather
 simple. Similarly humanoid robot can be divided in two distinctive parts,
 legs and upper body, which corresponds to the navigation and manipulation
 functions.
-
 %\subsection{Problem statement: disambiguating motions in embodied actions.}
 \begin{figure*}[t]
   \centering
@@ -156,18 +150,18 @@ functions.
   \caption{Introductory examples of embodied intelligence.}
   \label{fig:introExample}
 \end{figure*}
-
 For example, consider the \emph{Give me the purple ball} scenario~\cite{yoshida07}
-performed by the humanoid robot HRP-2 at LAAS-CNRS (Fig.~\ref{fig:introExample}). To reach the assigned
-objective, HRP-2 decomposes its task into elementary sub-tasks
-(Fig.~\ref{fig:introExample:purpleBall}). A dedicated software module addresses each
-sub-task. For instance,
+performed by the humanoid robot HRP-2 at LAAS-CNRS as shown in Fig.~\ref{fig:introExample}. 
+To reach the assigned objective, HRP-2 decomposes its mission into elementary sub-tasks,
+each of them being adressed by a dedicated software module. For instance,
 to reach the ball, the robot has to walk to the ball. \emph{Walking} appears as an
-elementary action that is a resource to solve the problem. It is processed by a
-dedicated locomotion module. In the second scenario (Fig.~\ref{fig:introExample:graspFeet}),
-HRP-2 has to grasp the ball that is located between its feet. To reach the
+elementary action that is a resource to solve the problem that is processed by a
+dedicated locomotion module. 
+
+However in the second scenario (Fig.~\ref{fig:introExample:graspFeet}),
+HRP-2 has to grasp the ball that is located between its feet~\cite{kanoun10}. To reach the
 objective, the robot has to step away from the ball and then grasp it. In this
-experiment~\cite{kanoun10} there is no dedicated module in charge of \emph{stepping}. \emph{Stepping} is
+experiment there is no dedicated module in charge of \emph{stepping}. \emph{Stepping} is
 a direct consequence of \emph{grasping}. The grasping action is totally embedded in
 the body, allowing the legs to naturally contribute to the action. Grasping
 appears as an embodied action generating a complex motion. Finally Fig.~\ref{fig:introExample:spotDiff}
@@ -180,16 +174,23 @@ robot. In the second one, the left arm performs another grasping task. Both
 motions are very similar. 
 
 The works presented here tackles the problem of motion recognition and 
-show that it is possible to disambiguate both cases by focusing
+shows that it is possible to disambiguate both cases by focusing
 the analysis of the motion in the task spaces and on
 the behaviors of the controllers of the robot.
 
-In the following section, we review related works in task recognition applied
-to humanoid robots. We then introduced in section~\ref{sec:sot} the basics of what the work presented here
-relies on: the task function formalism. The proposed algorithm to perform the 
-motion analysis is presented in section~\ref{sec:detect}.
-Finally, experimentations in simulation and on an HRP-2 robot that validate the method are presented in 
-section~\ref{sec:simu} and section~\ref{sec:real}.
+Recognition of motion is a problem that comes far away from robotics.
+In the vision community, the problem is generally looked from the
+unstructured motion point of view: no hypothesis are done
+even on the shape or rigidness of the moving body.
+
+However, informations are used from the environment and the recognition is mainly done from
+the context. For example salient points in time and position (looking at the 2D video
+flow as a 3D function)~\cite{laptev}. These points are learned from a database, then
+matched during the demonstration. In robotics,
+the structure of the multi rigid body moving is often supposed as known,
+coming from specific limb-motion tracker \cite{condensation} or
+from specific marker-based tracking systems \cite{?}. In the following,
+we will consider that the motion of the rigid bodies is known.
 
 \section{Related work}
 %In the quest of robot autonomy, research and development in Robotics is
@@ -224,25 +225,25 @@ have to be associated with the correct symbols, which is generally given to the 
 Alternatively, recognition can be based on specific criteria that are given as 
 a priori to the system. In~\cite{nakaoka07}, only the robot trajectories
 are used to distiguish between various phases of motion. A task is
-a complete motion within a temporal segment. The global motion
+a complete whole body motion within a temporal segment. The global motion
 is a sequence of tasks. Each task has its own
 parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps: 
 first, for each tasks, find all the temporal segments in the observed motion
 corresponding to that task.
 The second step is the estimation of the skill parameters for each segment.
-Each task are detected by the analysis of a trajectory projected in a specific space.
+Each task is detected by the analysis of a trajectory projected in a specific space.
 For example, the stepping task is detected by analyzing the trajectory 
 of a foot; a squatting task is detected by analyzing the vertical trajectory of the waist.
 The criteria used for detection and the associated dedicated projection spaces
 are ad-hoc, built manually for a particular motion that has to be imitated by the robot.
 
 Similarly,~\cite{muhlig09} uses a set of specific spaces
-in which the observed motion is projected and where ad-hoc criteria
+in which the observed motion is projected. Ad-hoc criteria
 %Observations of a movement from sensors (camera, or motion capture system)
 are used to automatically choose the set of task spaces that will best 
-represent and generalize a given movement in order to focus
-a learning technique into that new space. The criteria used for the task space selection
-are expressed by some score functions inspired by neuroscience: the proposed criteria are
+represent and generalize a given movement, in order to focus
+a learning technique into that new space. The criteria used for the task-space selection
+are expressed by some score functions inspired from neuroscience:
 the saliency of the object that is manipulated, a variance of the dimension
 of a space during several demonstrations, and some heuristics that express that
 uncomfortable or exhausting motions reveal the presence of a task. Those heuristics
@@ -256,9 +257,9 @@ The common approach of these last works are to project the observed motion in so
 where the recognition is easier. These spaces can be chosen arbitrary~\cite{nakaoka07}, 
 automatically selected~\cite{muhlig09} or learned~\cite{peters08}. Similarly, in control,
 smaller-size spaces are used to define the control objectives and modulate the robot behavior.
-A task function~\cite{samson91} expresses a control objective in a $n-\text{dimensional}$ task space.
-The approach has been extended to handle a hierarchical set of tasks~\cite{siciliano91, nakamura87},
-and to the operational space control~\cite{khatib87} using the redundancy of a system.
+Such as the task function~\cite{samson91} that expresses a control objective in a n-dimensional task space.
+The approach has been extended to handle a hierarchical set of tasks~\cite{siciliano91, nakamura87}
+using the redundancy of a system.
 
 %In this work the control law is obtained by a \emph{stack of tasks}
 %(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
@@ -291,18 +292,19 @@ and to the operational space control~\cite{khatib87} using the redundancy of a s
 %is out of the scope of the paper.
 %The task-function is generally used to generate a motion\cite{siciliano91, mansard07}, and
 The originality of the method presented in this paper is to use the properties of the
-task-function to perform a recognition. The main idea is
-to perform a reverse engineering of an observed motion knowing the set of all possible tasks that can appear 
-in a motion using their reference behaviors as characteristic trajectories. 
-The motion that is supposed to be generated by stacking the objectives controls is processed in order to
-seek the known behaviors in each task spaces. 
-Moreover, while all the approaches presented above can only deal with non-simultaneous task to recognize,
-we rely on the redundancy-control principles to recognize sets of simultaneous tasks.
-Projections of the motion in orthogonal spaces of already detected tasks
-ensure an efficient decoupling of the tasks performed
+task function to perform a recognition. The main idea is
+to perform a reverse engineering of an observed motion, knowing the set of all possible tasks that can appear 
+and using the control law in the task space as characteristic trajectories. 
+Under the hypothesis that the motion has been generated by stacking the objectives controls,
+the motion is processed in order to seek the known behaviors in each task spaces. 
+While all the approaches presented above can only recognize non-simultaneous task to recognize,
+we rely on the control redundancy principles to recognize sets of simultaneous tasks.
+Projections of the motion in the orthogonal already-detected task spaces
+ensure an efficient decoupling of the recognition of the tasks performed
 by the robot.
-The next section briefly reviews the mechanism of the task function approach used
-throughout this paper.
+%The next section briefly reviews the mechanism of the task function approach used
+%throughout this paper.
+%
 %The control law associated to the task function approach can be decomposed in two components:
 %a main command and a secondary command.
 %The secondary command is computed so as to not interfere with the main command. This is classically achieved by
@@ -320,30 +322,46 @@ throughout this paper.
 %illustrates the method respectively in simulation and on the real robot followed
 %by concluding remarks.
 
+We introduce in Section~\ref{sec:sot} the basics of what the work presented here
+relies on: the task function formalism. The proposed algorithm to perform the 
+motion analysis is presented in Section~\ref{sec:detect}.
+Finally, experimentations that validate the method are presented in 
+simulation in Section~\ref{sec:simu} and on the real HRP-2 robot in Section~\ref{sec:real}.
+
+
 \section{Tasks and stack of tasks}
 \label{sec:sot}
-A task function~\cite{samson91} is an elegant approach to describe intuitively
-sensor-based control objectives. Based on the redundancy of the system, the
+The task-function framework~\cite{samson91} is an elegant approach to describe intuitively
+sensor-based control objectives. The advantage is that expressing the control law
+in the most suitable subspace with respect to a given objective simplifies its construction
+as well as its execution since the subspace is generally closely linked with the sensors of
+the robot. Based on the redundancy of the system, the
 approach can be extended to consider a hierarchical set of
-tasks~\cite{siciliano91}.  Defining the motion of the robot in terms of tasks
-consists in choosing several control laws to be applied each on a different
-subspace of the robot degrees of freedom. 
+tasks~\cite{siciliano91}. Complex motion can then be composed from simple tasks seen as atomic bricks
+of motion. This composition mode, alog with the obvious composition by temporal
+sequencing offers a real versatility: subparts of the motion can be used in
+very different situations without to redesign them for each case.
 
+In the following, we consider that the robot input is the velocity $\mbf{\dot{q}}$,
+where $\mbf{q}$ is the robot configuration vector.                   
 A task is defined by a vector space 
-$\mbf{e}$ and by the reference behavior $\mbf{\dot{e}}$ to be
-executed in the task space given a signal $s$ and its desired value $s^*$. 
+$\mbf{e}$ and by the reference behavior $\mbf{\dot{e}^*}$ to be
+executed in the task space.  
 The Jacobian of the task is noted
-$\mbf{J}=\dpartial{\mbf{e}}{\mbf{q}}$ where $\mbf{q}$ is the robot
-configuration vector. 
-For a reaching task in three dimensions, $\mbf{e}$ is the error 
-between a current position $\mbf{p_3}$ and its desired value
-\begin{eqnarray*}
-  \mbf{e} & = & \mbf{s}^* - \mbf{s} = \mbf{p}_3^* - \mbf{p}_3\\
-  \mbf{J} & = & \dpartial{\mbf{p}}{\mbf{q}}\\
-  \mbf{\dot{e}}^* & = & -\lambda \mbf{e}, \text{with } \lambda>0
-\end{eqnarray*}
-When the input control is the velocity
-$\mbf{\dot{q}}$, the control law is given by the least-square solution:
+$\mbf{J}=\dpartial{\mbf{e}}{\mbf{q}}$. 
+Various typical behaviour can be chosen for $\mbf{\dot{e}^*}$. Typically, we will
+use in the following an exponential decrease, set by
+\begin{equation}
+  \mbf{\dot{e}} = -\lambda\mbf{e}
+\end{equation}
+where $\mbf{e} = \mbf{s} - \mbf{s^*}$ is the error between a current
+observed value $\mbf{s}$ and its arbitrary reference $\mbf{s^*}$,
+and $\lambda>0$ is the gain that tunes the rapidity of the regulation of $\mbf{e}$ to $0$.
+For example, the observed feature can be the 3D position $\mbf{p}$ of one of
+the robot end-effector, to be brought to a chosen position $\mbf{p^*}$.
+In that case $\mbf{J} = \dpartial{\mbf{p}}{\mbf{q}}$ is the articular jacobian of the robot.
+
+The control law is given by the least-square solution~\cite{liegeois77}:
 \begin{equation}
 \dot{\mbf{q}} = \mbf{J}^+ \mbf{\dot{e}}^* + \mbf{P}\mbf{z}
 \end{equation}
@@ -352,10 +370,10 @@ $\mbf{\dot{q}}$, the control law is given by the least-square solution:
 $\mbf{P} = \mbf{I} - \mbf{J}^+ \mbf{J}$ is the projection operator onto the null space
 of $\mbf{J}$ and $\mbf{z}$ is any secondary criterion. $\mbf{P}$ ensures
 a decoupling of the task with respect to $\mbf{z}$. 
-using $\mbf{z}$ as a secondary input, the control can be extended
+Using $\mbf{z}$ as a secondary input, the control can be extended
 recursively to a set of \emph{n} tasks. Those \emph{n} tasks
 are ordered by priority : task number 1 being the highest priority task,
-and task number \emph{n}, the lowest priority:
+and task number \emph{n}, the lowest priority,
 a $task_i$ should not disturb $task_j$ if $i>j$.
 The recursive formulation of the control law is proposed by~\cite{siciliano91} :
 \begin{equation}
@@ -367,49 +385,72 @@ the projector onto the null space of the augmented Jacobian
 $\mbf{J}_i^A = (\mbf{J}_1, \ldots \mbf{J}_i)$. The robot
 joint velocity realizing all the tasks is $\dot{\mbf{q}}^* = \dot{\mbf{q}}_n$.
 A complete implementation of this approach is proposed in~\cite{mansard07} under the
-name \emph{Stack of Tasks} (SoT). The next section details how those properties are
-used to perform recognition.
+name \emph{Stack of Tasks} (SoT). 
 
 \section{Motion analysis for task recognition} 
 \label{sec:detect}
 \label{section:algorithm}
-The algorithm proposed in this section
-is used to perform task recognition for a humanoid robot by
-identifying the set of tasks that have been used to
+In the previous section was recalled the classical widely-used task-function formalism.
+Each task can be used to generate a common pattern of motion in various situation.
+In that sense, a task is at the same time the controller that can
+generate a motion, as well as a descriptor of the motion that is currently executed.
+This descriptor is quasi symbolic, but comes also with additional parameters
+that characterize the way it is executed: for example, for exponential-decrease tasks,
+they come with the parameters $\lambda$ that characterize their rapidity. In this section,
+we propose to use the tasks as a set of descriptor to recognize a demonstrated motion,
+by identifying the set of tasks that have been used to
 generate the observed motion.
+The identified task set can then be used to characterize the observed motion, for
+example to distinguish between similar-looking movements.
 
 \subsection{Hypothesis}
-It is assumed that the model behavior of a task is known, so the distance between
-the theoretical and the actual trajectory measure how close an actual trajectory is
-to a trajectory generated by a controllers.
-The model of the robot and all tasks that may appear in a motion (the tasks pool) are known.
-The observed motion is then generated using a sub-set of those tasks.  
-It is also assumed that all the tasks involved in a motion are compatible:
-each tasks are completely fulfilled. 
+It is assumed that the model behavior ($\mbf{e}$, $\mbf{\dot{e}^*}$, $\mbf{J}$) of every
+possibly used tasks is known. The model of the robot and all tasks that may appear in a 
+motion are known. The set of models of possible tasks is called the \emph{task pool}.
+The observed motion is supposed to have been generated using a sub-set of those tasks.  
+It is also assumed that all the tasks involved in the demonstration are compatible
+in the sense of the projection $\mbf{P}$:
+there is no algorithmic singularities~\cite{chiaverini97} and the set
+of active tasks is constant during the motion.
+Each tasks are completely fulfilled. Finally, the observed motion is given through
+the joint trajectories. We will show in the experimental part how the joint
+trajectories can be recovered using a motion capture system.
 
 \subsection{Overview}
 \label{sec:alg1:selec}
-The input of the algorithm is a joint angle trajectories, and a set of candidate
+The input of the algorithm is the joint trajectories, and a set of candidate
 tasks. The algorithm is iterative: at each iteration, the task that seems the
 most relevant is selected. The selection of a task relies
 on a curve fitting score: trajectories are projected
 in each task space and the projected trajectories are
 compared to a theoretical trajectories which represent are characteristic
 of the execution of a task.
-In order to iteratively recognize
-simultaneous tasks, the observed motion is projected
-onto the null-space of the task that involves the best fitting, cancelling it in the motion.
-Then the other tasks can iteratively be recognized using the same mechanism with the projected motion.
-The algorithm stops when the original
-motion is totally canceled by the successive task cancellation.
+The observed motion is then projected
+onto the null-space of the selected task, cancelling its effect in the observed motion.
+Another iteration of selection-projection is then executed, on the projected motion.
+%In order to iteratively recognize simultaneous tasks,
+The algorithm stops when the original motion iteratively projected
+is totally canceled.
 
 The algorithm is showed in Alg.~\ref{alg:taskSelection}.
-The joint angles velocities trajectory
-of the motion to analyze is denoted $\mathbf{\dot{q}}^{*}(t)$,
-$\mathbf{P}$ denotes a projector, $\mathbf{\dot{q}}(t)$ the angle velocity trajectory
-of the reference motion, $r_i$ the score of the cost function of the optimization, $activePool$
+The joint-angles velocity trajectory
+of the motion is denoted $\mathbf{\dot{q}}^{*}(t)$,
+$\mbf{P\dot{q}}(t)$ denotes the successively projections of the reference
+motion. Before teh first iteration $\mbf{P\dot{q}}(t)$ is set to the reference motion.
+Then each iteration projects it in the selected-task null space
+$r_i$ the score of the cost function of the optimization, $activePool$
 the set of tasks selected during the algorithm and $\epsilon$ the threshold
-of the motion norm below which the algorithm stops. The task fitting is described
+of the motion norm below which the algorithm stops.
+
+If the observed motion is exactly generated by a SoT, ther resulting trajectory after projection
+onto all the active-task spaces will be null. However, in presence of noise like when
+acquiring the motion through real sensors,
+a residue is systematically obtained, which implies to use a threshold
+as stop critera: the loop ends when the residue is below the waited noise of
+the acquisition chain.
+
+The next subsection describes the two main functions of the algorithm.
+The task fitting is described
 in the following section. The procedure $\mathrm{projection}(i, \mathbf{\dot{q}}(t))$ compute the projector onto
 the null space of the task $i$ and apply the projection to the motion.
 
@@ -436,11 +477,11 @@ the null space of the task $i$ and apply the projection to the motion.
 
 \subsection{Task fitting by optimization} \label{sec:alg2:proj}
 The quantification of the relevance of a given task, with respect to
-the execution of a motion, is achieved by applying a least-square optimization
+the observed motion, is achieved by applying a least-square optimization
 between the actual motion and the reference behavior of a task over the parameters
 of the reference behavior :
 \begin{equation}
-	\mbf{x}^* = \underset{\mbf{x}}\argmin \frac{\Vert \mbf{p}^*(t) - \mbf{p}_\mbf{x}(t) \Vert^2}{\Vert \mbf{p}^*(t) \Vert^2}
+  \mbf{x}^* = \underset{\mbf{x}}\argmin \frac{\int \Vert \mbf{e}^*(t) - \mbf{e}_\mbf{x}(t) \Vert^2 \mathrm{dt}}{\int \Vert \mbf{e}^*(t) \Vert^2 \mathrm{dt}}
 \label{optimProblem}
 \end{equation}
 
