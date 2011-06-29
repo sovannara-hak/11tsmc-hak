@@ -358,6 +358,7 @@ Various typical behaviour can be chosen for $\mbf{\dot{e}^*}$. Typically, we wil
 use in the following an exponential decrease, set by
 \begin{equation}
   \mbf{\dot{e}^*} = -\lambda\mbf{e}
+  \label{eq:lambda}
 \end{equation}
 where $\mbf{e} = \mbf{s} - \mbf{s^*}$ is the error between a current
 observed value $\mbf{s}$ and its arbitrary reference $\mbf{s^*}$,
@@ -483,72 +484,77 @@ velocity onto the null space of the task $i$ and apply the projection to the mot
 
 \subsection{Projection of the motion}
 %\subsubsection{General case}
-In order to cancel a task $i$, the joint trajectories are projected onto the nullspace
+In order to cancel the effect of a detected task $i_{select}$, the joint trajectories are projected onto the nullspace
 of that task by multiplying it with the projector onto the nullspace of all tasks to cancel.
 For every time $t$ of the motion time interval:
 \begin{equation}
   \mbf{P\dot{q}}(t) \leftarrow \mbf{P^A_{i\mathrm{select}}}(t) \mbf{P\dot{q}}(t) 
   \label{eq:projection}
 \end{equation}
-with 
-\begin{equation}
-  \left\{
-      \begin{array}{rl}
-	\mbf{P^A_0}(t) &= \mbf{I}\\
-	\mbf{P^A_i}(t) &= \mbf{P^A_{i-1}}(t) - (\mbf{J_i}(t)\mbf{P^A_{i-1}}(t))^+(\mbf{J_i}(t)\mbf{P^A_{i-1}}(t))\\
-      \end{array}
-    \right.
-  \label{eq:projector}
-\end{equation}
-This operation will cancel the component of the motion that is independent with regard to the other tasks, 
-and modify by the way the coupled component of the motion. The remaining motion is then analyzed to 
-detect the potentially remaining tasks.
+where $ \mbf{P^A}(t)$ is jointly updated:
+\begin{equation*}
+  \mbf{P^A}(t) = \mbf{P^A}(t) - (\mbf{J_{i\mathrm{select}}}(t)\mbf{P^A}(t))^+(\mbf{J_{i\mathrm{select}}}(t)\mbf{P^A}(t))
+  \label{eq:projectionupdate}
+\end{equation*}
+The projector $\mbf{P^A}(t)$ is initialized to $\mbf{P^A_0}(t) = I$. The
+remaining motion ater projection $\mbf{P\dot{q}}(t) $ is then analyzed to
+detect the potentially-remaining tasks.
 
-\medskip
+The projecttion operation will nullify the effect of the motion in the
+selected-task space. It has in fact two different effects in the configuration
+space: on the first hand, it cancels the component of the motion that is
+independent with regard to the other tasks; on the other hand, it modifies by
+the way the part of the motion that is coupled with the effect of the remaining
+tasks. The first effect is beneficiable because it avoids future false
+detection that could be caused by non-linear reflection of the
+currently-selected task in the remaining task space. However, care has to be taken with the modification of the coupled part, as explained by the following example:
+
+%\medskip
 %\subsubsection{Example with two tasks}
-Considering the following example, the effect of the projections,
-where a motion composed of two arbitrary tasks is detailed. 
-The control law for a motion composed of two tasks $\mbf{e_1}$ and $\mbf{e_2}$ is given by:
+Consider a motion composed of two arbitrary tasks $\mbf{e_1}$ and $\mbf{e_2}$.
+The control law is given by:
 \begin{equation}
   \mbf{\dot{q}} = \mbf{J_1^+}\mbf{\dot{e}_1^*} - (\mbf{J_2}\mbf{P_1})^+ (\mbf{\dot{e}_2^*} - \mbf{J_2}\mbf{J_1^+}\mbf{\dot{e}_1^*})
   \label{eq:controlLaw2Tasks}
 \end{equation}
 
-Multiplying~(\ref{eq:controlLaw2Tasks}) by $\mbf{P_1}$ cancels the motion in the Task 1 space:
+If $\mbf{e_1}$ is detected first, \eqref{eq:projection} is applied with
+$i_{select} = 1$. Multiplying~(\ref{eq:controlLaw2Tasks}) by $\mbf{P_1}$
+cancels the motion in the Task 1 space:
 \begin{equation}
-  \mbf{P_1} \mbf{\dot{q}} = \mbf{P_1} \mbf{J_1^+}\mbf{\dot{e}_1^*} + \mbf{P_1} (\mbf{J_2}\mbf{P_1})^+ (\mbf{\dot{e}_2^*} - \mbf{J_2}\mbf{J_1^+}\mbf{\dot{e}_1^*})  
+  \mbf{P_1} \mbf{\dot{q}} = \underbrace{\mbf{P_1} \mbf{J_1^+}\mbf{\dot{e}_1^*}}_{\mbf{0}} + \mbf{P_1} (\mbf{J_2}\mbf{P_1})^+ (\mbf{\dot{e}_2^*} - \mbf{J_2}\mbf{J_1^+}\mbf{\dot{e}_1^*})  
   \label{eq:cancel1_2:1}
 \end{equation}
 The first term is null by definition of $\mbf{P_1}$.
-If one tries to observe the effect of the remaining motion $\mbf{P_i\dot{q}}$ in the Task 2 space after the nullification
-of the Task 1 component, the result of the projection is
-multiplied by the task Jacobian $\mbf{J_2}$:
+The motion due to $\mbf{P_1} \mbf{\dot{q}}$ in the Task-2 space is obtained by multiplying by $\mbf{J_2}$:
 \begin{equation}
   \mbf{J_2} \mbf{P_1} \mbf{\dot{q}} = \mbf{\dot{e}_2^*} +
   \mbf{J_2}  \mbf{J_1^+} \mbf{\dot{e}_1^*}  
   \label{eq:J2P1q}
 \end{equation}
-Since $\mbf{J_2}\mbf{P_1}(\mbf{J_2}\mbf{P_1})^+ = \mbf{I}$ by hypothesis.
+since $\mbf{J_2}\mbf{P_1}(\mbf{J_2}\mbf{P_1})^+ = \mbf{I}$ by hypothesis.
 The first term is the
 independent component of the second task, and the second term
 is the component coupled with Task 1. 
-Therefore, the projection onto the nullspace of the task discovered at the 
-first iteration will contain the coupling effect that has to be handled when trying to discover another task.
+Therefore, the projection onto the nullspace of the discovered task  at the 
+first iteration will induce a coupling effect that has to be handled when trying to discover another task.
 This coupling will be handled in the next section.
 %First, we will show what are the effects of the cancellation of Task 1 and Task 2.
 %Second, we will show what are the effects of the cancellation of the task 2 and the task 1. 
 
 \subsection{Task fitting by optimization} \label{sec:alg2:proj}
-The quantification of the relevance of a given task, with respect to
-an observed motion, is achieved by applying a non linear least-square optimization
-between the actual observed motion projected in the task space and the reference 
-behavior of a task over the unknown parameters:
+We denote $\mbf{\hat{e}}(t)$ the trajectory due to the current $\mbf{P}
+\mbf{\dot{q}}$ in the observed-task space $\mbf{e}$.  The quantification of the
+relevance of the given task $\mbf{e}$, with respect to the current motion
+$\mbf{P} \mbf{\dot{q}}$ , is achieved by applying a least-square
+optimization between the actual observed motion projected in the task space and
+the reference behavior of a task over the unknown parameters:
 \begin{equation}
   \mbf{x}^* = \underset{\mbf{x}}\argmin \frac{\int \Vert \mbf{\hat{e}}(t) - \mbf{e}_\mbf{x}(t) \Vert^2 \mathrm{dt}}{\int \Vert \mbf{\hat{e}}(t) \Vert^2 \mathrm{dt}}
 \label{optimProblem}
 \end{equation}
 
-\noindent where $\mbf{\hat{e}}(t)$ is the observed trajectory, $\mbf{e}_\mbf{x}(t)$ is the trajectory
+\noindent where $\mbf{\hat{e}}(t)$ is the observed trajectory and $\mbf{e}_\mbf{x}(t)$ is the trajectory
 generated by the model using the parameters $\mbf{x}$. 
 The score will thus be the residue after trying to obtain the best correspondence with the given
 model in the task space.
@@ -567,7 +573,7 @@ selected tasks appears. The projected motion is then augmented with coupling com
   \label{eq:compensation}
 \end{equation}
 where $A$ is the set of tasks that have already been detected and $i$ is the task candidate.
-In that equation, all the terms corresponding to $A$ are known since identified in the previous
+All the terms corresponding to $A$ are known since identified in the previous
 iteration of the algorithm.
 \medskip
 %In order to cancel the second task, the projector onto the null-space of both 
@@ -582,8 +588,8 @@ iteration of the algorithm.
 %is null because $\mbf{P_{2, 1}} = \mbf{P_{1, 2}} \subset \mbf{P_2}$ and $\mbf{P_2}(\mbf{J_2} \mbf{P_1})^+ = 0$.
 %
 In practice, the observation is sampled and the integral is a sum.
-The optimization problem~(\ref{optimProblem}) is a non linear problem. To solve
-it numerically, the CFSQP solver has been used~\cite{lawrence97}.
+The optimization problem~(\ref{optimProblem}) is in general a non linear problem. To solve
+it numerically, the CFSQP solver has been used~\cite{lawrence97}. The result of the optimization produces at the same time the residue used as a criteria to select the most plausible task, and the numerical of the task (for example the gain and the desired position, when considering a proportional task \eqref{eq:lambda}).
 
 %The task reference behavior $\mbf{e_x}$ can, for example, be defined by an exponential regulation.
 %In that case, the characteristic trajectory in the task
