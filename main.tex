@@ -415,7 +415,7 @@ possibly-used tasks is known. The model of the robot and all tasks that may appe
 motion are known. The set of models of possible tasks is called the \emph{task pool}.
 The observed motion is supposed to have been generated using an unknown sub-set of those tasks.  
 It is also assumed that all the tasks involved in the demonstration are compatible
-in the sense of the projection $\mbf{P}$ defined (\ref{eq:ltsq})
+in the sense of the projection $\mbf{P}$ defined in equation (\ref{eq:ltsq})
 (no algorithmic singularities~\cite{chiaverini97}) and that the set
 of active tasks is constant during the motion.
 Finally, the observed motion is given through
@@ -559,11 +559,11 @@ However, in general, a direct observation is not possible. For example,
 the center of mass of the robot is difficult to observe directly. 
 In addition, it is not possible to observe directly the effect of the successive projection. 
 $\mbf{\hat{e}}$ is then obtained by the kinematic model and 
-joint trajectories of the robot: $\mbf{J_i}\mbf{\hat{\dot{q}}}$
+joint trajectories of the robot: $\mbf{J_i}\mbf{\hat{\dot{q}}}$.
 However, proceeding so would lead to equation~(\ref{eq:J2P1q}), where the coupling with previously
 selected tasks appears. The projected motion is then augmented with coupling compensation.
 \begin{equation}
-  \mbf{\hat{e}}(t) = \mbf{J}_i\mbf{P\dot{q}}(t) + \mbf{J}_i\mbf{J}_A^+\mbf{\dot{e}}_A(t)
+  \mbf{\hat{e}}(t) = \mbf{J}_i\mbf{P}_A \mbf{\dot{q}}(t) + \mbf{J}_i\mbf{J}_A^+\mbf{\dot{e}}_A(t)
   \label{eq:compensation}
 \end{equation}
 where $A$ is the set of tasks that have already been detected and $i$ is the task candidate.
@@ -672,10 +672,10 @@ This section details a series of experimentation in simulation to validate the r
 Simulation allows us to emphasize the nominal behavior of the algorithm without 
 any sensor noise.
 The first experiment simply validates the projection of the motion~(section \ref{sec:prelimValid}). 
-Fig.~\ref{fig:snapshotXpqdot} and Fig.~\ref{fig:xp3Pqdot} illustrate the effect of the projections.
+%Fig.~\ref{fig:snapshotXpqdot} and Fig.~\ref{fig:xp3Pqdot} illustrate the effect of the projections.
 The second part compiles a set of experiments that validate the task recognition algorithm~(section \ref{sec:distinc}).
-Fig.~\ref{fig:XP2RFit} and Fig.~\ref{fig:XP2RLFit} shows how the fitting behaves. 
-Fig.~\ref{fig:RbeforeAfterProj} shows how a projected trajectory evolves after other projections.
+%Fig.~\ref{fig:XP2RFit} and Fig.~\ref{fig:XP2RLFit} shows how the fitting behaves. 
+%Fig.~\ref{fig:RbeforeAfterProj} shows how a projected trajectory evolves after other projections.
 For each experiment of that set, the task recognition algorithm proposed in this paper
 is applied to two similar-looking motions:
 the two motions have been artificially built to be ambiguous when 
@@ -1394,11 +1394,10 @@ the \emph{motion 2.a} and the \emph{motion 2.b} with a terminaison threshold set
   \vspace{-20pt}
 \end{table}
 
-The order of the task extraction is :
+For the \emph{motion 2.a}, the order of the task extraction is :
 \emph{Right Grab}, \emph{Twofeet} and \emph{Com} task.
-Whereas Fig.~\ref{fig:exp1:PqdotNormsRL} shows the evolution for the \emph{motion 2.b}.
-This time the extracted tasks are : \emph{Right Grab},  \emph{Com}, \emph{Twofeet} and \emph{Left Grab}.
-
+Whereas for the \emph{motion 2.b},
+the extracted tasks are : \emph{Right Grab},  \emph{Com}, \emph{Twofeet} and \emph{Left Grab}.
 
 Fig.~\ref{fig:exp1:headFit}-\ref{fig:exp1:taskLhand} show the
 fitting at the first iteration of the algorithm for the \emph{Head} and \emph{Left Grab} tasks. As expected,
@@ -1536,8 +1535,8 @@ shows the final posture of the robot for those motions.
 \begin{figure}[t]
   \centering
   \begin{tabular}{cc}
-    \includegraphics[width=0.48\linewidth]{img/realRobot/5a/5aFinal1.ps} &
-    \includegraphics[width=0.48\linewidth]{img/realRobot/5b/5bFinal1.ps} \\
+    \includegraphics[width=0.45\linewidth]{img/realRobot/5a/5aFinal1.ps} &
+    \includegraphics[width=0.45\linewidth]{img/realRobot/5b/5bFinal1.ps} \\
   \end{tabular}
   \caption{Final position for \emph{motion 5.a} and \emph{motion 5.b}.}
   \label{fig:motion5}
@@ -1593,7 +1592,7 @@ very small residue.
   \caption{Results of the task selection algorithm from the analysis of the \emph{motion 5.a} and the \emph{motion 5.b} on the real robot.}
   \label{tab:result5}
 \end{table}
-\vspace{-20pt}
+
 Fig.~\ref{fig:exp6:PqdotNorms5} shows the evolution of the norm of the motions after the projection
 into the null space of the tasks : \emph{Right Grab},  \emph{Gaze}, \emph{Twofeet} and \emph{Com} for
 the \emph{motion 5.a}. And \emph{Right Grab}, \emph{Twofeet}, \emph{Com} and \emph{Chest} for the
