@@ -372,8 +372,7 @@ The control law is given by the least-square solution~\cite{liegeois77}:
 \dot{\mbf{q}} = \mbf{J}^+ \mbf{\dot{e}}^* + \mbf{P}\mbf{z}
 \label{eq:ltsq}
 \end{equation}
-
-\noindent where $\mbf{J}^+$ is the least-square inverse of $\mbf{J}$,
+where $\mbf{J}^+$ is the least-square inverse of $\mbf{J}$,
 $\mbf{P} = \mbf{I} - \mbf{J}^+ \mbf{J}$ is the projection operator onto the null space
 of $\mbf{J}$ and $\mbf{z}$ is any secondary criterion. $\mbf{P}$ ensures
 a decoupling of the task with respect to $\mbf{z}$. 
@@ -416,12 +415,12 @@ possibly-used tasks is known. The model of the robot and all tasks that may appe
 motion are known. The set of models of possible tasks is called the \emph{task pool}.
 The observed motion is supposed to have been generated using an unknown sub-set of those tasks.  
 It is also assumed that all the tasks involved in the demonstration are compatible
-in the sense of the projection $\mbf{P}$ defined in equation (\ref{eq:ltsq})
+in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
 (no algorithmic singularities~\cite{chiaverini97}) and that the set
 of active tasks is constant during the motion.
 Finally, the observed motion is given through
 joint trajectories. \footnote{The joint-angle trajectories can be recovered using a motion
-capture system as shown in the remainder of this paper.}
+capture system as shown in Section~\ref{sec:xpset}.}
 
 \subsection{Overview}
 \label{sec:alg1:selec}
@@ -496,8 +495,8 @@ where $ \mbf{P^A}(t)$ is jointly updated:
   \mbf{P^A}(t) = \mbf{P^A}(t) - (\mbf{J_{i\mathrm{select}}}(t)\mbf{P^A}(t))^+(\mbf{J_{i\mathrm{select}}}(t)\mbf{P^A}(t))
   \label{eq:projectionupdate}
 \end{equation*}
-The projector $\mbf{P^A}(t)$ is initialized to $\mbf{P^A_0}(t) = I$. The
-remaining motion after projection $\mbf{P\dot{q}}(t) $ is then analyzed to
+The projector $\mbf{P^A}(t)$ is initialized to $\mbf{P^A_0}(t) = \mbf I$. The
+remaining motion ater projection $\mbf{P\dot{q}}(t) $ is then analyzed to
 detect the potentially-remaining tasks.
 
 The projection operation will nullify the effect of the motion in the
@@ -668,7 +667,7 @@ end of the first iteration results in the following Task-$a$ observation:
 =& (\mJ{a} \mP{b} \mJp{a} - \mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}) \medotc{a} \\
 &+ (\mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ + \mJ{a} \mJp{b}) \medotc{b}
 \end{align*}
-It can be shown that this complex sum is in fact simply $\medotc{a}$ (see Appendix 1).
+It can be shown that this complex sum is in fact simply $\medotc{a}$ (see Appendix~\ref{sec:appx}).
 %
 This proves that the same fitting is obtained independently of what task is
 detected first.  \QED
@@ -1298,7 +1297,7 @@ As previously, the task recognition algorithm is applied to two pairs of similar
 First time, we will briefly explain how the motion-capture system is used to record the joint-angle 
 trajectory. Then two pairs of motions are observed and provided to the recognition algorithm.
 
-\subsection{Experimental setup}
+\subsection{Experimental setup}\label{sec:xpset}
 A motion is executed with the \emph{SoT} on the HRP-2 robot equipped with markers on each
 body (see Fig.~\ref{fig:hrp2Markers}).
 \begin{figure}[t]
@@ -1651,6 +1650,27 @@ The experiments were limited to the analysis of robotic movement. In particular,
 the experiments only considers exponential decrease as behaviors.
 However, it could also be possible to handle other task models, for example, minimum jerk,
 in order to match a human reaching trajectories.
+
+\appendices
+\section{Proof of the reverse implication}
+\label{sec:appx}
+
+This appendix proves that $\medothp{a}{b} = \medotc{a}$. The proof is in two part, proving that the first left-coefficient (denoted $\mbf{C}_1$) of the sum is the identity, and that the second left-coefficient (denoted $\mbf{C}_2$) is null.
+
+\subsection{Proof that $\mbf{C}_1 = \mJ{a} \mP{b} \mJp{a} - \mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}) = \mbf{I}$}
+The projection operator $\mP{b}$ can be expanded using \eqref{eq:ltsq}:
+\begin{align*}
+\mbf{C}_1 =& \mJ{a} \mJp{a} -   \mJ{a} \mJp{b} \mJ{b} \mJp{a} \\
+&- \mJ{a} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a})  + \mJ{a} \mJp{b} \mJ{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a})
+\end{align*}
+The first term is the identity by hypothesis on Task $a$. Since $(\mJ{b} \mP{a} )^+ = \mP{b}(\mJ{b} \mP{a} )^+$, the third term is null. And by hypothesis on Tasks $a$ and $b$, $(\mJ{b} \mP{a} )^+$ is a generalized inverse of $\mJ{b}$, and thus $\mJ{b} (\mJ{b} \mP{a} )^+ \mJ{b}$: the fourth term is equal to the second and simplifies. \QED
+
+\subsection{Proof that $\mbf{C}_2 = \mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ + \mJ{a} \mJp{b} = \mbf{0}$}
+Similarly, the projector $\mP{b}$ is expanded:
+\[
+\mbf{C}_2 = \mJ{a} (\mJ{b} \mP{a} )^+ - \mJ{a} \mJp{b}\mJ{b} (\mJ{b} \mP{a} )^+ + \mJ{a} \mJp{b}
+\]
+As previously, the first term is null, this $(\mJ{b} \mP{a} )^+$ is a generalized inverse of $\mJ{b}$, the second term is equal to the third and simplifies. \QED
 
 \bibliographystyle{unsrt}
 \bibliography{biblio}
