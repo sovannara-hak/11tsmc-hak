@@ -156,7 +156,7 @@ functions.
 For example, consider the \emph{Give me the purple ball} scenario~\cite{yoshida07}
 performed by the humanoid robot HRP-2 at LAAS-CNRS as shown in Fig.~\ref{fig:introExample}. 
 To reach the assigned objective, HRP-2 decomposes its mission into elementary sub-tasks,
-each of them being adressed by a dedicated software module. For instance,
+each of them being addressed by a dedicated software module. For instance,
 to reach the ball, the robot has to walk to the ball. \emph{Walking} appears as an
 elementary action that is a resource to solve the problem that is processed by a
 dedicated locomotion module. 
@@ -228,7 +228,7 @@ have to be associated with the correct symbols, which are generally given to the
 
 Alternatively, recognition can be based on specific criteria that are a priori given 
 to the system. In~\cite{nakaoka07}, only the robot trajectories
-are used to distiguish between various phases of motion. A task is
+are used to distinguish between various phases of motion. A task is
 a complete whole body motion within a temporal segment. The global motion
 is a sequence of tasks. Each task has its own
 parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps: 
@@ -497,45 +497,45 @@ where $ \mbf{P^A}(t)$ is jointly updated:
   \label{eq:projectionupdate}
 \end{equation*}
 The projector $\mbf{P^A}(t)$ is initialized to $\mbf{P^A_0}(t) = I$. The
-remaining motion ater projection $\mbf{P\dot{q}}(t) $ is then analyzed to
+remaining motion after projection $\mbf{P\dot{q}}(t) $ is then analyzed to
 detect the potentially-remaining tasks.
 
-The projecttion operation will nullify the effect of the motion in the
+The projection operation will nullify the effect of the motion in the
 selected-task space. It has in fact two different effects in the configuration
 space: on the first hand, it cancels the component of the motion that is
 independent with regard to the other tasks; on the other hand, it modifies by
 the way the part of the motion that is coupled with the effect of the remaining
-tasks. The first effect is beneficiable because it avoids future false
+tasks. The first effect is beneficial because it avoids future false
 detection that could be caused by non-linear reflection of the
 currently-selected task in the remaining task space. However, care has to be taken with the modification of the coupled part, as explained by the following example:
 
 %\medskip
 %\subsubsection{Example with two tasks}
-Consider a motion composed of two arbitrary tasks $\mbf{e_1}$ and $\mbf{e_2}$.
+Consider a motion composed of two arbitrary tasks $\mbf{e}_a$ and $\mbf{e}_b$.
 The control law is given by:
 \begin{equation}
-  \mbf{\dot{q}} = \mbf{J_1^+}\mbf{\dot{e}_1^*} - (\mbf{J_2}\mbf{P_1})^+ (\mbf{\dot{e}_2^*} - \mbf{J_2}\mbf{J_1^+}\mbf{\dot{e}_1^*})
+  \mbf{\dot{q}} = \mbf{J}_a^+\mbf{\dot{e}}_a^* - (\mbf{J}_b\mbf{P}_a)^+ (\mbf{\dot{e}}_b^* - \mbf{J}_b\mbf{J}_a^+\mbf{\dot{e}}_a^*)
   \label{eq:controlLaw2Tasks}
 \end{equation}
 
-If $\mbf{e_1}$ is detected first, \eqref{eq:projection} is applied with
-$i_{select} = 1$. Multiplying~(\ref{eq:controlLaw2Tasks}) by $\mbf{P_1}$
-cancels the motion in the Task 1 space:
+If $\mbf{e}_a$ is detected first, \eqref{eq:projection} is applied with
+$i_{select} = a$. Multiplying~(\ref{eq:controlLaw2Tasks}) by $\mbf{P}_a$
+cancels the motion in the Task-$a$ space:
 \begin{equation}
-  \mbf{P_1} \mbf{\dot{q}} = \underbrace{\mbf{P_1} \mbf{J_1^+}\mbf{\dot{e}_1^*}}_{\mbf{0}} + \mbf{P_1} (\mbf{J_2}\mbf{P_1})^+ (\mbf{\dot{e}_2^*} - \mbf{J_2}\mbf{J_1^+}\mbf{\dot{e}_1^*})  
+  \mbf{P}_a \mbf{\dot{q}} = \underbrace{\mbf{P}_a \mbf{J}_a^+\mbf{\dot{e}}_a^*}_{\mbf{0}} + \mbf{P}_a (\mbf{J}_b\mbf{P}_a)^+ (\mbf{\dot{e}}_b^* - \mbf{J}_b\mbf{J}_a^+\mbf{\dot{e}}_a^*)  
   \label{eq:cancel1_2:1}
 \end{equation}
-The first term is null by definition of $\mbf{P_1}$.
-The motion due to $\mbf{P_1} \mbf{\dot{q}}$ in the Task-2 space is obtained by multiplying by $\mbf{J_2}$:
+The first term is null by definition of $\mbf{P}_a$.
+The motion due to $\mbf{P}_a \mbf{\dot{q}}$ in the Task-$b$ space is obtained by multiplying by $\mbf{J}_b$:
 \begin{equation}
-  \mbf{J_2} \mbf{P_1} \mbf{\dot{q}} = \mbf{\dot{e}_2^*} +
-  \mbf{J_2}  \mbf{J_1^+} \mbf{\dot{e}_1^*}  
+  \mbf{J}_b \mbf{P}_a \mbf{\dot{q}} = \mbf{\dot{e}}_b^* +
+  \mbf{J}_b  \mbf{J}_a^+ \mbf{\dot{e}}_a^*  
   \label{eq:J2P1q}
 \end{equation}
-since $\mbf{J_2}\mbf{P_1}(\mbf{J_2}\mbf{P_1})^+ = \mbf{I}$ by hypothesis.
+since $\mbf{J}_b\mbf{P}_a(\mbf{J}_b\mbf{P}_a)^+ = \mbf{I}$ by hypothesis.
 The first term is the
 independent component of the second task, and the second term
-is the component coupled with Task 1. 
+is the component coupled with Task-$a$. 
 Therefore, the projection onto the nullspace of the discovered task  at the 
 first iteration will induce a coupling effect that has to be handled when trying to discover another task.
 This coupling will be handled in the next section.
@@ -575,7 +575,7 @@ However, in general, a direct observation is not possible. For example,
 the center of mass of the robot is difficult to observe directly. 
 In addition, it is not possible to observe directly the effect of the successive projection. 
 $\medoth{}$ is then obtained by the kinematic model and 
-joint trajectories of the robot: $\mbf{J_i}\mbf{\hat{\dot{q}}}$.
+joint trajectories of the robot: $\mbf{J}_i\mbf{\hat{\dot{q}}}$.
 However, proceeding so would lead to equation~(\ref{eq:J2P1q}), where the coupling with previously
 selected tasks appears. The projected motion is then augmented with coupling compensation.
 \begin{equation}
@@ -627,34 +627,35 @@ original motion $\mqdot$ is denoted $\medoth{i}$, while the motion induced by
 the projected motion $\mP{j} \mqdot$ is denoted $\medothp{i}{j}$.
 
 We will prove that the order of nullification of the tasks is not important,
-\textit{i.e.} that $\medoth{i} = \medothp{i}{j} = \medotc{i}$, for $i=a$ and $j=b$, and reciprocaly, for $i=b$ and $j=a$.
+\textit{i.e.} that $\medoth{i} = \medothp{i}{j} = \medotc{i}$, for $i=a$ and $j=b$, and reciprocally, for $i=b$ and $j=a$.
 
-\subsubsection{Direct implication: removing \emph{Task a}, then \emph{Task b}}
+\subsubsection{Direct implication: removing Task-$a$, then Task-$b$}
 
 The direct implication is strait forward.
 %
-At iteration 1, the observation in \emph{task space a} is directly
-$\medoth{a} = \mbf{J}_a\mbf{\hat{\dot{q}}} = \medotc{a}$.  In \emph{task space
-  b}, it is obtained from \eqref{eq:compensation}:
+At iteration 1, the observation in Task-$a$ space is directly
+$\medoth{a} = \mbf{J}_a\mbf{\hat{\dot{q}}} = \medotc{a}$.  
+After the removal of Task-$a$, the observation in Task-$b$ space
+is obtained from \eqref{eq:compensation}:
 \begin{align*}
  \medothp{b}{a} &=  \mbf{J}_b\mbf{\hat{\dot{q}}} +  \mbf{J}_b \mbf{J}_a^+ \medoth{a}\\
  &= \underbrace{\mbf{J}_b(\mbf{J}_b \mbf{P}_a)^+}_{\mbf{I}} (\medotc{b} - \mbf{J}_b \mbf{J}_a^+\medotc{a}) + \mbf{J}_b \mbf{J}_a^+ \medotc{a}
 \end{align*}
 implicating directly $\medothp{b}{a}=\medotc{b}$, since $\mbf{J}_b(\mbf{J}_b \mbf{P}_a)^+ = \mbf{J}_b \mbf{P}_a(\mbf{J}_b \mbf{P}_a)^+ = \mbf{I}$ and $\medoth{a} = \medotc{a}$.
 
-The observation obtained in \emph{task space b} is independent from the
-projection in the nullspace of \emph{task a}.
+The observation obtained in Task-$b$ space is independent from the
+projection in the nullspace of Task-$a$.
 
-\subsubsection{Reverse implication: Removing \emph{Task b}, then \emph{Task a}}
+\subsubsection{Reverse implication: Removing Task-$b$, then Task-$a$}
 
-At the first iteration, the observation in \emph{task space b} is directly
+At the first iteration, the observation in Task-$b$ space is directly
 \begin{equation*}
 \medoth{b}  = \mJ{b} \mJp{a} \medotc{a} + \mJ{b} ( \mJ{b} \mP{a} )^+ ( \medotc{b} - \mJ{b} \mJp{a} \medotc{a} )
 \end{equation*}
 which implies $\medoth{b} = \medotc{b}$ since $\mJ{b} ( \mJ{b} \mP{a} )^+ = \mbf{I}$.
 
-Projecting the original motion~(\ref{eq:controlLaw2Tasks}) in the nullspace of \emph{task b} at the
-end of the first iteration results in the following Task-a observation:
+Projecting the original motion~(\ref{eq:controlLaw2Tasks}) in the nullspace of Task-$b$ at the
+end of the first iteration results in the following Task-$a$ observation:
 %\begin{equation}
 %  \mbf{P}_b \mbf{\hat{\dot{q}}} = \mbf{P}_b \mbf{J}_a^+\mbf{\hat{\dot{e}}}_a + 
 %  \mbf{P}_b (\mbf{J}_b \mbf{P}_a)^+ (\mbf{\hat{\dot{e}}}_b - \mbf{J}_b \mbf{J}_a^+ \mbf{\hat{e}}_a)
@@ -675,7 +676,8 @@ detected first.  \QED
 \medskip
  The proof can be extended using exactly the same arguments for
 a set of $n$ tasks.
-Similarly, it is straitforward to prove that whatever the order of detection, the resulting motion after all the projections is null.
+Similarly, it is straightforward to prove that whatever the order of detection, 
+the resulting motion after all the projections is null.
 
 \section{Results in simulation}
 \label{sec:simu}
@@ -983,7 +985,7 @@ defined by the sum square of the joint-angle velocities of the robot.
 	tasks null spaces.}
 \label{fig:xp3Pqdot}
 \end{figure}
-Each projection strictly decreases the norm of the velocity (ie the quantity of  movement). After
+Each projection strictly decreases the norm of the velocity (\emph{ie} the quantity of  movement). After
 five projections, the movement is completely nullified, which confirms that all the active tasks have been
 discovered. The algorithm can then stops.
 
@@ -1031,7 +1033,7 @@ Fig.~\ref{fig:XP2RFit} shows an example of the result of the task fitting of the
     }\\
 \end{tabular*}
 \caption{Task fitting on the \emph{motion 2.a} on the right and the left hand tasks. Variable $r$ is the residue,
-ie the distance between the two curves. The \emph{Right Hand} motion is properly fitted by
+\emph{ie} the distance between the two curves. The \emph{Right Hand} motion is properly fitted by
 the task model, showing that the task is active. The \emph{Left Hand} is not fitted properly, since the task is 
 not active. The two cases are easily distinguished by the residue value.} 
 \label{fig:XP2RFit}
@@ -1161,7 +1163,7 @@ and left hand are fitted by the model, with small residue: the tasks are detecte
 \label{fig:XP2RLFit}
 \end{figure*}
 
-\subsubsection{Grabing VS Screwing}
+\subsubsection{Grabbing VS Screwing}
 \label{sec:distinc2}
 In this section, the two motions considered are the \emph{motion 3.a} and \emph{motion 3.b}.
 Both motions share the same position target for the right hand. The only difference between
@@ -1359,7 +1361,7 @@ the first motion is a motion of the left arm induced by the coupling between a f
 hand the balancing \emph{Com} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be 
 ambiguous with regard to the first motion~(\emph{motion 2.b} in Table~\ref{tab:motion}).
 Table~\ref{tab:spotDiffReal1} shows the result of the identification algorithm for
-the \emph{motion 2.a} and the \emph{motion 2.b} with a terminaison threshold set to $ \epsilon = 0.07$.
+the \emph{motion 2.a} and the \emph{motion 2.b} with a termination threshold set to $ \epsilon = 0.07$.
 \begin{table}[h]
   \centering
   \begin{tabular}{|c|c|c|c|}
@@ -1510,7 +1512,7 @@ motions due to a task. It can be seen that the right arm moves because of the \e
   }
   \caption{Motion in the right hand space after successive projection.
   The motion of the right arm is a consequence of the  
-  \emph{Right Grab} and \emph{Com} tasks, as explicited by the fact
+  \emph{Right Grab} and \emph{Com} tasks, as explicated by the fact
   that the motion of the right arm is cancelled
   after the removal of the \emph{Right Grab} and \emph{Com} component of the motions.}
   \label{fig:exp1:Evolution2R}
