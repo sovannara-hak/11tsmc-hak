@@ -1,7 +1,7 @@
 all: tsmca2011
 default: tsmca2011
 
-FILE  = 11tsmca-hak
+FILE  = tsmca2011
 TEX_FILE = $(FILE).tex
 
 
