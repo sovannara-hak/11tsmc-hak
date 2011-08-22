@@ -211,46 +211,37 @@ the analysis of the motion in the task spaces and on
 the behaviors of the controllers of the robot.
 
 \section{Related work}
-Recognition of task is a problem that comes far away from robotics.
-In the vision community, this problem is generally looked from the
-unstructured motion point of view: no hypothesis are done
-even on the shape or rigidness of the moving body.
+Recognition spans a wide range of areas.  In the vision community, this problem is generally
+looked from the unstructured motion point of view: no hypothesis
+are done even on the shape or rigidity of the moving
+body. The recognition can be applied to spot irregular events~\cite{stauffer00}, or specific events
+such as visual indicators of drowning~\cite{eng03}. The recognition can
+also be focused on one person. The motion of the human can
+be analyzed in order to perform a human body tracking~\cite{shotton11}.
+However, informations from the environment are generally used and
+the recognition is mainly done from the context. For example,
+salient points in time and position (looking at the 2D video
+flow as a 3D function)~\cite{laptev05}. These points are learned from a
+database, then matched during the demonstration. The environment
+is also used to perform a background extraction in
+order to extract a silhouette and perform, for example a gait
+recognition~\cite{liu05}.
 
-Recognition spans a wide range of areas. The recognition can be applied to
-spot irregular events~\cite{stauffer00}, or specific events such as visual indicators
-of drowning~\cite{eng03}. The recognition can also be focused
-on one person. The motion of the human can be analyzed in order to
-perform a human body tracking~\cite{shotton11}. 
+The structure of a moving multi rigid body is a strong assumption, that
+can boost the performances when this knowledge is available. It is often the case in the robotic context. For example the
+estimation of a humanoid pose trajectory in~\cite{zordan03} is performed
+using optical motion-capture data to guide a known physical
+model. In the remainder of this paper, we will consider that
+the motion of the rigid bodies is known. A typical use of a dedicated vision system to reconstruct the whole-body pose is presented in the experimental section.
 
-However, informations are used from the environment and the recognition is mainly done from
-the context. For example, salient points in time and position (looking at the 2D video
-flow as a 3D function)~\cite{laptev05}. These points are learned from a database, then
-matched during the demonstration. The environment is also used to perform
-a background extraction in order to extract a silhouette and perform, for
-example a gait recognition~\cite{liu05}.
-
-The structure of a moving multi rigid body is often supposed as known
-and is used to estimate its pose. For example the estimation
-of a humanoid pose trajectory in \cite{zordan03} is performed 
-using optical motion-capture data to guide a known physical model.
-In the remainder of this paper, we will consider that the motion of the rigid bodies is known.
-
-%In the quest of robot autonomy, research and development in Robotics is
-%dominated by the stimulating competition between abstract symbol manipulation and physical signal
-%processing, between discrete data structures and continuous variables.
-%Indeed finding a proper way to relate the discrete space of symbols and the continuous space
-%of controllers is a challenge.\\
-%%%
-
-Higher level informations
-can be extracted from human movements. The direct example
-is signed languages which provide a way to convey meaning through
-the combination of hands, arms and face movement and configuration.
-In the same way, human gait has been studied from an
-information provider point of view.
-For example, the gait can be used like fingerprints to perform
-identification of human~\cite{cutting77, kale04}, or to recognize 
-emotions such as anger, sadness or happiness~\cite{karg10}.
+The question is now how to extract informations of higher levels from supposedly-known human
+whole body movements. A direct example is signed languages which
+provide a way to convey meaning through the combination
+of hands, arms and face movement and configuration. In the
+same way, human gait has been studied from an information
+provider point of view. For example, the gait can be used like
+fingerprints to perform identification of human~\cite{cutting77, kale04}, or to
+recognize emotions such as anger, sadness or happiness~\cite{karg10}.
 
 Statistics have been successfully applied
 to action recognition and motion analysis~\cite{schaal03}.
