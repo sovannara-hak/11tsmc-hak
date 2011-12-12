@@ -1746,11 +1746,11 @@ in order to analyze human trajectories.
 
 This appendix proves that $\medothp{a}{b} = \medotc{a}$. The proof is in two part, proving that the first left-coefficient (denoted $\mbf{C}_1$) of the sum is the identity, and that the second left-coefficient (denoted $\mbf{C}_2$) is null.
 
-\subsection{Proof that $\mbf{C}_1 = \mJ{a} \mP{b} \mJp{a} - \mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}) = \mbf{I}$}
+\subsection{Proof that $\mbf{C}_1 = \mJ{a} \mP{b} \mJp{a} - \mJ{a} \mP{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a} = \mbf{I}$}
 The projection operator $\mP{b}$ can be expanded using the definition of the projector $\mbf{P} = \mbf{I} - \mbf{J}^+ \mbf{J}$:
 \begin{align*}
 \mbf{C}_1 =& \mJ{a} \mJp{a} -   \mJ{a} \mJp{b} \mJ{b} \mJp{a} \\
-&- \mJ{a} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}  + \mJ{a} \mJp{b} \mJ{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a})
+&- \mJ{a} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}  + \mJ{a} \mJp{b} \mJ{b} (\mJ{b} \mP{a} )^+ \mJ{b} \mJp{a}
 \end{align*}
 The first term is the identity by hypothesis on Task $a$. Since $(\mJ{b} \mP{a} )^+ = \mP{b}(\mJ{b} \mP{a} )^+$, the third term is null. And by hypothesis on Tasks $a$ and $b$, $(\mJ{b} \mP{a} )^+$ is a generalized inverse of $\mJ{b}$, and thus $\mJ{b} (\mJ{b} \mP{a} )^+ \mJ{b} = \mJ{b}$: the fourth term is equal to the second and simplifies. \QED
 
