@@ -31,25 +31,29 @@ We would like to thank all the reviewers for their comments and suggestions.
 We have revised	our paper taking into account the reviewers suggestions.
 In the following, we will discuss the revisions and address the questions raised by the reviewers.
 
-\section{List of changes}
-\begin{itemize}
- \item Fig. 1(a) is correctly stated.
- \item In section III, s is defined as a signal.
- \item The term "articular jacobian" may be confusing, we explicit it
- by using the term "differential link between the error and the configuration of the robot"
- \item Hypotheses are a little bit more discussed.
- \item An example of what parameters x could be is given for eq (8): for an exponential decrease
- behavior, x are the parameters of the exponential.
-
-\end{itemize}
+%\section{List of changes}
+%\begin{itemize}
+% \item Fig. 1(a) is correctly stated.
+% \item In section III, s is defined as a signal.
+% \item The term "articular jacobian" may be confusing, we explicit it
+% by using the term "differential link between the error and the configuration of the robot"
+% \item Hypotheses are a little bit more discussed.
+% \item An example of what parameters x could be is given for eq (8): for an exponential decrease
+% behavior, x are the parameters of the exponential.
+% \item (6) is corrected.
+%\end{itemize}
 
 \section{Reply to Referee 1}
 \begin{quote}
+\textit{
   \red{The definitions of task and behavior are then described in sec IV.  I would suggest the authors to explain them together with the formulation.  In addition, the description of task and behavior which is clear in the formulation becomes a little bit confusing in sec IV.}
+}
 \end{quote}
 
 \begin{quote}
+\textit{
   In section IV, which are the limitations of the proposed strategy? In particular, the authors assume to know” the model of the robot”.  I guess they mean the kinematic model, please clarify. How much can the strategy cope with the model uncertainties
+}
 \end{quote}
 It is indeed the kinematic model of the robot that is assumed to be known. The kinematic model is
 required to compute the jacobian and the nullspace projector that are used in the recognition part
@@ -61,8 +65,10 @@ of an uncertain model has not been estimated in that works.
 This influence has to be tested in future works involving human movements.
 
 \begin{quote}
+\textit{
  In addition they assume that “all the tasks that may appear in a motion are known”.  This looks like a strong assumption, which requires further explanation.
   In addition I would suggest the authors to better explain the task pool.
+}
 \end{quote}
 The recognition method is meant to be used with \emph{predictables} movements.
 Unknown tasks are not supposed to happen. This assumption allow the 
@@ -72,35 +78,55 @@ That finite set is materialized by the task pool.
 The use of parallel tasks enlarge the movement expressivity of the movement to be analyzed.
 
 \begin{quote}
+\textit{
  \red{Are there cases in which the strategy has low performance?}
+}
  \end{quote}
 
 \begin{quote}
+\textit{
   In addition, the method is based on the observations coming from the robot.  Are you planning to extend the method to also deal with observations coming from different sources, apart from the same robot? 
+}
 \end{quote}
 The final discussion mentions the use of the method on human motions.
 Some works in biomechanics comforts us in a way that it has been showed
-that the redundancy is handled by the nervous system in a similar 
-way that roboticians handle redundancy for robots.\\
-
-N. Rezzoug and J. Jacquier-Bret and P. Gorce in Computer Methods, 
-A method for estimating three-dimensional human arm movement with two electromagnetic sensors,
-in Biomechanics and Biomedical Engineering volume 13 issue 6, December 2010
+that the redundancy is handled by the central nervous system in a similar 
+way that roboticians handle redundancy for robots~\cite{jacquierbret09}.
 
 \begin{quote}
+\textit{
  In section V, the differences between the left and right side in Fig. 3-4-5 are not clear.
+}
 \end{quote}
 The differences between the left and right side are ambiguous on purpose.
 The ambiguity is used to illustrate the precision of the recognition method.
  
 \begin{quote}
+\textit{
  Why the threshold for the stop criterion is fixed and how do you select its value.  Please make clear the tuning procedure.
+}
 \end{quote}
 The threshold is empirically set in order to be above numerical noise
 due to the successive projections.
 
 \begin{quote}
+\textit{
+In section VI, Fig. 15-16-18 are not so clear. Please try to distinguish the norm of the motion in different colors, instead of scale of green.
+}
+\end{quote}
+Caption of those figures where rewritten, Fig. 15 is used to illustrate
+the tasks coupling: the quantity of motion of the right hand space is illustrated.
+This quantity of motion involves all the degree of freedom of the kinematic chain from
+the free float to the hand. That quantity of motion becomes almost null after
+the nullification of two tasks: Right Grab and Com.
+It means that the motion of the kinematic chain is explained by the execution of those tasks.
+Fig. 16 and 18 is used to illustrate the decrease of the motion over the iterations of the recognition
+algorithm.
+
+\begin{quote}
+\textit{
  During the discussion of the results the authors mention the value of r such as “high” or “low”. I would suggest the authors to define a range (with discussions) to describe a reasonable (or not) result.
+}
 \end{quote}
 Caracterizing r as "high" or "low" was a mistake. The value of the residues have
 to be compared within each others. At the iteration i, the task fitting which has the lowest 
@@ -108,4 +134,109 @@ residue involves the better task to select at that iteration.
 
 \section{Reply to Referee 2}
 
+\begin{quote}
+\textit{
+The approach requires strong assumptions that makes its practical application to real-world scenarios disputable (the experiment is on a real robot, but the underlying target application is not clear). Indeed, the system works only if the robot being observed shares the same pre-designed set of controllers and the same robot capabilities (same kinematic structure, etc.). It would thus not be possible to use the method (at least as it is presented in the paper) to recognize a movement executed by a human user. The observation must come from the same robot or another copy of the robot. In this second case, it is difficult to find scenarios where two identical robots could not have access to each other's states through non-human-like information exchange capabilities (why not using wireless communication capabilities?). If the authors have an application in mind that would counterbalance this remark, they should include it explicitly in the introduction of the paper as a motivation for the proposed system.
+}
+\end{quote}
+The motivation for the proposed system was not clear enough in the introduction of the first version of the paper.
+The proposed method was intended to show that it was possible to perform task recognition 
+knowing how the motion is generated, and in particular, how the redundancy
+is used to perform parallel tasks. The approach can be seen as a reverse engineering method.
+The observation does not have to come from the same robot but from a robot where the 
+assumptions are valid. A short paragraph has been added at the end of introduction to
+illustrate that point.\\
+
+For the particular case of human motions, biomecanicals studies
+shows that the redundancy can also be viewed as a task space and a null space as it 
+is formulated in the uncontrolled manifold hypothesis~\cite{scholz99}.
+The degree of freedom of a human can be separated in two classes:
+the controlled and the uncontrolled ones for a particular task.
+The uncontrolled manifold (UCM) can be compared to the nullspace of the task jacobian,
+and the orthogonal manifold (ORT) can be compared to the task jacobian.
+In the experiments performed in~\cite{jacquierbret09},
+considering a reaching task performed by a human, it is shown that there is the variance
+of at the elbow becomes higher in presence of an obstacle (this obstacle becomes 
+a geometrical constraint for the reaching task).
+
+
+\begin{quote}
+\textit{
+Also, it is not discussed how the approach would scale up if a full database of movements is available. Exponential decrease movement behaviors are tested in the experiment: how do the authors plan to extend the system to movements that change depending on position of objects or state of the robot/environment (namely, motion control function with input parameters)?
+}
+\end{quote}
+Using the task function approach,
+the database of tasks is not so large. Typical database would include
+6D position tasks for an effector, center of mass regulation, 
+   visual servoing, relative position between two parts of the robot, 
+   posture (full body or not).
+  Being able to compose a movement by executing tasks in parallel (stacking the tasks)
+  allow a great expressivity of movements and we believe that this expressivity
+  is enough for a robot.
+
+\begin{quote}
+\textit{
+  Also, recent robot controllers are very often defined by a variety of movement constraints, such as inequality/equality constraints, soft constraints (such as loose workspace areas to reach or to stay in), or conditional constraints (e.g. moving until something is detected). For which of those controller behaviors will the proposed approach be applicable?
+  The hypotheses are clearly stated, which is appreciable, but extending the discussion to clarify the reason why they are required would be relevant: is it an implementation detail or a limiting factor? Are there potential ways to relax some of these hypotheses? What are the underlying implications they bring?, etc.
+}
+\end{quote}
+At this moment, only equalities constraints can be handled. It is explained by the assumption of a stack
+of tasks has to be constant during the observed movements.
+The stack must involves tasks that begin and end at the same time.
+In order to handle inequalities constraints, it is necessary to detect
+when constraints become inactive. The starting and ending time can be added
+to the task fitting optimisation problem but this solution has not yet been tested.\\
+
+The section describing the assumptions has been revised to reflect this explaination.
+
+\begin{quote}
+\textit{
+The authors should also discuss how the redundant robot structure is important for the proposed approach. Does the approach strongly rely on the control redundancy to recognize sets of parallel tasks, or could this hypothesis be somehow relaxed if one wants to extend it to larger sets of tasks or humanoids with fewer joint articulations?
+}
+\end{quote}
+The redundancy is used to decouple the tasks executed in parallel, if there are several tasks involved in the movement.
+We added this explanation in the overview of the algorithm in section IV.
+
+\begin{quote}
+\textit{
+Depending on the number of parallel tasks, compromises need to be adopted that do not always follow a strict hierarchy. Will the recognition be possible in this situation (e.g. if the system is underactuated)? Will the order of nullspace projections have an influence?
+}
+\end{quote}
+The hierarchy is not considered since all tasks involved in the movements are completely fulfilled.
+
+\begin{quote}
+\textit{
+In Section II, the authors point at the drawbacks of recognition methods based on the pre-specification of a set of possible spaces onto which the data are projected to find the subspaces matching the observed data. In the next paragraph, they then contrast this methodology to their approach based on reverse control, which actually relies on very similar core principles and hypotheses. The authors should reframe their work with respect to other more classical recognition approaches in a more transparent way concerning this point.
+}
+\end{quote}
+
+\begin{quote}
+\textit{
+In the proposed experiment, the set of active tasks is constant during the motion. How would the system cope with parallel tasks of variable lengths activated sequentially? Could this be tested in simulation?
+}
+\end{quote}
+The method does not handle sequential tasks. This is part of the future works:
+sequences of stack of tasks will be considered, then an instance of a stack
+of tasks could be a state of a probabilistic automata that can be learned a priori for
+a specific scenario. 
+
+\begin{quote}
+\textit{
+Does the stopping criterion threshold need to be adjusted depending on the number and type of tasks that are contained in the set of possible tasks?
+}
+\end{quote}
+The stopping criterion threshold need to be adjusted depending on the number of tasks involved in
+the motion because this threshold is used to handle the numeric noise introduced by the
+projection of the motion at each iteration and the noise introduced by the sensors (for example 
+the noise from the motion capture data).\\
+This is now precised when we define a value of that threshold in the experiment section V.C.
+
+\begin{quote}
+\textit{
+  \red{ How will the prevailing singularities affect recognition?}
+}
+\end{quote}
+
+\bibliographystyle{ieeetr}
+\bibliography{bibReply}
 \end{document}
