@@ -209,6 +209,11 @@ The works presented here tackles the problem of motion recognition and
 shows that it is possible to disambiguate both cases by focusing
 the analysis of the motion in the task spaces and on
 the behaviors of the controllers of the robot.
+The main assumption needed to disambiguate those cases is
+that the kinematic model of the observed robot has to be known.
+The experiments presented in this paper focus on the HRP-2 robot,
+but the method is generic and as long as the assumptions
+are respected, the method is theoritically valid for other robots.
 
 \section{Related work}
 Recognition spans a wide range of areas.  In the vision community, this problem is generally
@@ -467,7 +472,7 @@ possibly-used tasks is known. The kinematic model of the robot and all tasks tha
 motion are known. 
 The kinematic model is
 required to compute the Jacobian and the nullspace projector that are used in the recognition part.
-As a consequence, uncertainties in the kinematic model will negatively affect the performance of the method.
+As a consequence, uncertainties in the kinematic model will affect the performance of the method.
 The tasks that may appear in a motion have to be known because the considered approach
 of the recognition is to consider the recognition problem 
 as a selection in a finite set problem.
@@ -477,10 +482,16 @@ The approach considered handles tasks executed in parallel. Considering
 parallel tasks allow then a good expressivity of movements thanks to the different
 possible tasks combination.
 The observed motion is supposed to have been generated using an unknown sub-set of those tasks.  
+This is a strong assumption, but the use of the task function approach allows
+a good expressivity of movements by composing a motion in a stack of tasks.
 It is also assumed that all the tasks involved in the demonstration are compatible
 in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
 (no algorithmic singularities~\cite{chiaverini97}) and that the set
 of active tasks is constant during the motion.
+That last assumption discards all inequalities constraints because
+such constraints involves a change in the stack of tasks used to generate the movement.
+Another consequence of that assumption is that the hierarchy of the tasks are not considered
+since all tasks are assumed to be completely fulfilled.
 Finally, the observed motion is given through
 joint trajectories\footnote{The joint-angle trajectories are observed using a motion
 capture system as shown in Section~\ref{sec:xpset}.}.
@@ -491,7 +502,7 @@ The input of the algorithm is joint trajectories and
 the task pool. The algorithm is iterative: at each iteration of the algorithm, the task that seems the
 most relevant is selected. The selection of a task relies
 on a curve-fitting score, obtained by projecting the joint-angle trajectory in each task space.
-Assuming that the model of the robot is known,
+Assuming that the kinematic model of the robot is known,
 the projection of the motion in each task space reconstructs the trajectory in that space.
 For example, the trajectory of the center of mass (\emph{Com} task) is 
 recovered from the joint trajectories by the projection
@@ -501,6 +512,8 @@ compared to the theoretical trajectories which are characteristic
 of the execution of a task.
 The observed motion is then projected
 onto the null-space of the selected task, cancelling the effect of the task in the observed motion.
+This projection into the null-space relies on the control redundancy and
+is used to decouple the current tasks from the others.
 Another iteration of selection-projection is then executed, on the projected motion.
 %In order to iteratively recognize simultaneous tasks,
 The algorithm stops when the original motion is cancelled, by the iterative projections.
@@ -1180,7 +1193,8 @@ all selected tasks. The final quantity of movement
 after projection is very low for both motions compared
 to the threshold for the stop criterion $\int \Vert P\dot{q}(t) \Vert ^2 dt > \epsilon$
 that is empirically fixed to $\epsilon = 0.07$ in order to
-handle numerical noise due to successive projections.
+handle numerical noise due to successive projections (the threshold depends
+    on the number of tasks involved in the movement).
 
 Finally Fig.~\ref{fig:RbeforeAfterProj} shows how the norm of joint-angle velocities corresponding to the tasks
 \emph{Right Grab} and \emph{Left Grab} evolves after the projections.
@@ -1447,7 +1461,8 @@ the first motion is a motion of the left arm induced by the coupling between a f
 and the balancing \emph{Com} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be 
 ambiguous with regard to the first motion~(\emph{motion 2.b} in Table~\ref{tab:motion}).
 Table~\ref{tab:spotDiffReal1} shows the result of the identification algorithm for
-\emph{motion 2.a} and \emph{motion 2.b} with a termination threshold set to $ \epsilon = 0.07$.
+\emph{motion 2.a} and \emph{motion 2.b} with a termination threshold set to $ \epsilon = 0.09$.
+This threshold was chosen to handle the noise introduced in the motion capture data.
 \begin{table}[t]
   \centering
   \begin{tabular}{|c|c|c|c|}
@@ -1596,11 +1611,12 @@ motions due to a task. It can be seen that the right arm moves because of \emph{
   }
   \label{fig:exp1:Evolution2R:b}
   }
-  \caption{Motion in the right hand space after successive projection.
-  The motion of the right arm is a consequence of 
-  \emph{Right Grab} and \emph{Com} tasks, as explicated by the fact
-  that the motion of the right arm is cancelled
-  after the removal of \emph{Right Grab} and \emph{Com} component of the motions.}
+  \caption{Quantity of motion in the right hand space after successive projection.
+    The quantity of motion in the right hand space is almost null
+      after the nullification of the tasks \emph{Right Grab and Com}.
+  It means that the motion of the right arm is a consequence of 
+  \emph{Right Grab} and \emph{Com} tasks. It is consistent with the fact that,
+  in order to maintain its balance, the right arm has to move.}
   \label{fig:exp1:Evolution2R}
 \end{figure*}
 Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
@@ -1621,7 +1637,7 @@ is mainly sensor noise.
 \label{fig:exp1:PqdotNormsRL}
 }
 \caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
-\emph{motion 2.a} and \emph{motion 2.b}.}
+\emph{motion 2.a} and \emph{motion 2.b}. The norm decreases iteratively during the recognition algorithm.}
 \label{fig:exp1:PqdotNorms}
 \end{figure*}
 
@@ -1709,7 +1725,7 @@ into the null space of the tasks : \emph{Right Grab},  \emph{Gaze}, \emph{Twofee
   }
 }
 \caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
-\emph{motion 5.a} and \emph{motion 5.b}.}
+\emph{motion 5.a} and \emph{motion 5.b}. The norm decreases iteratively during the recognition algorithm.}
 \label{fig:exp6:PqdotNorms5}
 \end{figure*}
 As in the previous experiments, the projection decreases strictly the quantity of movement
