@@ -362,7 +362,7 @@ We named this reverse engineering algorithm approach \emph{reverse control}.
 While all the approaches presented above can only recognize non-parallel task,
 we rely on the control redundancy principles to recognize sets of parallel tasks.
 Projections of the motion in the already-detected orthogonal task spaces
-ensure an efficient decoupling of the recognition of the tasks performed
+ensure an efficient decoupling of the tasks performed
 by the robot.
 %The next section briefly reviews the mechanism of the task function approach used
 %throughout this paper.
@@ -422,7 +422,7 @@ and $\lambda>0$ is the gain that tunes the speed of the regulation of $\mbf{e}$ 
 For example, the observed feature can be a 3D position $\mbf{p}$ of one of
 the robot's end-effectors, to be brought to a chosen position $\mbf{p^*}$.
 In that case differential link between the error and the robot configuration 
-is $\mbf{J} = \dpartial{\mbf{p}}{\mbf{q}}$.
+is the Jacobian $\mbf{J} = \dpartial{\mbf{p}}{\mbf{q}}$.
 
 The control law is given by the least-square solution~\cite{liegeois77}:
 \begin{equation}
@@ -440,12 +440,12 @@ and task number \emph{n}, the lowest priority,
 $task_i$ should not disturb $task_j$ if $i>j$.
 The recursive formulation of the control law is proposed by~\cite{siciliano91} :
 \begin{equation}
-\dot{\mbf{q}}_i = \dot{\mbf{q}}_{i-1} + (\mbf{J}_i \mbf{P}_{i-1}^{A})^+
+\dot{\mbf{q}}_i = \dot{\mbf{q}}_{i-1} + (\mbf{J}_i \mbf{P}_{i-1}^{\mbf{A}})^+
 (\dot{\mbf{e}}^*_i - \mbf{J}_i \dot{\mbf{q}}_{i-1}) , \ \ i = 1 \ldots n
 \end{equation}
-\noindent with $\dot{\mbf{q}}_0 = 0$ and $\mbf{P}_{i-1}^{A}$ is
+\noindent with $\dot{\mbf{q}}_0 = 0$ and $\mbf{P}_{i-1}^{\mbf{A}}$ is
 the projector onto the null space of the augmented Jacobian
-$\mbf{J}_i^A = (\mbf{J}_1, \ldots \mbf{J}_i)$. Joint velocities realizing all 
+$\mbf{J}_i^{\mbf{A}} = (\mbf{J}_1, \ldots \mbf{J}_i)$. Joint velocities realizing all 
 the tasks is $\dot{\mbf{q}}^* = \dot{\mbf{q}}_n$.
 A complete implementation of this approach is proposed in~\cite{mansard07} under the
 name \emph{Stack of Tasks} (SoT). 
@@ -471,24 +471,22 @@ It is assumed that the behavior model ($\mbf{e}$, $\mbf{\dot{e}^*}$, $\mbf{J}$) 
 possibly-used tasks is known. The kinematic model of the robot and all tasks that may appear in a 
 motion are known. 
 The kinematic model is
-required to compute the Jacobian and the nullspace projector that are used in the recognition part.
+required to compute the Jacobian and the null space projector that are used in the recognition part.
 As a consequence, uncertainties in the kinematic model will affect the performance of the method.
 The tasks that may appear in a motion have to be known because the considered approach
 of the recognition is to consider the recognition problem 
 as a selection in a finite set problem.
-The set of models of possible tasks is called the \emph{task pool}.
+The set of possible tasks is called the \emph{task pool}.
 Possible tasks may for example be end-effector, center of mass, visual or posture servoing.
-The approach considered handles tasks executed in parallel. Considering 
-parallel tasks allow then a good expressivity of movements thanks to the different
+The approach considered handles tasks executed in parallel because
+it allows a good expressivity of movements thanks to the different
 possible tasks combination.
-The observed motion is supposed to have been generated using an unknown sub-set of those tasks.  
-This is a strong assumption, but the use of the task function approach allows
-a good expressivity of movements by composing a motion in a stack of tasks.
+The observed motion is supposed to have been generated using an unknown sub-set of the task pool.
 It is also assumed that all the tasks involved in the demonstration are compatible
 in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
 (no algorithmic singularities~\cite{chiaverini97}) and that the set
 of active tasks is constant during the motion.
-That last assumption discards all inequalities constraints because
+That last assumption discards sequential movements and all inequalities constraints because
 such constraints involves a change in the stack of tasks used to generate the movement.
 Another consequence of that assumption is that the hierarchy of the tasks are not considered
 since all tasks are assumed to be completely fulfilled.
@@ -511,12 +509,12 @@ The projected trajectories are
 compared to the theoretical trajectories which are characteristic
 of the execution of a task.
 The observed motion is then projected
-onto the null-space of the selected task, cancelling the effect of the task in the observed motion.
-This projection into the null-space relies on the control redundancy and
+onto the null space of the selected task, cancelling the effect of the task in the observed motion.
+This projection into the null space relies on the control redundancy and
 is used to decouple the current tasks from the others.
 Another iteration of selection-projection is then executed, on the projected motion.
 %In order to iteratively recognize simultaneous tasks,
-The algorithm stops when the original motion is cancelled, by the iterative projections.
+The algorithm stops when the original motion is totally cancelled, by the iterative projections.
 \newcommand{\shOUTPUT}{\textbf{Output: }}
 \newcommand{\shINPUT}{\textbf{Input: }}
 
@@ -543,13 +541,13 @@ of the observed motion is denoted $\mathbf{\hat{\dot{q}}}(t)$\footnote{In the re
 and measures are denoted $\hat{\cdot}$ while references and desired values are denoted $\cdot^*$}.
 $\mbf{P\dot{q}}(t)$ denotes the successive projections of the reference
 motion. Before the first iteration, $\mbf{P\dot{q}}(t)$ is set to the reference motion.
-Then, each iteration projects it in the selected-task null space.
-$r_i$ denotes the score of the cost function of the optimization. $activePool$ denotes
+Then, each iteration projects it in the selected task null space.
+$r_i$ denotes the score of the cost function of the curve fitting optimization. $activePool$ denotes
 the set of tasks selected during the algorithm. 
 
 If the observed motion is exactly generated by a SoT, 
 the resulting trajectory $\mathbf{P\dot{q}}$ after projection
-onto all the active-task spaces is null. However, in presence of noise (like when
+onto all the active-task spaces is null. However, in presence of noise (\emph{ie} when
 acquiring motion through real sensors)
 a residue is systematically obtained, which implies to use a threshold
 as stop criteria: the loop ends when the residue is below the noise of
@@ -568,8 +566,8 @@ of the observed motion and the theoretical motion. The process is detailed in se
 The reconstruction of the trajectories in each task space from the joint trajectories is directly
 done by multiplying the joint trajectories by the task jacobian.
 
-In order to cancel the effect of a detected task $i_{select}$, the joint trajectories are projected onto the nullspace
-of that task by multiplying it with the projector onto the nullspace of all tasks to cancel.
+In order to cancel the effect of a detected task $i_{select}$, the joint trajectories are projected onto the null space
+of that task by multiplying it with the projector onto the null space of all tasks to cancel.
 For every time $t$ of the motion time interval:
 \begin{equation}
   \mbf{P\dot{q}}(t) \leftarrow \mbf{P^A_{i\mathrm{select}}}(t) \mbf{P\dot{q}}(t) 
@@ -620,7 +618,7 @@ since $\mbf{J}_b\mbf{P}_a(\mbf{J}_b\mbf{P}_a)^+ = \mbf{I}$ by hypothesis.
 The first term is the
 independent component of the second task, and the second term
 is the component coupled with Task $a$. 
-Therefore, the projection onto the nullspace of the discovered task  at the 
+Therefore, the projection onto the null space of the discovered task  at the 
 first iteration will induce a coupling effect that has to be handled when trying to discover another task.
 This coupling will be handled in the next section.
 %First, we will show what are the effects of the cancellation of Task 1 and Task 2.
@@ -638,7 +636,7 @@ This coupling will be handled in the next section.
 
 \subsection{Task fitting by optimization} \label{sec:alg2:proj}
 We denote $\medoth{}(t)$ the trajectory due to the current $\mbf{P}
-\mbf{\dot{q}}$ in the observed-task space $\mbf{e}$.  The quantification of the
+\mbf{\dot{q}}$ in the observed-task space.  The quantification of the
 relevance of the given task $\mbf{e}$, with respect to the current motion
 $\mbf{P} \mbf{\dot{q}}$ , is achieved by applying a least-square
 optimization between the actual observed motion projected in the task space and
@@ -668,11 +666,11 @@ joint trajectories of the robot: $\mbf{J}_i\mbf{\hat{\dot{q}}}$.
 However, proceeding so would lead to~(\ref{eq:J2P1q}), where the coupling with previously
 selected tasks appears. The projected motion is then augmented with coupling compensation.
 \begin{equation}
-  \medoth{}(t) = \mbf{J}_i\mbf{P}_A \mbf{\dot{q}}(t) + \mbf{J}_i\mbf{J}_A^+\medoth{A}(t)
+  \medoth{}(t) = \mbf{J}_i\mbf{P}^{\mbf{A}} \mbf{\dot{q}}(t) + \mbf{J}_i\mbf{J}^{\mbf{A}+}\medoth{\mbf{A}}(t)
   \label{eq:compensation}
 \end{equation}
-where $A$ is the set of tasks that have already been detected and $i$ is the task candidate.
-All the terms corresponding to $A$ are known since identified in the previous
+where $\mbf{A}$ is the set of tasks that have already been detected and $i$ is the task candidate.
+All the terms corresponding to $\mbf{A}$ are known since identified in the previous
 iteration of the algorithm.
 
 %In order to cancel the second task, the projector onto the null-space of both 
@@ -689,7 +687,7 @@ iteration of the algorithm.
 \medskip
 In practice, the observation is sampled and the integral is a sum.
 The optimization problem~(\ref{optimProblem}) is in general a non linear problem. To solve
-it numerically, the CFSQP solver has been used~\cite{lawrence97}. The result of the optimization produces at the same time the residue used as a criteria to select the most plausible task, and the numerical of the task (for example the gain and the desired position, when considering a proportional task \eqref{eq:lambda}).
+it numerically, the CFSQP solver has been used~\cite{lawrence97}. The result of the optimization produces at the same time the residue used as a criteria to select the most plausible task, and the numerical parameters of the task (for example the gain and the desired position, when considering a proportional task \eqref{eq:lambda}).
 
 %The task reference behavior $\mbf{e_x}$ can, for example, be defined by an exponential regulation.
 %In that case, the characteristic trajectory in the task
@@ -737,7 +735,7 @@ is obtained from \eqref{eq:compensation}:
 implicating directly $\medothp{b}{a}=\medotc{b}$, since $\mbf{J}_b(\mbf{J}_b \mbf{P}_a)^+ = \mbf{J}_b \mbf{P}_a(\mbf{J}_b \mbf{P}_a)^+ = \mbf{I}$ and $\medoth{a} = \medotc{a}$.
 
 The observation obtained in Task $b$ space is independent from the
-projection in the nullspace of Task $a$.\\
+projection in the null space of Task $a$.\\
 
 \subsubsection{Detecting Task $b$, then Task $a$}
 
@@ -747,7 +745,7 @@ At the first iteration, the observation in Task $b$ space is directly
 \end{equation*}
 which implies $\medoth{b} = \medotc{b}$ since $\mJ{b} ( \mJ{b} \mP{a} )^+ = \mbf{I}$.
 
-Projecting the original motion~(\ref{eq:controlLaw2Tasks}) in the nullspace of Task $b$ at the
+Projecting the original motion~(\ref{eq:controlLaw2Tasks}) in the null space of Task $b$ at the
 end of the first iteration results in the following Task $a$ observation:
 %\begin{equation}
 %  \mbf{P}_b \mbf{\hat{\dot{q}}} = \mbf{P}_b \mbf{J}_a^+\mbf{\hat{\dot{e}}}_a + 
@@ -842,9 +840,9 @@ The set of tasks considered in those experiments are :
   \item \emph{Left/Right Grab} : either the left or right hand
 of the robot reaches a point defined in the Cartesian space (3 DOF)
   \item \emph{Screw} : similar to the \emph{grab} task, but the desired position 
-has to be reached with a defined orientation. (6 DOF)
-  \item \emph{Head} : the head of the robot is constrained in position and orientation. (6 DOF)
-  \item \emph{Chest} : the chest of the robot is constrained in orientation.  (3DOF)
+has to be reached with a defined orientation (6 DOF)
+  \item \emph{Head} : the head of the robot is constrained in position and orientation (6 DOF)
+  \item \emph{Chest} : the chest of the robot is constrained in orientation  (3DOF)
 \end{itemize}
 \begin{table}[h]
   \centering
@@ -1084,7 +1082,7 @@ defined by the sum square of the joint-angle velocities of the robot.
 \end{figure}
 Each projection strictly decreases the norm of the velocity (\emph{ie} the quantity of  movement). After
 five projections, the movement is completely nullified, which confirms that all the active tasks have been
-discovered. The algorithm can then stops.
+discovered. The algorithm can then stop.
 
 \subsection{Experiment 2 : Distinction between two close motions}
 \label{sec:distinc}
@@ -1384,7 +1382,7 @@ As previously, correct tasks are detected for each movement. The residue after p
 tasks are very small, proving that everything was properly detected and subtracted.
 
 In conclusion, we have shown experimentally in this section that, without noise, the detection algorithm
-performs perfectly, \emph{i.e.} detects exactly all the active tasks, without any  false detection,
+performs perfectly, \emph{ie} detects exactly all the active tasks, without any  false detection,
 and issues a neglectable residue of projected motion due to numerical noise. The following section will consider
 realistic cases of noisy signals acquired by real sensors.
 
