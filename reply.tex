@@ -52,7 +52,7 @@ In the following, we will discuss the revisions and address the questions raised
 
 \begin{quote}
 \textit{
-  In section IV, which are the limitations of the proposed strategy? In particular, the authors assume to know” the model of the robot”.  I guess they mean the kinematic model, please clarify. How much can the strategy cope with the model uncertainties
+  In section IV, which are the limitations of the proposed strategy? In particular, the authors assume to know” the model of the robot”.  I guess they mean the kinematic model, please clarify. How much can the strategy cope with the model uncertainties.
 }
 \end{quote}
 It is indeed the kinematic model of the robot that is assumed to be known. The kinematic model is
@@ -92,6 +92,8 @@ The final discussion mentions the use of the method on human motions.
 Some works in biomechanics comforts us in a way that it has been showed
 that the redundancy is handled by the central nervous system in a similar 
 way that roboticians handle redundancy for robots~\cite{jacquierbret09}.
+The consequence is that applying the recognition method to human motion makes
+sense if behavior model (analytical or statistical) of human motion are known.
 
 \begin{quote}
 \textit{
@@ -107,7 +109,7 @@ The ambiguity is used to illustrate the precision of the recognition method.
 }
 \end{quote}
 The threshold is empirically set in order to be above numerical noise
-due to the successive projections.
+due to the successive projections. 
 
 \begin{quote}
 \textit{
@@ -120,7 +122,7 @@ This quantity of motion involves all the degree of freedom of the kinematic chai
 the free float to the hand. That quantity of motion becomes almost null after
 the nullification of two tasks: Right Grab and Com.
 It means that the motion of the kinematic chain is explained by the execution of those tasks.
-Fig. 16 and 18 is used to illustrate the decrease of the motion over the iterations of the recognition
+Fig. 16 and 18 is used to illustrate the decrease of the quantity of motion over the iterations of the recognition
 algorithm.
 
 \begin{quote}
@@ -145,7 +147,8 @@ knowing how the motion is generated, and in particular, how the redundancy
 is used to perform parallel tasks. The approach can be seen as a reverse engineering method.
 The observation does not have to come from the same robot but from a robot where the 
 assumptions are valid. A short paragraph has been added at the end of introduction to
-illustrate that point.\\
+illustrate that point. The experiments on the robot illustrate that the method 
+is robust to sensor noise.\\
 
 For the particular case of human motions, biomecanicals studies
 shows that the redundancy can also be viewed as a task space and a null space as it 
@@ -155,10 +158,14 @@ the controlled and the uncontrolled ones for a particular task.
 The uncontrolled manifold (UCM) can be compared to the nullspace of the task jacobian,
 and the orthogonal manifold (ORT) can be compared to the task jacobian.
 In the experiments performed in~\cite{jacquierbret09},
-considering a reaching task performed by a human, it is shown that there is the variance
+considering a reaching task performed by a human, it is shown that the variance
 of at the elbow becomes higher in presence of an obstacle (this obstacle becomes 
-a geometrical constraint for the reaching task).
+a geometrical constraint for the reaching task): in order to handle 
+secondary objectives (obstacle avoidance), the flexibility at the elbow level is used.\\
 
+We did not detail the investigation about the application of the recognition
+method to human motion, because we believe that
+it was out of scope for this paper.
 
 \begin{quote}
 \textit{
@@ -172,11 +179,14 @@ the database of tasks is not so large. Typical database would include
    posture (full body or not).
   Being able to compose a movement by executing tasks in parallel (stacking the tasks)
   allow a great expressivity of movements and we believe that this expressivity
-  is enough for a robot.
+  is enough for a robot. \\
+
+  Behaviors others than the exponential decrease can be
+  used as a fitting criterion as it is shown in the generic formulation (8).
 
 \begin{quote}
 \textit{
-  Also, recent robot controllers are very often defined by a variety of movement constraints, such as inequality/equality constraints, soft constraints (such as loose workspace areas to reach or to stay in), or conditional constraints (e.g. moving until something is detected). For which of those controller behaviors will the proposed approach be applicable?
+  Also, recent robot controllers are very often defined by a variety of movement constraints, such as inequality/equality constraints, soft constraints (such as loose workspace areas to reach or to stay in), or \red{conditional constraints (e.g. moving until something is detected)}. For which of those controller behaviors will the proposed approach be applicable?
   The hypotheses are clearly stated, which is appreciable, but extending the discussion to clarify the reason why they are required would be relevant: is it an implementation detail or a limiting factor? Are there potential ways to relax some of these hypotheses? What are the underlying implications they bring?, etc.
 }
 \end{quote}
@@ -185,8 +195,7 @@ of tasks has to be constant during the observed movements.
 The stack must involves tasks that begin and end at the same time.
 In order to handle inequalities constraints, it is necessary to detect
 when constraints become inactive. The starting and ending time can be added
-to the task fitting optimisation problem but this solution has not yet been tested.\\
-
+to the task fitting optimisation problem but this solution has not yet been tested.
 The section describing the assumptions has been revised to reflect this explaination.
 
 \begin{quote}
@@ -199,14 +208,15 @@ We added this explanation in the overview of the algorithm in section IV.
 
 \begin{quote}
 \textit{
-Depending on the number of parallel tasks, compromises need to be adopted that do not always follow a strict hierarchy. Will the recognition be possible in this situation (e.g. if the system is underactuated)? Will the order of nullspace projections have an influence?
+Depending on the number of parallel tasks, compromises need to be adopted that do not always follow a strict hierarchy. Will the recognition be possible in this situation (\red{e.g. if the system is underactuated})? Will the order of nullspace projections have an influence?
 }
 \end{quote}
-The hierarchy is not considered since all tasks involved in the movements are completely fulfilled.
+The hierarchy is not considered during the recognition since all tasks involved in the movements are completely fulfilled.
 
 \begin{quote}
 \textit{
-In Section II, the authors point at the drawbacks of recognition methods based on the pre-specification of a set of possible spaces onto which the data are projected to find the subspaces matching the observed data. In the next paragraph, they then contrast this methodology to their approach based on reverse control, which actually relies on very similar core principles and hypotheses. The authors should reframe their work with respect to other more classical recognition approaches in a more transparent way concerning this point.
+\red{In Section II, the authors point at the drawbacks of recognition methods based on the pre-specification of a set of possible spaces onto which the data are projected to find the subspaces matching the observed data. In the next paragraph, they then contrast this methodology to their approach based on reverse control, which actually relies on very similar core principles and hypotheses. The authors should reframe their work with respect to other more classical recognition approaches in a more transparent way concerning this point.
+}
 }
 \end{quote}
 
@@ -215,8 +225,8 @@ In Section II, the authors point at the drawbacks of recognition methods based o
 In the proposed experiment, the set of active tasks is constant during the motion. How would the system cope with parallel tasks of variable lengths activated sequentially? Could this be tested in simulation?
 }
 \end{quote}
-The method does not handle sequential tasks. This is part of the future works:
-sequences of stack of tasks will be considered, then an instance of a stack
+The method does not handle sequences of tasks. This is part of the future works:
+sequences of stack of tasks will be considered. An instance of a stack
 of tasks could be a state of a probabilistic automata that can be learned a priori for
 a specific scenario. 
 
