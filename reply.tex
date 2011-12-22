@@ -46,10 +46,11 @@ In the following, we will discuss the revisions and address the questions raised
 \section{Reply to Referee 1}
 \begin{quote}
 \textit{
-  \red{The definitions of task and behavior are then described in sec IV.  I would suggest the authors to explain them together with the formulation.  In addition, the description of task and behavior which is clear in the formulation becomes a little bit confusing in sec IV.}
+  The definitions of task and behavior are then described in sec IV.  I would suggest the authors to explain them together with the formulation.  In addition, the description of task and behavior which is clear in the formulation becomes a little bit confusing in sec IV.
 }
 \end{quote}
-
+  We moved the paragraph about the tasks from section IV at the end of the section III, where the 
+  task function formalism is defined.
 \begin{quote}
 \textit{
   In section IV, which are the limitations of the proposed strategy? In particular, the authors assume to know” the model of the robot”.  I guess they mean the kinematic model, please clarify. How much can the strategy cope with the model uncertainties.
@@ -79,9 +80,14 @@ The use of parallel tasks enlarge the movement expressivity of the movement to b
 
 \begin{quote}
 \textit{
- \red{Are there cases in which the strategy has low performance?}
+ Are there cases in which the strategy has low performance?
 }
  \end{quote}
+ We encounter poor performances when the
+ movements generated for the test contains 
+ numerical errors: we tried to randomly build stack of tasks, but
+ singularities where often encountered resulting in
+ movements that have no sense.
 
 \begin{quote}
 \textit{
@@ -186,14 +192,14 @@ the database of tasks is not so large. Typical database would include
 
 \begin{quote}
 \textit{
-  Also, recent robot controllers are very often defined by a variety of movement constraints, such as inequality/equality constraints, soft constraints (such as loose workspace areas to reach or to stay in), or \red{conditional constraints (e.g. moving until something is detected)}. For which of those controller behaviors will the proposed approach be applicable?
+  Also, recent robot controllers are very often defined by a variety of movement constraints, such as inequality/equality constraints, soft constraints (such as loose workspace areas to reach or to stay in), or conditional constraints (e.g. moving until something is detected). For which of those controller behaviors will the proposed approach be applicable?
   The hypotheses are clearly stated, which is appreciable, but extending the discussion to clarify the reason why they are required would be relevant: is it an implementation detail or a limiting factor? Are there potential ways to relax some of these hypotheses? What are the underlying implications they bring?, etc.
 }
 \end{quote}
 At this moment, only equalities constraints can be handled. It is explained by the assumption of a stack
 of tasks has to be constant during the observed movements.
 The stack must involves tasks that begin and end at the same time.
-In order to handle inequalities constraints, it is necessary to detect
+In order to handle inequalities constraints (and also conditional constraints), it is necessary to detect
 when constraints become inactive. The starting and ending time can be added
 to the task fitting optimisation problem but this solution has not yet been tested.
 The section describing the assumptions has been revised to reflect this explaination.
@@ -208,17 +214,19 @@ We added this explanation in the overview of the algorithm in section IV.
 
 \begin{quote}
 \textit{
-Depending on the number of parallel tasks, compromises need to be adopted that do not always follow a strict hierarchy. Will the recognition be possible in this situation (\red{e.g. if the system is underactuated})? Will the order of nullspace projections have an influence?
+Depending on the number of parallel tasks, compromises need to be adopted that do not always follow a strict hierarchy. Will the recognition be possible in this situation (e.g. if the system is underactuated)? Will the order of nullspace projections have an influence?
 }
 \end{quote}
 The hierarchy is not considered during the recognition since all tasks involved in the movements are completely fulfilled.
 
 \begin{quote}
 \textit{
-\red{In Section II, the authors point at the drawbacks of recognition methods based on the pre-specification of a set of possible spaces onto which the data are projected to find the subspaces matching the observed data. In the next paragraph, they then contrast this methodology to their approach based on reverse control, which actually relies on very similar core principles and hypotheses. The authors should reframe their work with respect to other more classical recognition approaches in a more transparent way concerning this point.
-}
+In Section II, the authors point at the drawbacks of recognition methods based on the pre-specification of a set of possible spaces onto which the data are projected to find the subspaces matching the observed data. In the next paragraph, they then contrast this methodology to their approach based on reverse control, which actually relies on very similar core principles and hypotheses. The authors should reframe their work with respect to other more classical recognition approaches in a more transparent way concerning this point.
 }
 \end{quote}
+The pre-specification of possible spaces used in previous works does not rely
+on the method of generation of movements but rather on heuristics.
+This has been precised in section II where we present the originality of our method.
 
 \begin{quote}
 \textit{
@@ -243,9 +251,13 @@ This is now precised when we define a value of that threshold in the experiment 
 
 \begin{quote}
 \textit{
-  \red{ How will the prevailing singularities affect recognition?}
+  How will the prevailing singularities affect recognition?
 }
 \end{quote}
+Numerical error will occurs in the neighborhood of the singularities,
+leading to errors in the recognition. We do not study how much it affects
+the recognition because when we generate a motion, we tried to avoid
+non consistent motion.
 
 \bibliographystyle{ieeetr}
 \bibliography{bibReply}
