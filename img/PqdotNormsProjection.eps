@@ -1,3593 +1,775 @@
-%!PS-Adobe-2.0 EPSF-2.0
-%%Title: PqdotNormsProjection.tex
-%%Creator: gnuplot 4.2 patchlevel 6 
-%%CreationDate: Wed Apr 20 17:33:24 2011
-%%DocumentFonts: 
-%%BoundingBox: 50 50 410 302
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: cairo 1.10.2 (http://cairographics.org)
+%%CreationDate: Thu Mar  8 11:03:46 2012
+%%Pages: 1
+%%BoundingBox: 0 0 360 252
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 2
 %%EndComments
 %%BeginProlog
-/gnudict 256 dict def
-gnudict begin
-%
-% The following 6 true/false flags may be edited by hand if required
-% The unit line width may also be changed
-%
-/Color true def
-/Blacktext true def
-/Solid true def
-/Dashlength 1 def
-/Landscape false def
-/Level1 false def
-/Rounded false def
-/TransparentPatterns false def
-/gnulinewidth 5.000 def
-/userlinewidth gnulinewidth def
-%
-/vshift -73 def
-/dl1 {
-  10.0 Dashlength mul mul
-  Rounded { currentlinewidth 0.75 mul sub dup 0 le { pop 0.01 } if } if
-} def
-/dl2 {
-  10.0 Dashlength mul mul
-  Rounded { currentlinewidth 0.75 mul add } if
-} def
-/hpt_ 31.5 def
-/vpt_ 31.5 def
-/hpt hpt_ def
-/vpt vpt_ def
-Level1 {} {
-/SDict 10 dict def
-systemdict /pdfmark known not {
-  userdict /pdfmark systemdict /cleartomark get put
-} if
-SDict begin [
-  /Title (PqdotNormsProjection.tex)
-  /Subject (gnuplot plot)
-  /Creator (gnuplot 4.2 patchlevel 6 )
-  /Author (Sovannara Hak,B179,0561336357)
-%  /Producer (gnuplot)
-%  /Keywords ()
-  /CreationDate (Wed Apr 20 17:33:24 2011)
-  /DOCINFO pdfmark
-end
-} ifelse
-%
-% Gnuplot Prolog Version 4.2 (August 2006)
-%
-/M {moveto} bind def
-/L {lineto} bind def
-/R {rmoveto} bind def
-/V {rlineto} bind def
-/N {newpath moveto} bind def
-/Z {closepath} bind def
-/C {setrgbcolor} bind def
-/f {rlineto fill} bind def
-/vpt2 vpt 2 mul def
-/hpt2 hpt 2 mul def
-/Lshow {currentpoint stroke M 0 vshift R 
-	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
-/Rshow {currentpoint stroke M dup stringwidth pop neg vshift R
-	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
-/Cshow {currentpoint stroke M dup stringwidth pop -2 div vshift R 
-	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
-/UP {dup vpt_ mul /vpt exch def hpt_ mul /hpt exch def
-  /hpt2 hpt 2 mul def /vpt2 vpt 2 mul def} def
-/DL {Color {setrgbcolor Solid {pop []} if 0 setdash}
- {pop pop pop 0 setgray Solid {pop []} if 0 setdash} ifelse} def
-/BL {stroke userlinewidth 2 mul setlinewidth
-	Rounded {1 setlinejoin 1 setlinecap} if} def
-/AL {stroke userlinewidth 2 div setlinewidth
-	Rounded {1 setlinejoin 1 setlinecap} if} def
-/UL {dup gnulinewidth mul /userlinewidth exch def
-	dup 1 lt {pop 1} if 10 mul /udl exch def} def
-/PL {stroke userlinewidth setlinewidth
-	Rounded {1 setlinejoin 1 setlinecap} if} def
-% Default Line colors
-/LCw {1 1 1} def
-/LCb {0 0 0} def
-/LCa {0 0 0} def
-/LC0 {0 0.3 0} def
-/LC1 {0 0.53 0} def
-/LC2 {0.086 0.651 0.086} def
-/LC3 {0.153 0.757 0.153} def
-/LC4 {0.223 0.843 0.223} def
-/LC5 {0.367 1 0.367} def
-/LC6 {0 0 0} def
-/LC7 {1 0.3 0} def
-/LC8 {0.5 0.5 0.5} def
-% Default Line Types
-/LTw {PL [] 1 setgray} def
-/LTb {BL [] LCb DL} def
-/LTa {AL [1 udl mul 2 udl mul] 0 setdash LCa setrgbcolor} def
-/LT0 {PL [] LC0 DL} def
-/LT1 {PL [4 dl1 2 dl2] LC1 DL} def
-/LT2 {PL [2 dl1 3 dl2] LC2 DL} def
-/LT3 {PL [1 dl1 1.5 dl2] LC3 DL} def
-/LT4 {PL [6 dl1 2 dl2 1 dl1 2 dl2] LC4 DL} def
-/LT5 {PL [3 dl1 3 dl2 1 dl1 3 dl2] LC5 DL} def
-/LT6 {PL [2 dl1 2 dl2 2 dl1 6 dl2] LC6 DL} def
-/LT7 {PL [1 dl1 2 dl2 6 dl1 2 dl2 1 dl1 2 dl2] LC7 DL} def
-/LT8 {PL [2 dl1 2 dl2 2 dl1 2 dl2 2 dl1 2 dl2 2 dl1 4 dl2] LC8 DL} def
-/Pnt {stroke [] 0 setdash gsave 1 setlinecap M 0 0 V stroke grestore} def
-/Dia {stroke [] 0 setdash 2 copy vpt add M
-  hpt neg vpt neg V hpt vpt neg V
-  hpt vpt V hpt neg vpt V closepath stroke
-  Pnt} def
-/Pls {stroke [] 0 setdash vpt sub M 0 vpt2 V
-  currentpoint stroke M
-  hpt neg vpt neg R hpt2 0 V stroke
- } def
-/Box {stroke [] 0 setdash 2 copy exch hpt sub exch vpt add M
-  0 vpt2 neg V hpt2 0 V 0 vpt2 V
-  hpt2 neg 0 V closepath stroke
-  Pnt} def
-/Crs {stroke [] 0 setdash exch hpt sub exch vpt add M
-  hpt2 vpt2 neg V currentpoint stroke M
-  hpt2 neg 0 R hpt2 vpt2 V stroke} def
-/TriU {stroke [] 0 setdash 2 copy vpt 1.12 mul add M
-  hpt neg vpt -1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt 1.62 mul V closepath stroke
-  Pnt} def
-/Star {2 copy Pls Crs} def
-/BoxF {stroke [] 0 setdash exch hpt sub exch vpt add M
-  0 vpt2 neg V hpt2 0 V 0 vpt2 V
-  hpt2 neg 0 V closepath fill} def
-/TriUF {stroke [] 0 setdash vpt 1.12 mul add M
-  hpt neg vpt -1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt 1.62 mul V closepath fill} def
-/TriD {stroke [] 0 setdash 2 copy vpt 1.12 mul sub M
-  hpt neg vpt 1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt -1.62 mul V closepath stroke
-  Pnt} def
-/TriDF {stroke [] 0 setdash vpt 1.12 mul sub M
-  hpt neg vpt 1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt -1.62 mul V closepath fill} def
-/DiaF {stroke [] 0 setdash vpt add M
-  hpt neg vpt neg V hpt vpt neg V
-  hpt vpt V hpt neg vpt V closepath fill} def
-/Pent {stroke [] 0 setdash 2 copy gsave
-  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
-  closepath stroke grestore Pnt} def
-/PentF {stroke [] 0 setdash gsave
-  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
-  closepath fill grestore} def
-/Circle {stroke [] 0 setdash 2 copy
-  hpt 0 360 arc stroke Pnt} def
-/CircleF {stroke [] 0 setdash hpt 0 360 arc fill} def
-/C0 {BL [] 0 setdash 2 copy moveto vpt 90 450 arc} bind def
-/C1 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 90 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C2 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 90 180 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C3 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 180 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C4 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 180 270 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C5 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 90 arc
-	2 copy moveto
-	2 copy vpt 180 270 arc closepath fill
-	vpt 0 360 arc} bind def
-/C6 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 90 270 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C7 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 270 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C8 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 270 360 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C9 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 270 450 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C10 {BL [] 0 setdash 2 copy 2 copy moveto vpt 270 360 arc closepath fill
-	2 copy moveto
-	2 copy vpt 90 180 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C11 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 180 arc closepath fill
-	2 copy moveto
-	2 copy vpt 270 360 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C12 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 180 360 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C13 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 0 90 arc closepath fill
-	2 copy moveto
-	2 copy vpt 180 360 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/C14 {BL [] 0 setdash 2 copy moveto
-	2 copy vpt 90 360 arc closepath fill
-	vpt 0 360 arc} bind def
-/C15 {BL [] 0 setdash 2 copy vpt 0 360 arc closepath fill
-	vpt 0 360 arc closepath} bind def
-/Rec {newpath 4 2 roll moveto 1 index 0 rlineto 0 exch rlineto
-	neg 0 rlineto closepath} bind def
-/Square {dup Rec} bind def
-/Bsquare {vpt sub exch vpt sub exch vpt2 Square} bind def
-/S0 {BL [] 0 setdash 2 copy moveto 0 vpt rlineto BL Bsquare} bind def
-/S1 {BL [] 0 setdash 2 copy vpt Square fill Bsquare} bind def
-/S2 {BL [] 0 setdash 2 copy exch vpt sub exch vpt Square fill Bsquare} bind def
-/S3 {BL [] 0 setdash 2 copy exch vpt sub exch vpt2 vpt Rec fill Bsquare} bind def
-/S4 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt Square fill Bsquare} bind def
-/S5 {BL [] 0 setdash 2 copy 2 copy vpt Square fill
-	exch vpt sub exch vpt sub vpt Square fill Bsquare} bind def
-/S6 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt vpt2 Rec fill Bsquare} bind def
-/S7 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt vpt2 Rec fill
-	2 copy vpt Square fill Bsquare} bind def
-/S8 {BL [] 0 setdash 2 copy vpt sub vpt Square fill Bsquare} bind def
-/S9 {BL [] 0 setdash 2 copy vpt sub vpt vpt2 Rec fill Bsquare} bind def
-/S10 {BL [] 0 setdash 2 copy vpt sub vpt Square fill 2 copy exch vpt sub exch vpt Square fill
-	Bsquare} bind def
-/S11 {BL [] 0 setdash 2 copy vpt sub vpt Square fill 2 copy exch vpt sub exch vpt2 vpt Rec fill
-	Bsquare} bind def
-/S12 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill Bsquare} bind def
-/S13 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill
-	2 copy vpt Square fill Bsquare} bind def
-/S14 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill
-	2 copy exch vpt sub exch vpt Square fill Bsquare} bind def
-/S15 {BL [] 0 setdash 2 copy Bsquare fill Bsquare} bind def
-/D0 {gsave translate 45 rotate 0 0 S0 stroke grestore} bind def
-/D1 {gsave translate 45 rotate 0 0 S1 stroke grestore} bind def
-/D2 {gsave translate 45 rotate 0 0 S2 stroke grestore} bind def
-/D3 {gsave translate 45 rotate 0 0 S3 stroke grestore} bind def
-/D4 {gsave translate 45 rotate 0 0 S4 stroke grestore} bind def
-/D5 {gsave translate 45 rotate 0 0 S5 stroke grestore} bind def
-/D6 {gsave translate 45 rotate 0 0 S6 stroke grestore} bind def
-/D7 {gsave translate 45 rotate 0 0 S7 stroke grestore} bind def
-/D8 {gsave translate 45 rotate 0 0 S8 stroke grestore} bind def
-/D9 {gsave translate 45 rotate 0 0 S9 stroke grestore} bind def
-/D10 {gsave translate 45 rotate 0 0 S10 stroke grestore} bind def
-/D11 {gsave translate 45 rotate 0 0 S11 stroke grestore} bind def
-/D12 {gsave translate 45 rotate 0 0 S12 stroke grestore} bind def
-/D13 {gsave translate 45 rotate 0 0 S13 stroke grestore} bind def
-/D14 {gsave translate 45 rotate 0 0 S14 stroke grestore} bind def
-/D15 {gsave translate 45 rotate 0 0 S15 stroke grestore} bind def
-/DiaE {stroke [] 0 setdash vpt add M
-  hpt neg vpt neg V hpt vpt neg V
-  hpt vpt V hpt neg vpt V closepath stroke} def
-/BoxE {stroke [] 0 setdash exch hpt sub exch vpt add M
-  0 vpt2 neg V hpt2 0 V 0 vpt2 V
-  hpt2 neg 0 V closepath stroke} def
-/TriUE {stroke [] 0 setdash vpt 1.12 mul add M
-  hpt neg vpt -1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt 1.62 mul V closepath stroke} def
-/TriDE {stroke [] 0 setdash vpt 1.12 mul sub M
-  hpt neg vpt 1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt -1.62 mul V closepath stroke} def
-/PentE {stroke [] 0 setdash gsave
-  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
-  closepath stroke grestore} def
-/CircE {stroke [] 0 setdash 
-  hpt 0 360 arc stroke} def
-/Opaque {gsave closepath 1 setgray fill grestore 0 setgray closepath} def
-/DiaW {stroke [] 0 setdash vpt add M
-  hpt neg vpt neg V hpt vpt neg V
-  hpt vpt V hpt neg vpt V Opaque stroke} def
-/BoxW {stroke [] 0 setdash exch hpt sub exch vpt add M
-  0 vpt2 neg V hpt2 0 V 0 vpt2 V
-  hpt2 neg 0 V Opaque stroke} def
-/TriUW {stroke [] 0 setdash vpt 1.12 mul add M
-  hpt neg vpt -1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt 1.62 mul V Opaque stroke} def
-/TriDW {stroke [] 0 setdash vpt 1.12 mul sub M
-  hpt neg vpt 1.62 mul V
-  hpt 2 mul 0 V
-  hpt neg vpt -1.62 mul V Opaque stroke} def
-/PentW {stroke [] 0 setdash gsave
-  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
-  Opaque stroke grestore} def
-/CircW {stroke [] 0 setdash 
-  hpt 0 360 arc Opaque stroke} def
-/BoxFill {gsave Rec 1 setgray fill grestore} def
-/Density {
-  /Fillden exch def
-  currentrgbcolor
-  /ColB exch def /ColG exch def /ColR exch def
-  /ColR ColR Fillden mul Fillden sub 1 add def
-  /ColG ColG Fillden mul Fillden sub 1 add def
-  /ColB ColB Fillden mul Fillden sub 1 add def
-  ColR ColG ColB setrgbcolor} def
-/BoxColFill {gsave Rec PolyFill} def
-/PolyFill {gsave Density fill grestore grestore} def
-/h {rlineto rlineto rlineto gsave closepath fill grestore} bind def
-%
-% PostScript Level 1 Pattern Fill routine for rectangles
-% Usage: x y w h s a XX PatternFill
-%	x,y = lower left corner of box to be filled
-%	w,h = width and height of box
-%	  a = angle in degrees between lines and x-axis
-%	 XX = 0/1 for no/yes cross-hatch
-%
-/PatternFill {gsave /PFa [ 9 2 roll ] def
-  PFa 0 get PFa 2 get 2 div add PFa 1 get PFa 3 get 2 div add translate
-  PFa 2 get -2 div PFa 3 get -2 div PFa 2 get PFa 3 get Rec
-  gsave 1 setgray fill grestore clip
-  currentlinewidth 0.5 mul setlinewidth
-  /PFs PFa 2 get dup mul PFa 3 get dup mul add sqrt def
-  0 0 M PFa 5 get rotate PFs -2 div dup translate
-  0 1 PFs PFa 4 get div 1 add floor cvi
-	{PFa 4 get mul 0 M 0 PFs V} for
-  0 PFa 6 get ne {
-	0 1 PFs PFa 4 get div 1 add floor cvi
-	{PFa 4 get mul 0 2 1 roll M PFs 0 V} for
- } if
-  stroke grestore} def
-%
-/languagelevel where
- {pop languagelevel} {1} ifelse
- 2 lt
-	{/InterpretLevel1 true def}
-	{/InterpretLevel1 Level1 def}
- ifelse
-%
-% PostScript level 2 pattern fill definitions
-%
-/Level2PatternFill {
-/Tile8x8 {/PaintType 2 /PatternType 1 /TilingType 1 /BBox [0 0 8 8] /XStep 8 /YStep 8}
-	bind def
-/KeepColor {currentrgbcolor [/Pattern /DeviceRGB] setcolorspace} bind def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop 0 0 M 8 8 L 0 8 M 8 0 L stroke} 
->> matrix makepattern
-/Pat1 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop 0 0 M 8 8 L 0 8 M 8 0 L stroke
-	0 4 M 4 8 L 8 4 L 4 0 L 0 4 L stroke}
->> matrix makepattern
-/Pat2 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop 0 0 M 0 8 L
-	8 8 L 8 0 L 0 0 L fill}
->> matrix makepattern
-/Pat3 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop -4 8 M 8 -4 L
-	0 12 M 12 0 L stroke}
->> matrix makepattern
-/Pat4 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop -4 0 M 8 12 L
-	0 -4 M 12 8 L stroke}
->> matrix makepattern
-/Pat5 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop -2 8 M 4 -4 L
-	0 12 M 8 -4 L 4 12 M 10 0 L stroke}
->> matrix makepattern
-/Pat6 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop -2 0 M 4 12 L
-	0 -4 M 8 12 L 4 -4 M 10 8 L stroke}
->> matrix makepattern
-/Pat7 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop 8 -2 M -4 4 L
-	12 0 M -4 8 L 12 4 M 0 10 L stroke}
->> matrix makepattern
-/Pat8 exch def
-<< Tile8x8
- /PaintProc {0.5 setlinewidth pop 0 -2 M 12 4 L
-	-4 0 M 12 8 L -4 4 M 8 10 L stroke}
->> matrix makepattern
-/Pat9 exch def
-/Pattern1 {PatternBgnd KeepColor Pat1 setpattern} bind def
-/Pattern2 {PatternBgnd KeepColor Pat2 setpattern} bind def
-/Pattern3 {PatternBgnd KeepColor Pat3 setpattern} bind def
-/Pattern4 {PatternBgnd KeepColor Landscape {Pat5} {Pat4} ifelse setpattern} bind def
-/Pattern5 {PatternBgnd KeepColor Landscape {Pat4} {Pat5} ifelse setpattern} bind def
-/Pattern6 {PatternBgnd KeepColor Landscape {Pat9} {Pat6} ifelse setpattern} bind def
-/Pattern7 {PatternBgnd KeepColor Landscape {Pat8} {Pat7} ifelse setpattern} bind def
-} def
-%
-%
-%End of PostScript Level 2 code
-%
-/PatternBgnd {
-  TransparentPatterns {} {gsave 1 setgray fill grestore} ifelse
-} def
-%
-% Substitute for Level 2 pattern fill codes with
-% grayscale if Level 2 support is not selected.
-%
-/Level1PatternFill {
-/Pattern1 {0.250 Density} bind def
-/Pattern2 {0.500 Density} bind def
-/Pattern3 {0.750 Density} bind def
-/Pattern4 {0.125 Density} bind def
-/Pattern5 {0.375 Density} bind def
-/Pattern6 {0.625 Density} bind def
-/Pattern7 {0.875 Density} bind def
-} def
-%
-% Now test for support of Level 2 code
-%
-Level1 {Level1PatternFill} {Level2PatternFill} ifelse
-%
-/Symbol-Oblique /Symbol findfont [1 0 .167 1 0 0] makefont
-dup length dict begin {1 index /FID eq {pop pop} {def} ifelse} forall
-currentdict end definefont pop
-end
+/cairo_eps_state save def
+/dict_count countdictstack def
+/op_count count 1 sub def
+userdict begin
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/m { moveto } bind def
+/l { lineto } bind def
+/c { curveto } bind def
+/h { closepath } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/f* { eofill } bind def
+/n { newpath } bind def
+/W { clip } bind def
+/W* { eoclip } bind def
+/BT { } bind def
+/ET { } bind def
+/pdfmark where { pop globaldict /?pdfmark /exec load put }
+    { globaldict begin /?pdfmark /pop load def /pdfmark
+    /cleartomark load def end } ifelse
+/BDC { mark 3 1 roll /BDC pdfmark } bind def
+/EMC { mark /EMC pdfmark } bind def
+/cairo_store_point { /cairo_point_y exch def /cairo_point_x exch def } def
+/Tj { show currentpoint cairo_store_point } bind def
+/TJ {
+  {
+    dup
+    type /stringtype eq
+    { show } { -0.001 mul 0 cairo_font_matrix dtransform rmoveto } ifelse
+  } forall
+  currentpoint cairo_store_point
+} bind def
+/cairo_selectfont { cairo_font_matrix aload pop pop pop 0 0 6 array astore
+    cairo_font exch selectfont cairo_point_x cairo_point_y moveto } bind def
+/Tf { pop /cairo_font exch def /cairo_font_matrix where
+      { pop cairo_selectfont } if } bind def
+/Td { matrix translate cairo_font_matrix matrix concatmatrix dup
+      /cairo_font_matrix exch def dup 4 get exch 5 get cairo_store_point
+      /cairo_font where { pop cairo_selectfont } if } bind def
+/Tm { 2 copy 8 2 roll 6 array astore /cairo_font_matrix exch def
+      cairo_store_point /cairo_font where { pop cairo_selectfont } if } bind def
+/g { setgray } bind def
+/rg { setrgbcolor } bind def
+/d1 { setcachedevice } bind def
 %%EndProlog
-gnudict begin
-gsave
-50 50 translate
-0.050 0.050 scale
-0 setgray
-newpath
-1.000 UL
-LTb
-LCb setrgbcolor
-1606 704 M
-63 0 V
-5201 0 R
--63 0 V
-stroke
-LTb
-1606 1383 M
-63 0 V
-5201 0 R
--63 0 V
-1606 2061 M
-63 0 V
-5201 0 R
--63 0 V
-1606 2740 M
-63 0 V
-5201 0 R
--63 0 V
-1606 3419 M
-63 0 V
-5201 0 R
--63 0 V
-1606 4097 M
-63 0 V
-5201 0 R
--63 0 V
-1606 4776 M
-63 0 V
-5201 0 R
--63 0 V
-1606 704 M
-0 63 V
-0 4009 R
-0 -63 V
-2618 704 M
-0 63 V
-0 4009 R
-0 -63 V
-3631 704 M
-0 63 V
-0 4009 R
-0 -63 V
-4643 704 M
-0 63 V
-0 4009 R
-0 -63 V
-5655 704 M
-0 63 V
-0 4009 R
-0 -63 V
-6668 704 M
-0 63 V
-0 4009 R
-0 -63 V
-stroke
-1606 4776 N
-0 -4072 V
-5264 0 V
-0 4072 V
--5264 0 V
-Z stroke
-1.000 UP
-1.000 UL
-LTb
-4.000 UL
-LT0
-LC0 setrgbcolor
-LTb
-LCb setrgbcolor
-LT0
-LC0 setrgbcolor
-6015 4603 M
-591 0 V
-1818 4776 M
-1 -2 V
-10 -54 V
-10 -56 V
-10 -50 V
-10 -52 V
-10 -46 V
-10 -49 V
-10 -43 V
-11 -46 V
-10 -40 V
-10 -43 V
-10 -37 V
-10 -41 V
-10 -35 V
-10 -38 V
-10 -33 V
-11 -36 V
-10 -30 V
-10 -35 V
-10 -29 V
-10 -32 V
-10 -27 V
-10 -31 V
-10 -26 V
-11 -29 V
-10 -24 V
-10 -28 V
-10 -23 V
-10 -27 V
-10 -21 V
-10 -26 V
-10 -21 V
-11 -24 V
-10 -20 V
-10 -24 V
-10 -18 V
-10 -23 V
-10 -17 V
-10 -22 V
-10 -17 V
-11 -21 V
-10 -16 V
-10 -20 V
-10 -15 V
-10 -20 V
-10 -15 V
-10 -19 V
-10 -14 V
-10 -19 V
-11 -13 V
-10 -18 V
-10 -13 V
-10 -18 V
-10 -12 V
-10 -17 V
-10 -12 V
-10 -17 V
-11 -12 V
-10 -16 V
-10 -11 V
-10 -16 V
-10 -11 V
-10 -16 V
-10 -10 V
-10 -15 V
-11 -11 V
-10 -15 V
-10 -10 V
-10 -14 V
-10 -10 V
-10 -15 V
-10 -9 V
-10 -14 V
-11 -10 V
-10 -14 V
-10 -9 V
-10 -14 V
-10 -9 V
-10 -13 V
-10 -9 V
-10 -14 V
-11 -8 V
-10 -14 V
-10 -9 V
-10 -13 V
-10 -8 V
-10 -13 V
-10 -9 V
-10 -13 V
-11 -9 V
-10 -12 V
-10 -9 V
-10 -13 V
-10 -8 V
-10 -13 V
-10 -8 V
-10 -13 V
-11 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-stroke 2841 2702 M
-10 -12 V
-10 -9 V
-10 -12 V
-11 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -13 V
-10 -9 V
-10 -12 V
-10 -9 V
-11 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -10 V
-11 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -10 V
-11 -11 V
-10 -10 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-11 -12 V
-10 -9 V
-10 -11 V
-10 -10 V
-10 -11 V
-10 -10 V
-10 -11 V
-10 -9 V
-11 -12 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -10 V
-10 -10 V
-10 -10 V
-11 -10 V
-10 -10 V
-10 -10 V
-10 -10 V
-10 -10 V
-10 -9 V
-10 -11 V
-10 -9 V
-11 -10 V
-10 -9 V
-10 -10 V
-10 -9 V
-10 -10 V
-10 -9 V
-10 -10 V
-10 -8 V
-11 -10 V
-10 -9 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -9 V
-11 -9 V
-10 -9 V
-10 -8 V
-10 -9 V
-10 -8 V
-10 -9 V
-10 -8 V
-10 -9 V
-11 -8 V
-10 -9 V
-10 -7 V
-10 -9 V
-10 -8 V
-10 -8 V
-10 -8 V
-10 -8 V
-11 -8 V
-10 -8 V
-10 -7 V
-10 -8 V
-10 -8 V
-10 -8 V
-10 -7 V
-10 -8 V
-11 -7 V
-10 -7 V
-10 -7 V
-stroke 3894 1703 M
-10 -8 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -8 V
-11 -6 V
-10 -8 V
-10 -6 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -6 V
-10 -7 V
-11 -7 V
-10 -6 V
-10 -7 V
-10 -6 V
-10 -7 V
-10 -6 V
-10 -6 V
-10 -7 V
-11 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-11 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -6 V
-10 -5 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-11 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-11 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-11 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -3 V
-stroke 4947 1178 M
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-stroke 5999 937 M
-11 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-stroke
-LT1
-LC1 setrgbcolor
-LTb
-LCb setrgbcolor
-LT1
-LC1 setrgbcolor
-6015 4383 M
-591 0 V
-1808 4763 M
-11 -60 V
-10 -55 V
-10 -57 V
-10 -51 V
-10 -53 V
-10 -48 V
-10 -50 V
-10 -44 V
-11 -47 V
-10 -41 V
-10 -44 V
-10 -39 V
-10 -41 V
-10 -36 V
-10 -39 V
-10 -34 V
-11 -37 V
-10 -31 V
-10 -36 V
-10 -29 V
-10 -33 V
-10 -28 V
-10 -32 V
-10 -26 V
-11 -30 V
-10 -24 V
-10 -29 V
-10 -23 V
-10 -27 V
-10 -22 V
-10 -26 V
-10 -21 V
-11 -25 V
-10 -19 V
-10 -24 V
-10 -18 V
-10 -23 V
-10 -17 V
-10 -23 V
-10 -16 V
-11 -21 V
-10 -16 V
-10 -20 V
-10 -15 V
-10 -20 V
-10 -14 V
-10 -19 V
-10 -13 V
-10 -18 V
-11 -13 V
-10 -18 V
-10 -12 V
-10 -17 V
-10 -12 V
-10 -17 V
-10 -11 V
-10 -16 V
-11 -11 V
-10 -15 V
-10 -11 V
-10 -15 V
-10 -10 V
-10 -15 V
-10 -9 V
-10 -15 V
-11 -9 V
-10 -14 V
-10 -9 V
-10 -14 V
-10 -9 V
-10 -14 V
-10 -8 V
-10 -14 V
-11 -8 V
-10 -13 V
-10 -8 V
-10 -13 V
-10 -8 V
-10 -13 V
-10 -8 V
-10 -12 V
-11 -8 V
-10 -13 V
-10 -7 V
-10 -13 V
-10 -7 V
-10 -12 V
-10 -8 V
-10 -12 V
-11 -8 V
-10 -12 V
-10 -7 V
-10 -12 V
-10 -8 V
-10 -11 V
-10 -8 V
-10 -12 V
-11 -8 V
-10 -11 V
-10 -8 V
-10 -12 V
-10 -8 V
-stroke 2841 2653 M
-10 -11 V
-10 -8 V
-10 -12 V
-11 -8 V
-10 -11 V
-10 -8 V
-10 -12 V
-10 -8 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -8 V
-11 -12 V
-10 -8 V
-10 -12 V
-10 -8 V
-10 -12 V
-10 -8 V
-10 -12 V
-10 -8 V
-11 -12 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-11 -11 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-11 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-11 -11 V
-10 -9 V
-10 -11 V
-10 -9 V
-10 -10 V
-10 -9 V
-10 -11 V
-10 -9 V
-11 -10 V
-10 -9 V
-10 -11 V
-10 -8 V
-10 -11 V
-10 -8 V
-10 -11 V
-10 -8 V
-11 -10 V
-10 -9 V
-10 -10 V
-10 -9 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-11 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -9 V
-10 -8 V
-10 -9 V
-11 -9 V
-10 -9 V
-10 -8 V
-10 -9 V
-10 -7 V
-10 -9 V
-10 -8 V
-10 -9 V
-11 -7 V
-10 -9 V
-10 -8 V
-10 -8 V
-10 -8 V
-10 -8 V
-10 -7 V
-10 -9 V
-11 -7 V
-10 -8 V
-10 -7 V
-10 -8 V
-10 -7 V
-10 -8 V
-10 -7 V
-10 -8 V
-11 -7 V
-10 -8 V
-10 -7 V
-stroke 3894 1691 M
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-11 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -6 V
-10 -7 V
-10 -6 V
-10 -7 V
-11 -6 V
-10 -7 V
-10 -6 V
-10 -7 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -7 V
-11 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-11 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-11 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-11 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -4 V
-11 -3 V
-stroke 4947 1173 M
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-stroke 5999 935 M
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-stroke
-LT2
-LC2 setrgbcolor
-LTb
-LCb setrgbcolor
-LT2
-LC2 setrgbcolor
-6015 4163 M
-591 0 V
--4798 -8 R
-11 -47 V
-10 -43 V
-10 -45 V
-10 -39 V
-10 -43 V
-10 -36 V
-10 -40 V
-10 -34 V
-11 -37 V
-10 -31 V
-10 -35 V
-10 -29 V
-10 -33 V
-10 -27 V
-10 -31 V
-10 -25 V
-11 -30 V
-10 -23 V
-10 -28 V
-10 -22 V
-10 -27 V
-10 -20 V
-10 -25 V
-10 -19 V
-11 -25 V
-10 -17 V
-10 -24 V
-10 -16 V
-10 -22 V
-10 -16 V
-10 -21 V
-10 -15 V
-11 -20 V
-10 -14 V
-10 -20 V
-10 -13 V
-10 -19 V
-10 -12 V
-10 -18 V
-10 -12 V
-11 -17 V
-10 -11 V
-10 -17 V
-10 -11 V
-10 -16 V
-10 -10 V
-10 -16 V
-10 -10 V
-10 -15 V
-11 -9 V
-10 -15 V
-10 -9 V
-10 -15 V
-10 -8 V
-10 -14 V
-10 -8 V
-10 -14 V
-11 -8 V
-10 -13 V
-10 -8 V
-10 -13 V
-10 -7 V
-10 -13 V
-10 -7 V
-10 -13 V
-11 -6 V
-10 -13 V
-10 -6 V
-10 -13 V
-10 -6 V
-10 -12 V
-10 -7 V
-10 -11 V
-11 -7 V
-10 -11 V
-10 -6 V
-10 -12 V
-10 -6 V
-10 -12 V
-10 -6 V
-10 -11 V
-11 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-11 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-10 -6 V
-10 -11 V
-11 -7 V
-10 -10 V
-10 -7 V
-10 -11 V
-10 -6 V
-stroke 2841 2483 M
-10 -11 V
-10 -7 V
-10 -10 V
-11 -7 V
-10 -11 V
-10 -7 V
-10 -10 V
-10 -7 V
-10 -11 V
-10 -7 V
-10 -11 V
-10 -7 V
-11 -11 V
-10 -7 V
-10 -11 V
-10 -7 V
-10 -11 V
-10 -8 V
-10 -10 V
-10 -8 V
-11 -11 V
-10 -7 V
-10 -11 V
-10 -8 V
-10 -11 V
-10 -8 V
-10 -10 V
-10 -8 V
-11 -11 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -11 V
-10 -8 V
-10 -11 V
-10 -8 V
-11 -10 V
-10 -9 V
-10 -10 V
-10 -8 V
-10 -11 V
-10 -8 V
-10 -10 V
-10 -8 V
-11 -10 V
-10 -9 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -8 V
-10 -10 V
-10 -9 V
-11 -9 V
-10 -9 V
-10 -9 V
-10 -9 V
-10 -9 V
-10 -8 V
-10 -10 V
-10 -8 V
-11 -10 V
-10 -7 V
-10 -10 V
-10 -8 V
-10 -9 V
-10 -8 V
-10 -9 V
-10 -8 V
-11 -9 V
-10 -8 V
-10 -9 V
-10 -7 V
-10 -9 V
-10 -8 V
-10 -9 V
-10 -7 V
-10 -9 V
-11 -7 V
-10 -9 V
-10 -7 V
-10 -9 V
-10 -7 V
-10 -8 V
-10 -7 V
-10 -9 V
-11 -7 V
-10 -8 V
-10 -7 V
-10 -8 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -8 V
-11 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -7 V
-11 -7 V
-10 -7 V
-10 -6 V
-stroke 3894 1594 M
-10 -7 V
-10 -6 V
-10 -7 V
-10 -6 V
-10 -7 V
-11 -6 V
-10 -7 V
-10 -6 V
-10 -7 V
-10 -5 V
-10 -7 V
-10 -6 V
-10 -6 V
-11 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -7 V
-10 -5 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-11 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -5 V
-11 -4 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -5 V
-11 -4 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -5 V
-10 -4 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-stroke 4947 1119 M
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-stroke 5999 907 M
-11 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-stroke
-LT3
-LC3 setrgbcolor
-LTb
-LCb setrgbcolor
-LT3
-LC3 setrgbcolor
-6015 3943 M
-591 0 V
-1808 3834 M
-11 -57 V
-10 -52 V
-10 -51 V
-10 -49 V
-10 -48 V
-10 -46 V
-10 -46 V
-10 -43 V
-11 -44 V
-10 -40 V
-10 -41 V
-10 -39 V
-10 -39 V
-10 -37 V
-10 -37 V
-10 -34 V
-11 -36 V
-10 -33 V
-10 -33 V
-10 -32 V
-10 -32 V
-10 -29 V
-10 -31 V
-10 -28 V
-11 -29 V
-10 -27 V
-10 -28 V
-10 -26 V
-10 -26 V
-10 -25 V
-10 -25 V
-10 -23 V
-11 -25 V
-10 -22 V
-10 -23 V
-10 -21 V
-10 -22 V
-10 -20 V
-10 -20 V
-10 -19 V
-11 -20 V
-10 -18 V
-10 -19 V
-10 -17 V
-10 -18 V
-10 -16 V
-10 -16 V
-10 -16 V
-10 -15 V
-11 -15 V
-10 -15 V
-10 -13 V
-10 -14 V
-10 -13 V
-10 -13 V
-10 -12 V
-10 -12 V
-11 -11 V
-10 -12 V
-10 -10 V
-10 -11 V
-10 -9 V
-10 -10 V
-10 -9 V
-10 -9 V
-11 -9 V
-10 -8 V
-10 -8 V
-10 -8 V
-10 -7 V
-10 -7 V
-10 -7 V
-10 -6 V
-11 -6 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-11 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -4 V
-10 -2 V
-10 -4 V
-stroke 2841 1973 M
-10 -3 V
-10 -4 V
-10 -2 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-11 -3 V
-10 -5 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-11 -4 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-11 -5 V
-10 -6 V
-10 -4 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -4 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -7 V
-10 -5 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -6 V
-10 -5 V
-10 -6 V
-10 -6 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -6 V
-10 -5 V
-11 -5 V
-10 -5 V
-10 -6 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -6 V
-10 -4 V
-11 -6 V
-10 -4 V
-10 -6 V
-stroke 3894 1453 M
-10 -5 V
-10 -5 V
-10 -4 V
-10 -6 V
-10 -4 V
-11 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-11 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-11 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-11 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -3 V
-stroke 4947 1072 M
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-stroke 5999 888 M
-11 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-stroke
-LT4
-LC4 setrgbcolor
-LTb
-LCb setrgbcolor
-LT4
-LC4 setrgbcolor
-6015 3723 M
-591 0 V
-1808 1998 M
-11 79 V
-10 -13 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-11 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -9 V
-10 -12 V
-10 -8 V
-10 -12 V
-11 -9 V
-10 -11 V
-10 -9 V
-10 -11 V
-10 -8 V
-10 -12 V
-10 -8 V
-10 -11 V
-11 -8 V
-10 -11 V
-10 -7 V
-10 -12 V
-10 -7 V
-10 -11 V
-10 -6 V
-10 -11 V
-11 -6 V
-10 -11 V
-10 -5 V
-10 -11 V
-10 -5 V
-10 -10 V
-10 -5 V
-10 -9 V
-11 -5 V
-10 -9 V
-10 -4 V
-10 -9 V
-10 -3 V
-10 -9 V
-10 -2 V
-10 -8 V
-10 -3 V
-11 -7 V
-10 -2 V
-10 -7 V
-10 -1 V
-10 -6 V
-10 -1 V
-10 -5 V
-10 -1 V
-11 -5 V
-10 1 V
-10 -5 V
-10 1 V
-10 -4 V
-10 1 V
-10 -3 V
-10 1 V
-11 -3 V
-10 3 V
-10 -3 V
-10 3 V
-10 -3 V
-10 4 V
-10 -2 V
-10 3 V
-11 -1 V
-10 3 V
-10 -1 V
-10 4 V
-10 0 V
-10 4 V
-10 -1 V
-10 4 V
-11 0 V
-10 4 V
-10 0 V
-10 5 V
-10 0 V
-10 4 V
-10 0 V
-10 5 V
-11 0 V
-10 4 V
-10 0 V
-10 5 V
-10 0 V
-10 4 V
-10 0 V
-10 4 V
-11 0 V
-10 4 V
-10 0 V
-10 3 V
-10 0 V
-stroke 2841 1665 M
-10 3 V
-10 0 V
-10 3 V
-11 0 V
-10 2 V
-10 0 V
-10 2 V
-10 -1 V
-10 3 V
-10 -1 V
-10 2 V
-10 -2 V
-11 2 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -2 V
-10 1 V
-10 -2 V
-11 1 V
-10 -3 V
-10 0 V
-10 -2 V
-10 0 V
-10 -3 V
-10 0 V
-10 -3 V
-11 -1 V
-10 -3 V
-10 -1 V
-10 -3 V
-10 -1 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -4 V
-10 -2 V
-10 -4 V
-10 -2 V
-10 -4 V
-11 -2 V
-10 -5 V
-10 -2 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -5 V
-11 -2 V
-10 -5 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -5 V
-11 -3 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-10 -5 V
-11 -3 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-11 -5 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -4 V
-11 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-11 -5 V
-10 -4 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -4 V
-10 -4 V
-10 -4 V
-11 -5 V
-10 -4 V
-10 -4 V
-stroke 3894 1380 M
-10 -4 V
-10 -4 V
-10 -4 V
-10 -5 V
-10 -3 V
-11 -5 V
-10 -3 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -3 V
-10 -5 V
-10 -3 V
-11 -5 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -4 V
-10 -3 V
-11 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-11 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -4 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -3 V
-11 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-11 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -3 V
-11 -2 V
-stroke 4947 1047 M
-10 -2 V
-10 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-11 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -2 V
-stroke 5999 876 M
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-stroke
-LT5
-LC5 setrgbcolor
-LTb
-LCb setrgbcolor
-LT5
-LC5 setrgbcolor
-6015 3503 M
-591 0 V
-1808 762 M
-11 74 V
-10 0 V
-10 2 V
-10 0 V
-10 3 V
-10 0 V
-10 3 V
-10 1 V
-11 3 V
-10 1 V
-10 3 V
-10 1 V
-10 3 V
-10 1 V
-10 4 V
-10 0 V
-11 4 V
-10 0 V
-10 4 V
-10 0 V
-10 3 V
-10 0 V
-10 4 V
-10 -1 V
-11 4 V
-10 -1 V
-10 3 V
-10 0 V
-10 2 V
-10 -1 V
-10 3 V
-10 -1 V
-11 2 V
-10 -1 V
-10 2 V
-10 -1 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-11 1 V
-10 -2 V
-10 1 V
-10 -2 V
-10 1 V
-10 -3 V
-10 1 V
-10 -3 V
-10 1 V
-11 -3 V
-10 1 V
-10 -3 V
-10 0 V
-10 -3 V
-10 0 V
-10 -3 V
-10 0 V
-11 -4 V
-10 0 V
-10 -4 V
-10 0 V
-10 -3 V
-10 -1 V
-10 -4 V
-10 0 V
-11 -4 V
-10 0 V
-10 -4 V
-10 -1 V
-10 -4 V
-10 0 V
-10 -4 V
-10 -1 V
-11 -4 V
-10 -1 V
-10 -3 V
-10 -1 V
-10 -4 V
-10 -1 V
-10 -3 V
-10 -2 V
-11 -3 V
-10 -1 V
-10 -3 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -2 V
-10 -1 V
-10 -2 V
-10 -2 V
-11 -2 V
-10 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-stroke 2841 778 M
-10 -2 V
-10 -1 V
-10 -1 V
-11 -1 V
-10 -2 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 0 V
-10 -1 V
-10 0 V
-11 -1 V
-10 -1 V
-10 0 V
-10 0 V
-10 -1 V
-10 0 V
-10 -1 V
-10 0 V
-11 -1 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 0 V
-11 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 -1 V
-10 1 V
-11 -1 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-11 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-11 -2 V
-10 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 2 V
-10 -2 V
-11 2 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-11 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 1 V
-10 -2 V
-10 2 V
-stroke 3894 746 M
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-11 2 V
-10 -2 V
-10 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 1 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-11 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-11 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-11 -2 V
-10 1 V
-10 -2 V
-10 2 V
-10 -2 V
-10 2 V
-10 -2 V
-10 1 V
-11 -1 V
-10 1 V
-10 -2 V
-10 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-11 -2 V
-10 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 2 V
-11 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-11 -2 V
-10 2 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-11 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-11 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-11 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-11 1 V
-stroke 4947 730 M
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-11 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-11 1 V
-10 -1 V
-10 1 V
-10 -2 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 -1 V
-11 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-11 1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-11 0 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-11 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-11 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 -1 V
-10 1 V
-11 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-stroke 5999 713 M
-11 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 1 V
-10 -1 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 -1 V
-11 1 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 -1 V
-11 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 -1 V
-10 1 V
-10 -1 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-10 0 V
-11 0 V
-10 0 V
-10 0 V
-10 0 V
-stroke
-1.000 UL
-LTb
-LCb setrgbcolor
-1606 4776 N
-0 -4072 V
-5264 0 V
-0 4072 V
--5264 0 V
-Z stroke
-1.000 UP
-1.000 UL
-LTb
-stroke
-grestore
-end
+%%Page: 1 1
+%%BeginPageSetup
+%%PageBoundingBox: 0 0 360 252
+%%EndPageSetup
+q 0 0 360 252 rectclip q
+0 g
+0.5 w
+0 J
+0 j
+[] 0.0 d
+10 M 80.301 35.199 m 83.449 35.199 l 343.5 35.199 m 340.352 35.199 l S
+80.301 69.148 m 83.449 69.148 l 343.5 69.148 m 340.352 69.148 l 80.301 
+103.051 m 83.449 103.051 l 343.5 103.051 m 340.352 103.051 l 80.301 137 
+m 83.449 137 l 343.5 137 m 340.352 137 l 80.301 170.949 m 83.449 
+170.949 l 343.5 170.949 m 340.352 170.949 l 80.301 204.852 m 83.449 
+204.852 l 343.5 204.852 m 340.352 204.852 l 80.301 238.801 m 83.449 
+238.801 l 343.5 238.801 m 340.352 238.801 l 80.301 35.199 m 80.301 
+38.352 l 80.301 238.801 m 80.301 235.648 l 130.898 35.199 m 130.898 
+38.352 l 130.898 238.801 m 130.898 235.648 l 181.551 35.199 m 181.551 
+38.352 l 181.551 238.801 m 181.551 235.648 l 232.148 35.199 m 232.148 
+38.352 l 232.148 238.801 m 232.148 235.648 l 282.75 35.199 m 282.75 
+38.352 l 282.75 238.801 m 282.75 235.648 l 333.398 35.199 m 333.398 
+38.352 l 333.398 238.801 m 333.398 235.648 l S
+80.301 238.801 263.199 -203.602 re S
+0.843137 0 0 rg
+1 w
+300.75 230.148 m 330.301 230.148 l 90.898 238.801 m 90.949 238.699 l 
+91.449 236 l 91.949 233.199 l 92.449 230.699 l 92.949 228.102 l 93.449 
+225.801 l 93.949 223.352 l 94.449 221.199 l 95 218.898 l 95.5 216.898 l 
+96 214.75 l 96.5 212.898 l 97 210.852 l 97.5 209.102 l 98 207.199 l 
+98.5 205.551 l 99.051 203.75 l 99.551 202.25 l 100.051 200.5 l 100.551 
+199.051 l 101.051 197.449 l 101.551 196.102 l 102.051 194.551 l 102.551 
+193.25 l 103.102 191.801 l 103.602 190.602 l 104.102 189.199 l 104.602 
+188.051 l 105.102 186.699 l 105.602 185.648 l 106.102 184.352 l 106.602 
+183.301 l 107.148 182.102 l 107.648 181.102 l 108.148 179.898 l 108.648 
+179 l 109.148 177.852 l 109.648 177 l 110.148 175.898 l 110.648 175.051 
+l 111.199 174 l 111.699 173.199 l 112.199 172.199 l 112.699 171.449 l 
+113.199 170.449 l 113.699 169.699 l 114.199 168.75 l 114.699 168.051 l 
+115.199 167.102 l 115.75 166.449 l 116.25 165.551 l 116.75 164.898 l 
+117.25 164 l 117.75 163.398 l 118.25 162.551 l 118.75 161.949 l 119.25 
+161.102 l 119.801 160.5 l 120.301 159.699 l 120.801 159.148 l 121.301 
+158.352 l 121.801 157.801 l 122.301 157 l 122.801 156.5 l 123.301 
+155.75 l 123.852 155.199 l 124.352 154.449 l 124.852 153.949 l 125.352 
+153.25 l 125.852 152.75 l 126.352 152 l 126.852 151.551 l 127.352 
+150.852 l 127.898 150.352 l 128.398 149.648 l 128.898 149.199 l 129.398 
+148.5 l 129.898 148.051 l 130.398 147.398 l 130.898 146.949 l 131.398 
+146.25 l 131.949 145.852 l 132.449 145.148 l 132.949 144.699 l 133.449 
+144.051 l 133.949 143.648 l 134.449 143 l 134.949 142.551 l 135.449 
+141.898 l 136 141.449 l 136.5 140.852 l 137 140.398 l 137.5 139.75 l 
+138 139.352 l 138.5 138.699 l 139 138.301 l 139.5 137.648 l 140.051 
+137.199 l 140.551 136.602 l 141.051 136.148 l 141.551 135.551 l 142.051 
+135.102 l S
+142.051 135.102 m 142.551 134.5 l 143.051 134.051 l 143.551 133.449 l 
+144.102 133 l 144.602 132.398 l 145.102 131.949 l 145.602 131.352 l 
+146.102 130.898 l 146.602 130.25 l 147.102 129.801 l 147.602 129.199 l 
+148.102 128.75 l 148.648 128.148 l 149.148 127.699 l 149.648 127.102 l 
+150.148 126.648 l 150.648 126.051 l 151.148 125.602 l 151.648 125 l 
+152.148 124.5 l 152.699 123.898 l 153.199 123.449 l 153.699 122.852 l 
+154.199 122.398 l 154.699 121.801 l 155.199 121.352 l 155.699 120.75 l 
+157.25 119.199 l 157.75 118.602 l 158.25 118.148 l 158.75 117.551 l 
+159.25 117.102 l 159.75 116.5 l 160.25 116.051 l 160.801 115.449 l 
+161.301 115 l 161.801 114.449 l 162.301 113.949 l 162.801 113.398 l 
+163.301 112.898 l 163.801 112.352 l 164.301 111.898 l 164.852 111.301 l 
+165.352 110.852 l 165.852 110.301 l 166.352 109.852 l 166.852 109.301 l 
+168.352 107.801 l 168.898 107.301 l 170.898 105.301 l 171.398 104.852 l 
+171.898 104.301 l 172.398 103.852 l 172.949 103.352 l 173.449 102.898 l 
+173.949 102.398 l 174.449 101.949 l 174.949 101.449 l 175.449 101 l 
+175.949 100.5 l 176.449 100.102 l 177 99.602 l 177.5 99.148 l 178 
+98.648 l 178.5 98.25 l 179 97.75 l 179.5 97.352 l 180 96.852 l 180.5 
+96.449 l 181 96 l 181.551 95.551 l 182.051 95.102 l 182.551 94.699 l 
+183.051 94.25 l 183.551 93.852 l 184.051 93.398 l 184.551 93 l 185.051 
+92.551 l 185.602 92.148 l 186.102 91.699 l 186.602 91.352 l 187.102 
+90.898 l 188.102 90.102 l 188.602 89.699 l 189.102 89.301 l 189.648 
+88.898 l 190.148 88.5 l 190.648 88.148 l 191.648 87.352 l 192.148 
+86.949 l 192.648 86.602 l 193.148 86.199 l 193.699 85.852 l 194.699 
+85.148 l S
+194.699 85.148 m 195.199 84.75 l 195.699 84.398 l 196.199 84.051 l 
+196.699 83.699 l 197.199 83.301 l 197.75 83 l 198.25 82.602 l 198.75 
+82.301 l 199.25 81.949 l 199.75 81.602 l 200.25 81.25 l 200.75 80.949 l 
+201.25 80.602 l 201.801 80.25 l 202.301 79.949 l 202.801 79.602 l 
+203.301 79.301 l 203.801 78.949 l 204.301 78.648 l 204.801 78.352 l 
+205.301 78 l 205.852 77.699 l 206.352 77.398 l 206.852 77.102 l 208.852 
+75.898 l 209.352 75.602 l 209.898 75.301 l 210.398 75 l 210.898 74.75 l 
+211.898 74.148 l 212.398 73.852 l 212.898 73.602 l 213.398 73.301 l 
+213.898 73.051 l 214.449 72.75 l 215.449 72.25 l 215.949 71.949 l 
+217.949 70.949 l 218.5 70.648 l 221.5 69.148 l 222 68.949 l 222.551 
+68.699 l 223.551 68.199 l 224.051 68 l 225.051 67.5 l 225.551 67.301 l 
+226.051 67.051 l 226.602 66.852 l 227.102 66.602 l 227.602 66.398 l 
+228.102 66.148 l 228.602 65.949 l 229.102 65.699 l 230.102 65.301 l 
+230.648 65.102 l 231.148 64.852 l 231.648 64.648 l 233.648 63.852 l 
+234.148 63.648 l 234.699 63.449 l 236.199 62.852 l 236.699 62.648 l 
+238.199 62.051 l 238.75 61.898 l 239.75 61.5 l 240.25 61.352 l 240.75 
+61.148 l 241.25 60.949 l 241.75 60.801 l 242.25 60.602 l 242.801 60.398 
+l 243.301 60.25 l 243.801 60.051 l 244.301 59.898 l 244.801 59.75 l 
+245.301 59.551 l 245.801 59.398 l 246.301 59.199 l 246.801 59.051 l 
+247.352 58.898 l S
+247.352 58.898 m 247.852 58.699 l 248.352 58.551 l 248.852 58.398 l 
+249.852 58.102 l 250.352 57.898 l 250.852 57.75 l 251.398 57.602 l 
+251.898 57.449 l 252.398 57.301 l 252.898 57.148 l 253.898 56.852 l 
+254.398 56.699 l 254.898 56.551 l 255.449 56.398 l 256.449 56.102 l 
+256.949 55.949 l 257.449 55.801 l 257.949 55.699 l 258.449 55.551 l 
+258.949 55.398 l 259.5 55.25 l 260 55.102 l 260.5 55 l 261 54.852 l 
+261.5 54.699 l 262 54.602 l 262.5 54.449 l 263 54.301 l 263.551 54.199 
+l 264.051 54.051 l 264.551 53.949 l 265.051 53.801 l 265.551 53.648 l 
+266.051 53.551 l 266.551 53.398 l 267.051 53.301 l 267.602 53.148 l 
+268.102 53.051 l 268.602 52.949 l 269.102 52.801 l 269.602 52.699 l 
+270.102 52.551 l 270.602 52.449 l 271.102 52.352 l 271.648 52.199 l 
+272.148 52.102 l 272.648 52 l 273.148 51.852 l 274.148 51.648 l 274.648 
+51.551 l 275.148 51.398 l 275.699 51.301 l 276.199 51.199 l 276.699 
+51.102 l 277.699 50.898 l 278.199 50.75 l 278.699 50.648 l 279.199 
+50.551 l 279.699 50.449 l 280.25 50.352 l 281.25 50.148 l 281.75 50.051 
+l 282.25 49.949 l 282.75 49.852 l 283.75 49.648 l 284.301 49.551 l 
+284.801 49.449 l 285.301 49.352 l 285.801 49.25 l 286.301 49.199 l 
+286.801 49.102 l 287.801 48.898 l 288.352 48.801 l 288.852 48.699 l 
+289.352 48.602 l 289.852 48.551 l 290.352 48.449 l 290.852 48.352 l 
+291.352 48.25 l 291.852 48.199 l 292.398 48.102 l 293.398 47.898 l 
+293.898 47.852 l 294.898 47.648 l 295.398 47.602 l 295.898 47.5 l 
+296.449 47.398 l 296.949 47.352 l 297.449 47.25 l 297.949 47.199 l 
+298.449 47.102 l 298.949 47 l 299.449 46.949 l 299.949 46.852 l S
+299.949 46.852 m 300.5 46.801 l 301 46.699 l 301.5 46.648 l 302 46.551 
+l 302.5 46.5 l 303 46.398 l 303.5 46.352 l 304 46.25 l 304.551 46.199 l 
+305.051 46.102 l 305.551 46.051 l 306.051 45.949 l 306.551 45.898 l 
+307.051 45.801 l 308.051 45.699 l 308.602 45.602 l 309.102 45.551 l 
+309.602 45.449 l 310.102 45.398 l 310.602 45.352 l 311.102 45.25 l 
+312.102 45.148 l 312.602 45.051 l 313.148 45 l 314.148 44.898 l 314.648 
+44.801 l 315.648 44.699 l 316.148 44.602 l 316.648 44.551 l 317.199 
+44.5 l 318.199 44.398 l 318.699 44.301 l 320.199 44.148 l 320.699 
+44.102 l 321.25 44 l 322.25 43.898 l 322.75 43.852 l 324.25 43.699 l 
+324.75 43.602 l 325.301 43.551 l 326.801 43.398 l 327.301 43.352 l 
+328.801 43.199 l 329.352 43.148 l 329.852 43.102 l 331.852 42.898 l 
+332.352 42.852 l 332.852 42.801 l 333.398 42.75 l 334.398 42.648 l 
+334.898 42.602 l 336.898 42.398 l 337.449 42.352 l 339.449 42.148 l 
+339.949 42.102 l 340.449 42.051 l 340.949 42.051 l 341.5 42 l 342.5 
+41.898 l 343 41.852 l S
+0 0.337255 0.423529 rg
+[ 24 1] 0 d
+4 M 300.75 219.148 m 330.301 219.148 l 90.398 238.148 m 90.949 235.148 l 
+91.449 232.398 l 91.949 229.551 l 92.449 227 l 92.949 224.352 l 93.449 
+221.949 l 93.949 219.449 l 94.449 217.25 l 95 214.898 l 95.5 212.852 l 
+96 210.648 l 96.5 208.699 l 97 206.648 l 97.5 204.852 l 98 202.898 l 
+98.5 201.199 l 99.051 199.352 l 99.551 197.801 l 100.051 196 l 100.551 
+194.551 l 101.051 192.898 l 101.551 191.5 l 102.051 189.898 l 102.551 
+188.602 l 103.102 187.102 l 103.602 185.898 l 104.102 184.449 l 104.602 
+183.301 l 105.102 181.949 l 105.602 180.852 l 106.102 179.551 l 106.602 
+178.5 l 107.148 177.25 l 107.648 176.301 l 108.148 175.102 l 108.648 
+174.199 l 109.148 173.051 l 109.648 172.199 l 110.148 171.051 l 110.648 
+170.25 l 111.199 169.199 l 111.699 168.398 l 112.199 167.398 l 112.699 
+166.648 l 113.199 165.648 l 113.699 164.949 l 114.199 164 l 114.699 
+163.352 l 115.199 162.449 l 115.75 161.801 l 116.25 160.898 l 116.75 
+160.301 l 117.25 159.449 l 117.75 158.852 l 118.25 158 l 118.75 157.449 
+l 119.25 156.648 l 119.801 156.102 l 120.301 155.352 l 120.801 154.801 
+l 121.301 154.051 l 121.801 153.551 l 122.301 152.801 l 122.801 152.352 
+l 123.301 151.602 l 123.852 151.148 l 124.352 150.449 l 124.852 150 l 
+125.352 149.301 l 125.852 148.852 l 126.352 148.148 l 126.852 147.75 l 
+127.352 147.051 l 127.898 146.648 l 128.398 146 l 128.898 145.602 l 
+129.398 144.949 l 129.898 144.551 l 130.398 143.898 l 130.898 143.5 l 
+131.398 142.898 l 131.949 142.5 l 132.449 141.852 l 132.949 141.5 l 
+133.449 140.852 l 133.949 140.5 l 134.449 139.898 l 134.949 139.5 l 
+135.449 138.898 l 136 138.5 l 136.5 137.898 l 137 137.551 l 137.5 
+136.949 l 138 136.551 l 138.5 136 l 139 135.602 l 139.5 135 l 140.051 
+134.602 l 140.551 134.051 l 141.051 133.648 l 141.551 133.051 l 142.051 
+132.648 l S
+[ 24 1] 0 d
+142.051 132.648 m 142.551 132.102 l 143.051 131.699 l 143.551 131.102 l 
+144.102 130.699 l 144.602 130.148 l 145.102 129.75 l 145.602 129.148 l 
+146.102 128.75 l 146.602 128.199 l 147.102 127.75 l 147.602 127.199 l 
+148.102 126.801 l 148.648 126.199 l 149.148 125.801 l 149.648 125.199 l 
+150.148 124.801 l 150.648 124.199 l 151.148 123.801 l 151.648 123.199 l 
+152.148 122.801 l 152.699 122.199 l 153.199 121.75 l 153.699 121.199 l 
+154.199 120.75 l 154.699 120.199 l 155.199 119.75 l 155.699 119.199 l 
+156.199 118.75 l 156.75 118.199 l 157.25 117.75 l 157.75 117.148 l 
+158.25 116.699 l 158.75 116.148 l 159.25 115.699 l 159.75 115.148 l 
+160.25 114.699 l 160.801 114.148 l 161.301 113.699 l 161.801 113.148 l 
+162.301 112.699 l 162.801 112.148 l 163.301 111.699 l 163.801 111.148 l 
+164.301 110.699 l 164.852 110.148 l 165.352 109.699 l 165.852 109.148 l 
+166.352 108.699 l 166.852 108.199 l 167.352 107.75 l 167.852 107.199 l 
+168.352 106.75 l 168.898 106.25 l 169.398 105.801 l 169.898 105.25 l 
+170.398 104.852 l 170.898 104.301 l 171.398 103.898 l 171.898 103.352 l 
+172.398 102.949 l 172.949 102.449 l 173.449 102 l 173.949 101.5 l 
+174.449 101.051 l 174.949 100.551 l 175.449 100.148 l 175.949 99.648 l 
+176.449 99.25 l 177 98.75 l 177.5 98.352 l 178 97.852 l 178.5 97.449 l 
+179 96.949 l 179.5 96.551 l 180 96.102 l 180.5 95.699 l 181 95.25 l 
+181.551 94.801 l 182.051 94.352 l 182.551 93.949 l 183.051 93.5 l 
+183.551 93.148 l 184.051 92.699 l 184.551 92.301 l 185.051 91.852 l 
+185.602 91.5 l 186.102 91.051 l 186.602 90.648 l 187.602 89.852 l 
+188.102 89.449 l 188.602 89.102 l 189.102 88.648 l 189.648 88.301 l 
+190.148 87.898 l 190.648 87.551 l 191.148 87.148 l 191.648 86.801 l 
+192.148 86.398 l 192.648 86.051 l 193.148 85.648 l 193.699 85.301 l 
+194.199 84.898 l 194.699 84.551 l S
+[ 24 1] 0 d
+194.699 84.551 m 195.199 84.199 l 195.699 83.852 l 196.699 83.148 l 
+197.199 82.801 l 197.75 82.449 l 198.25 82.102 l 199.25 81.398 l 199.75 
+81.102 l 200.25 80.75 l 200.75 80.449 l 201.25 80.102 l 201.801 79.801 
+l 202.301 79.449 l 202.801 79.148 l 203.301 78.801 l 204.801 77.898 l 
+205.301 77.551 l 205.852 77.25 l 206.852 76.648 l 207.352 76.352 l 
+209.352 75.148 l 209.898 74.898 l 210.398 74.602 l 210.898 74.301 l 
+211.398 74.051 l 212.398 73.449 l 212.898 73.199 l 213.398 72.898 l 
+213.898 72.648 l 214.449 72.398 l 214.949 72.102 l 216.949 71.102 l 
+217.449 70.801 l 217.949 70.551 l 218.5 70.301 l 221.5 68.801 l 222 
+68.602 l 222.551 68.352 l 223.551 67.852 l 224.051 67.648 l 224.551 
+67.398 l 225.051 67.199 l 225.551 66.949 l 226.051 66.75 l 226.602 66.5 
+l 227.102 66.301 l 227.602 66.051 l 228.102 65.852 l 228.602 65.648 l 
+229.102 65.398 l 230.102 65 l 230.648 64.75 l 231.648 64.352 l 232.148 
+64.148 l 234.148 63.352 l 234.699 63.148 l 236.699 62.352 l 237.199 
+62.199 l 238.199 61.801 l 238.75 61.602 l 239.25 61.449 l 240.25 61.051 
+l 240.75 60.898 l 241.75 60.5 l 242.25 60.352 l 242.801 60.148 l 
+243.801 59.852 l 244.301 59.648 l 244.801 59.5 l 245.301 59.301 l 
+245.801 59.148 l 246.301 59 l 246.801 58.801 l 247.352 58.648 l S
+[ 24 1] 0 d
+247.352 58.648 m 248.352 58.352 l 248.852 58.148 l 249.852 57.852 l 
+250.352 57.699 l 250.852 57.551 l 251.398 57.398 l 252.398 57.102 l 
+252.898 56.898 l 253.398 56.801 l 253.898 56.648 l 254.898 56.352 l 
+255.449 56.199 l 255.949 56.051 l 256.449 55.898 l 257.449 55.602 l 
+257.949 55.449 l 258.449 55.352 l 258.949 55.199 l 259.5 55.051 l 260 
+54.898 l 260.5 54.801 l 261 54.648 l 261.5 54.5 l 262 54.398 l 263 
+54.102 l 263.551 54 l 264.051 53.852 l 264.551 53.75 l 265.051 53.602 l 
+265.551 53.5 l 266.051 53.352 l 266.551 53.25 l 267.051 53.102 l 
+267.602 53 l 268.102 52.852 l 269.102 52.648 l 269.602 52.5 l 270.102 
+52.398 l 270.602 52.301 l 271.102 52.148 l 271.648 52.051 l 272.148 
+51.949 l 272.648 51.801 l 273.148 51.699 l 273.648 51.602 l 274.148 
+51.5 l 274.648 51.352 l 275.148 51.25 l 275.699 51.148 l 276.199 51.051 
+l 276.699 50.949 l 277.199 50.852 l 277.699 50.75 l 278.199 50.602 l 
+279.199 50.398 l 279.699 50.301 l 280.25 50.199 l 280.75 50.102 l 
+281.75 49.898 l 282.25 49.801 l 282.75 49.699 l 283.25 49.602 l 283.75 
+49.5 l 284.301 49.398 l 284.801 49.301 l 285.301 49.25 l 285.801 49.148 
+l 286.301 49.051 l 286.801 48.949 l 287.301 48.852 l 287.801 48.75 l 
+288.352 48.648 l 288.852 48.602 l 289.852 48.398 l 290.352 48.301 l 
+290.852 48.25 l 291.352 48.148 l 291.852 48.051 l 292.398 47.949 l 
+292.898 47.898 l 293.398 47.801 l 293.898 47.699 l 294.398 47.648 l 
+294.898 47.551 l 295.398 47.449 l 295.898 47.398 l 296.449 47.301 l 
+296.949 47.199 l 297.449 47.148 l 297.949 47.051 l 298.449 47 l 298.949 
+46.898 l 299.449 46.801 l 299.949 46.75 l S
+[ 24 1] 0 d
+299.949 46.75 m 300.5 46.648 l 301 46.602 l 301.5 46.5 l 302 46.449 l 
+302.5 46.352 l 303 46.301 l 303.5 46.199 l 304 46.148 l 304.551 46.051 
+l 305.551 45.949 l 306.051 45.852 l 306.551 45.801 l 307.051 45.699 l 
+307.551 45.648 l 308.051 45.602 l 308.602 45.5 l 309.102 45.449 l 
+309.602 45.352 l 310.602 45.25 l 311.102 45.148 l 311.602 45.102 l 
+312.102 45.051 l 312.602 44.949 l 313.148 44.898 l 313.648 44.852 l 
+314.148 44.801 l 314.648 44.699 l 315.148 44.648 l 315.648 44.602 l 
+316.148 44.551 l 316.648 44.449 l 317.199 44.398 l 317.699 44.352 l 
+318.699 44.25 l 319.199 44.148 l 319.699 44.102 l 320.699 44 l 321.25 
+43.949 l 321.75 43.898 l 322.25 43.801 l 323.75 43.648 l 324.25 43.602 
+l 324.75 43.551 l 325.301 43.5 l 326.301 43.398 l 326.801 43.301 l 
+328.301 43.148 l 328.801 43.102 l 329.352 43.051 l 330.852 42.898 l 
+331.352 42.852 l 332.852 42.699 l 333.398 42.648 l 333.898 42.602 l 
+335.898 42.398 l 336.398 42.352 l 336.898 42.301 l 337.449 42.301 l 
+338.949 42.148 l 339.449 42.102 l 340.949 41.949 l 341.5 41.898 l 342 
+41.852 l 342.5 41.852 l 343 41.801 l S
+0 0.47451 0.141176 rg
+[ 6 6] 0 d
+300.75 208.148 m 330.301 208.148 l 90.398 207.75 m 90.949 205.398 l 
+91.449 203.25 l 91.949 201 l 92.449 199.051 l 92.949 196.898 l 93.449 
+195.102 l 93.949 193.102 l 94.449 191.398 l 95 189.551 l 95.5 188 l 96 
+186.25 l 96.5 184.801 l 97 183.148 l 97.5 181.801 l 98 180.25 l 98.5 
+179 l 99.051 177.5 l 99.551 176.352 l 100.051 174.949 l 100.551 173.852 
+l 101.051 172.5 l 101.551 171.5 l 102.051 170.25 l 102.551 169.301 l 
+103.102 168.051 l 103.602 167.199 l 104.102 166 l 104.602 165.199 l 
+105.102 164.102 l 105.602 163.301 l 106.102 162.25 l 106.602 161.5 l 
+107.148 160.5 l 107.648 159.801 l 108.148 158.801 l 108.648 158.148 l 
+109.148 157.199 l 109.648 156.602 l 110.148 155.699 l 110.648 155.102 l 
+111.199 154.25 l 111.699 153.699 l 112.199 152.852 l 112.699 152.301 l 
+113.199 151.5 l 113.699 151 l 114.199 150.199 l 114.699 149.699 l 
+115.199 148.949 l 115.75 148.5 l 116.25 147.75 l 116.75 147.301 l 
+117.25 146.551 l 117.75 146.148 l 118.25 145.449 l 118.75 145.051 l 
+119.25 144.352 l 119.801 143.949 l 120.301 143.301 l 120.801 142.898 l 
+121.301 142.25 l 121.801 141.898 l 122.301 141.25 l 122.801 140.898 l 
+123.301 140.25 l 123.852 139.949 l 124.352 139.301 l 124.852 139 l 
+125.352 138.352 l 125.852 138.051 l 126.352 137.449 l 126.852 137.102 l 
+127.352 136.551 l 127.898 136.199 l 128.398 135.648 l 128.898 135.352 l 
+129.398 134.75 l 129.898 134.449 l 130.398 133.852 l 130.898 133.551 l 
+131.398 133 l 131.949 132.699 l 132.449 132.148 l 132.949 131.852 l 
+133.449 131.301 l 133.949 131 l 134.449 130.449 l 134.949 130.148 l 
+135.449 129.602 l 136 129.301 l 136.5 128.75 l 137 128.449 l 137.5 
+127.898 l 138 127.602 l 138.5 127.051 l 139 126.75 l 139.5 126.199 l 
+140.051 125.852 l 140.551 125.352 l 141.051 125 l 141.551 124.449 l 
+142.051 124.148 l S
+[ 6 6] 0 d
+142.051 124.148 m 142.551 123.602 l 143.051 123.25 l 143.551 122.75 l 
+144.102 122.398 l 144.602 121.852 l 145.102 121.5 l 145.602 121 l 
+146.102 120.648 l 146.602 120.102 l 147.102 119.75 l 147.602 119.199 l 
+148.102 118.852 l 148.648 118.301 l 149.148 117.949 l 149.648 117.398 l 
+150.148 117.051 l 150.648 116.5 l 151.148 116.102 l 151.648 115.602 l 
+152.148 115.199 l 152.699 114.648 l 153.199 114.301 l 153.699 113.75 l 
+154.199 113.352 l 154.699 112.801 l 155.199 112.398 l 155.699 111.898 l 
+156.199 111.5 l 156.75 110.949 l 157.25 110.551 l 157.75 110.051 l 
+158.25 109.648 l 158.75 109.102 l 159.25 108.699 l 159.75 108.148 l 
+160.25 107.75 l 160.801 107.25 l 161.301 106.801 l 161.801 106.301 l 
+162.301 105.898 l 162.801 105.352 l 163.301 104.949 l 163.801 104.449 l 
+164.301 104.051 l 164.852 103.551 l 165.352 103.102 l 165.852 102.602 l 
+166.352 102.199 l 166.852 101.699 l 167.352 101.301 l 167.852 100.801 l 
+168.352 100.352 l 168.898 99.898 l 170.898 98.102 l 171.398 97.699 l 
+171.898 97.199 l 172.398 96.801 l 172.949 96.301 l 173.449 95.949 l 
+173.949 95.449 l 174.449 95.051 l 174.949 94.602 l 175.449 94.199 l 
+175.949 93.75 l 176.449 93.352 l 177 92.898 l 177.5 92.5 l 178 92.051 l 
+178.5 91.699 l 179 91.25 l 179.5 90.852 l 180 90.398 l 180.5 90.051 l 
+181 89.602 l 181.551 89.25 l 182.051 88.801 l 182.551 88.449 l 183.051 
+88 l 183.551 87.648 l 184.051 87.25 l 184.551 86.898 l 185.051 86.449 l 
+185.602 86.102 l 186.102 85.699 l 186.602 85.352 l 187.102 84.949 l 
+187.602 84.602 l 188.602 83.898 l 189.102 83.5 l 189.648 83.148 l 
+190.148 82.801 l 190.648 82.449 l 191.148 82.102 l 192.148 81.398 l 
+192.648 81.051 l 193.148 80.699 l 193.699 80.352 l 194.199 80 l 194.699 
+79.699 l S
+[ 6 6] 0 d
+194.699 79.699 m 195.199 79.352 l 195.699 79.051 l 196.199 78.699 l 
+196.699 78.398 l 197.199 78.051 l 197.75 77.75 l 198.25 77.398 l 198.75 
+77.102 l 199.25 76.75 l 199.75 76.5 l 200.25 76.148 l 200.75 75.852 l 
+201.25 75.551 l 201.801 75.25 l 202.801 74.648 l 203.301 74.352 l 
+203.801 74.102 l 204.301 73.75 l 204.801 73.5 l 205.301 73.199 l 
+205.852 72.949 l 206.352 72.648 l 206.852 72.352 l 207.352 72.102 l 
+207.852 71.801 l 208.852 71.301 l 209.352 71 l 209.898 70.75 l 210.398 
+70.449 l 213.898 68.699 l 214.449 68.449 l 216.449 67.449 l 216.949 
+67.25 l 217.949 66.75 l 218.5 66.551 l 219.5 66.051 l 220 65.852 l 
+220.5 65.602 l 221 65.398 l 221.5 65.199 l 222 64.949 l 222.551 64.75 l 
+223.051 64.551 l 223.551 64.301 l 224.051 64.102 l 224.551 63.898 l 
+225.051 63.699 l 225.551 63.449 l 226.051 63.25 l 226.602 63.051 l 
+227.102 62.852 l 227.602 62.648 l 229.602 61.852 l 230.102 61.699 l 
+230.648 61.5 l 231.648 61.102 l 232.148 60.949 l 233.648 60.352 l 
+234.148 60.199 l 234.699 60 l 235.199 59.852 l 235.699 59.648 l 236.199 
+59.5 l 236.699 59.301 l 237.199 59.148 l 237.699 58.949 l 238.199 
+58.801 l 238.75 58.602 l 239.25 58.449 l 239.75 58.301 l 240.25 58.148 
+l 240.75 57.949 l 241.25 57.801 l 241.75 57.648 l 242.25 57.5 l 242.801 
+57.301 l 243.301 57.148 l 244.301 56.852 l 244.801 56.699 l 245.301 
+56.551 l 245.801 56.398 l 246.801 56.102 l 247.352 55.949 l S
+[ 6 6] 0 d
+247.352 55.949 m 247.852 55.801 l 248.352 55.648 l 249.352 55.352 l 
+249.852 55.199 l 250.352 55.102 l 250.852 54.949 l 251.398 54.801 l 
+251.898 54.648 l 252.398 54.551 l 252.898 54.398 l 253.898 54.102 l 
+254.398 54 l 254.898 53.852 l 255.449 53.75 l 255.949 53.602 l 256.449 
+53.449 l 256.949 53.352 l 257.449 53.199 l 257.949 53.102 l 258.449 
+52.949 l 258.949 52.852 l 259.5 52.699 l 260 52.602 l 260.5 52.5 l 261 
+52.352 l 261.5 52.25 l 262 52.102 l 263 51.898 l 263.551 51.75 l 
+264.051 51.648 l 264.551 51.551 l 265.051 51.398 l 265.551 51.301 l 
+266.051 51.199 l 266.551 51.102 l 267.051 51 l 267.602 50.852 l 268.602 
+50.648 l 269.102 50.551 l 269.602 50.449 l 270.102 50.352 l 271.102 
+50.148 l 271.648 50.051 l 272.148 49.949 l 272.648 49.852 l 273.148 
+49.699 l 273.648 49.648 l 274.148 49.551 l 274.648 49.449 l 275.148 
+49.352 l 275.699 49.25 l 276.199 49.148 l 276.699 49.051 l 277.199 
+48.949 l 277.699 48.852 l 278.699 48.648 l 279.199 48.602 l 279.699 
+48.5 l 280.25 48.398 l 280.75 48.301 l 281.25 48.199 l 281.75 48.148 l 
+282.25 48.051 l 282.75 47.949 l 283.25 47.852 l 283.75 47.801 l 284.301 
+47.699 l 284.801 47.602 l 285.301 47.5 l 285.801 47.449 l 286.301 
+47.352 l 286.801 47.301 l 287.301 47.199 l 287.801 47.102 l 288.352 
+47.051 l 288.852 46.949 l 289.352 46.852 l 289.852 46.801 l 290.352 
+46.699 l 290.852 46.648 l 291.352 46.551 l 291.852 46.5 l 292.398 
+46.398 l 292.898 46.352 l 293.398 46.25 l 293.898 46.199 l 294.398 
+46.102 l 294.898 46.051 l 295.398 45.949 l 295.898 45.898 l 296.449 
+45.801 l 297.449 45.699 l 297.949 45.602 l 298.449 45.551 l 298.949 
+45.449 l 299.449 45.398 l 299.949 45.352 l S
+[ 6 6] 0 d
+299.949 45.352 m 300.5 45.25 l 301.5 45.148 l 302 45.051 l 303 44.949 l 
+303.5 44.852 l 304 44.801 l 304.551 44.75 l 305.051 44.648 l 305.551 
+44.602 l 306.551 44.5 l 307.051 44.398 l 307.551 44.352 l 308.051 
+44.301 l 308.602 44.25 l 309.102 44.199 l 309.602 44.102 l 311.602 
+43.898 l 312.102 43.852 l 312.602 43.75 l 313.148 43.699 l 313.648 
+43.648 l 314.148 43.602 l 316.148 43.398 l 316.648 43.352 l 317.199 
+43.25 l 318.199 43.148 l 318.699 43.102 l 320.699 42.898 l 321.25 
+42.852 l 323.25 42.648 l 323.75 42.602 l 324.75 42.5 l 325.301 42.449 l 
+325.801 42.398 l 326.301 42.352 l 326.801 42.301 l 327.301 42.301 l 
+328.801 42.148 l 329.352 42.102 l 331.352 41.898 l 331.852 41.852 l 
+332.352 41.801 l 332.852 41.801 l 333.398 41.75 l 334.398 41.648 l 
+334.898 41.602 l 335.398 41.551 l 335.898 41.551 l 336.898 41.449 l 
+337.449 41.398 l 337.949 41.352 l 338.449 41.301 l 338.949 41.301 l 
+340.449 41.148 l 340.949 41.148 l 341.5 41.102 l 343 40.949 l S
+0.643137 0.247059 0.298039 rg
+[ 8 2 1 2] 0 d
+300.75 197.148 m 330.301 197.148 l 90.398 191.699 m 90.949 188.852 l 
+91.449 186.25 l 91.949 183.699 l 92.449 181.25 l 92.949 178.852 l 
+93.949 174.25 l 94.449 172.102 l 95.5 167.898 l 96 165.852 l 96.5 
+163.898 l 97 161.949 l 97.5 160.102 l 98 158.25 l 98.5 156.551 l 99.051 
+154.75 l 99.551 153.102 l 100.051 151.449 l 100.551 149.852 l 101.051 
+148.25 l 101.551 146.801 l 102.051 145.25 l 102.551 143.852 l 103.102 
+142.398 l 103.602 141.051 l 104.102 139.648 l 104.602 138.352 l 105.102 
+137.051 l 106.102 134.551 l 106.602 133.398 l 107.148 132.148 l 107.648 
+131.051 l 108.148 129.898 l 108.648 128.852 l 109.148 127.75 l 110.148 
+125.75 l 110.648 124.801 l 111.199 123.801 l 111.699 122.898 l 112.199 
+121.949 l 112.699 121.102 l 113.199 120.199 l 113.699 119.398 l 114.199 
+118.602 l 114.699 117.801 l 115.199 117.051 l 115.75 116.301 l 116.25 
+115.551 l 116.75 114.898 l 117.25 114.199 l 117.75 113.551 l 118.25 
+112.898 l 118.75 112.301 l 119.25 111.699 l 119.801 111.148 l 120.301 
+110.551 l 120.801 110.051 l 121.301 109.5 l 121.801 109.051 l 122.301 
+108.551 l 122.801 108.102 l 123.301 107.648 l 123.852 107.199 l 124.352 
+106.801 l 124.852 106.398 l 125.352 106 l 125.852 105.648 l 126.352 
+105.301 l 126.852 104.949 l 127.352 104.648 l 127.898 104.352 l 129.398 
+103.449 l 131.398 102.449 l 131.949 102.25 l 132.449 102 l 133.449 
+101.602 l 133.949 101.398 l 135.449 100.801 l 136 100.648 l 136.5 
+100.449 l 137 100.301 l 137.5 100.102 l 138 99.949 l 138.5 99.801 l 139 
+99.602 l 139.5 99.449 l 140.051 99.301 l 140.551 99.148 l 141.051 
+98.949 l 141.551 98.852 l 142.051 98.648 l S
+[ 8 2 1 2] 0 d
+142.051 98.648 m 142.551 98.5 l 143.051 98.301 l 143.551 98.199 l 
+144.102 98 l 144.602 97.852 l 145.102 97.648 l 145.602 97.5 l 146.102 
+97.301 l 146.602 97.148 l 147.102 96.949 l 147.602 96.801 l 148.102 
+96.602 l 148.648 96.449 l 149.148 96.199 l 149.648 96.051 l 150.148 
+95.852 l 150.648 95.648 l 152.148 95.051 l 152.699 94.852 l 153.199 
+94.602 l 153.699 94.398 l 154.199 94.148 l 154.699 93.949 l 155.199 
+93.699 l 155.699 93.5 l 156.199 93.25 l 156.75 93.051 l 160.25 91.301 l 
+160.801 91.051 l 161.301 90.75 l 161.801 90.551 l 162.301 90.25 l 
+162.801 90 l 163.301 89.699 l 163.801 89.5 l 164.301 89.199 l 164.852 
+88.949 l 165.352 88.648 l 165.852 88.398 l 166.352 88.102 l 166.852 
+87.852 l 168.352 86.949 l 168.898 86.699 l 169.398 86.398 l 169.898 
+86.148 l 170.398 85.852 l 170.898 85.602 l 171.398 85.25 l 171.898 85 l 
+172.398 84.699 l 172.949 84.449 l 173.449 84.148 l 173.949 83.852 l 
+174.449 83.551 l 174.949 83.301 l 176.449 82.398 l 177 82.148 l 177.5 
+81.852 l 178 81.602 l 179.5 80.699 l 180 80.449 l 180.5 80.148 l 181 
+79.898 l 181.551 79.602 l 182.051 79.352 l 183.551 78.449 l 184.051 
+78.199 l 184.551 77.898 l 185.051 77.648 l 185.602 77.398 l 186.102 
+77.102 l 187.102 76.602 l 187.602 76.301 l 188.102 76.051 l 188.602 
+75.75 l 189.102 75.5 l 189.648 75.25 l 190.148 75 l 190.648 74.699 l 
+192.148 73.949 l 192.648 73.648 l 193.148 73.449 l 193.699 73.148 l 
+194.199 72.949 l 194.699 72.648 l S
+[ 8 2 1 2] 0 d
+194.699 72.648 m 195.699 72.148 l 196.199 71.949 l 196.699 71.648 l 
+197.199 71.449 l 197.75 71.199 l 199.75 70.199 l 200.25 70 l 200.75 
+69.75 l 201.25 69.551 l 201.801 69.301 l 202.301 69.051 l 202.801 
+68.852 l 203.801 68.352 l 204.301 68.148 l 204.801 67.898 l 205.301 
+67.699 l 205.852 67.5 l 206.352 67.25 l 207.352 66.852 l 207.852 66.602 
+l 208.352 66.398 l 209.352 66 l 209.898 65.75 l 210.898 65.352 l 
+211.398 65.148 l 213.398 64.352 l 213.898 64.148 l 214.449 63.949 l 
+215.949 63.352 l 216.449 63.148 l 216.949 62.949 l 217.449 62.801 l 
+217.949 62.602 l 218.5 62.398 l 219 62.199 l 219.5 62.051 l 220 61.852 
+l 220.5 61.648 l 221 61.5 l 221.5 61.301 l 222 61.148 l 222.551 60.949 
+l 223.051 60.801 l 223.551 60.602 l 224.051 60.449 l 224.551 60.25 l 
+225.051 60.102 l 225.551 59.898 l 226.051 59.75 l 226.602 59.602 l 
+227.102 59.398 l 228.102 59.102 l 228.602 58.898 l 229.602 58.602 l 
+230.102 58.449 l 230.648 58.301 l 231.148 58.102 l 231.648 57.949 l 
+232.148 57.801 l 232.648 57.648 l 233.648 57.352 l 234.148 57.199 l 
+234.699 57.051 l 235.199 56.898 l 236.199 56.602 l 236.699 56.449 l 
+237.199 56.301 l 237.699 56.148 l 238.199 56.051 l 238.75 55.898 l 
+239.75 55.602 l 240.25 55.449 l 240.75 55.352 l 241.25 55.199 l 241.75 
+55.051 l 242.25 54.898 l 242.801 54.801 l 243.301 54.648 l 243.801 54.5 
+l 244.301 54.398 l 244.801 54.25 l 245.301 54.148 l 245.801 54 l 
+246.301 53.898 l 246.801 53.75 l 247.352 53.602 l S
+[ 8 2 1 2] 0 d
+247.352 53.602 m 248.352 53.398 l 248.852 53.25 l 249.352 53.148 l 
+249.852 53 l 250.352 52.898 l 250.852 52.75 l 251.398 52.648 l 251.898 
+52.551 l 252.398 52.398 l 252.898 52.301 l 253.398 52.199 l 253.898 
+52.051 l 254.398 51.949 l 254.898 51.852 l 255.449 51.75 l 255.949 
+51.602 l 256.949 51.398 l 257.449 51.301 l 257.949 51.199 l 258.449 
+51.051 l 258.949 50.949 l 259.5 50.852 l 260.5 50.648 l 261 50.551 l 
+261.5 50.449 l 262 50.352 l 263 50.148 l 263.551 50.051 l 264.051 
+49.949 l 264.551 49.852 l 265.551 49.648 l 266.051 49.551 l 266.551 
+49.449 l 267.051 49.352 l 267.602 49.25 l 268.102 49.148 l 268.602 
+49.051 l 269.102 49 l 269.602 48.898 l 270.102 48.801 l 270.602 48.699 
+l 271.102 48.602 l 271.648 48.5 l 272.148 48.449 l 272.648 48.352 l 
+273.648 48.148 l 274.148 48.102 l 275.148 47.898 l 275.699 47.852 l 
+276.699 47.648 l 277.199 47.602 l 278.199 47.398 l 278.699 47.352 l 
+279.699 47.148 l 280.25 47.102 l 280.75 47 l 281.25 46.949 l 281.75 
+46.852 l 282.25 46.801 l 282.75 46.699 l 283.25 46.602 l 283.75 46.551 
+l 284.301 46.449 l 284.801 46.398 l 285.301 46.301 l 286.301 46.199 l 
+286.801 46.102 l 287.301 46.051 l 287.801 45.949 l 288.352 45.898 l 
+288.852 45.801 l 289.852 45.699 l 290.352 45.602 l 290.852 45.551 l 
+291.352 45.449 l 291.852 45.398 l 292.398 45.352 l 292.898 45.25 l 
+293.898 45.148 l 294.398 45.051 l 295.898 44.898 l 296.449 44.801 l 
+297.449 44.699 l 297.949 44.602 l 299.949 44.398 l S
+[ 8 2 1 2] 0 d
+299.949 44.398 m 300.5 44.301 l 302 44.148 l 302.5 44.102 l 303 44 l 
+304 43.898 l 304.551 43.852 l 306.051 43.699 l 306.551 43.602 l 308.051 
+43.449 l 308.602 43.398 l 309.102 43.352 l 311.102 43.148 l 311.602 
+43.102 l 312.602 43 l 313.148 42.949 l 313.648 42.898 l 314.148 42.852 
+l 316.148 42.648 l 316.648 42.602 l 317.199 42.551 l 318.699 42.398 l 
+319.199 42.352 l 320.699 42.199 l 321.25 42.148 l 321.75 42.102 l 
+322.25 42.051 l 322.75 42.051 l 324.25 41.898 l 324.75 41.852 l 325.301 
+41.801 l 326.301 41.699 l 326.801 41.699 l 327.301 41.648 l 327.801 
+41.602 l 328.801 41.5 l 329.352 41.449 l 329.852 41.449 l 330.352 
+41.398 l 330.852 41.352 l 331.852 41.25 l 332.352 41.25 l 332.852 
+41.199 l 333.398 41.148 l 333.898 41.102 l 334.398 41.102 l 335.898 
+40.949 l 336.398 40.949 l 336.898 40.898 l 337.449 40.852 l 337.949 
+40.801 l 338.449 40.801 l 339.949 40.648 l 340.449 40.648 l 340.949 
+40.602 l 341.5 40.551 l 342 40.551 l 343 40.449 l S
+1 0.298039 0 rg
+[ 2 1] 0 d
+300.75 186.148 m 330.301 186.148 l 90.398 99.898 m 90.949 103.852 l 
+91.449 103.199 l 91.949 102.75 l 92.449 102.148 l 92.949 101.699 l 
+93.449 101.102 l 93.949 100.648 l 94.449 100.051 l 95 99.602 l 95.5 99 
+l 96 98.551 l 96.5 97.949 l 97 97.5 l 97.5 96.898 l 98 96.5 l 98.5 
+95.898 l 99.051 95.449 l 99.551 94.898 l 100.051 94.449 l 100.551 
+93.898 l 101.051 93.5 l 101.551 92.898 l 102.051 92.5 l 102.551 91.949 
+l 103.102 91.551 l 103.602 91 l 104.102 90.648 l 104.602 90.051 l 
+105.102 89.699 l 105.602 89.148 l 106.102 88.852 l 106.602 88.301 l 
+107.148 88 l 107.648 87.449 l 108.148 87.199 l 108.648 86.648 l 109.148 
+86.398 l 109.648 85.898 l 110.148 85.648 l 110.648 85.199 l 111.199 
+84.949 l 111.699 84.5 l 112.199 84.301 l 112.699 83.852 l 113.199 
+83.699 l 113.699 83.25 l 114.199 83.148 l 114.699 82.75 l 115.199 
+82.602 l 115.75 82.25 l 116.25 82.148 l 116.75 81.801 l 117.25 81.75 l 
+117.75 81.449 l 118.25 81.398 l 118.75 81.148 l 119.25 81.102 l 119.801 
+80.852 l 120.301 80.898 l 120.801 80.648 l 121.301 80.699 l 121.801 
+80.5 l 122.301 80.551 l 122.801 80.398 l 123.301 80.449 l 123.852 
+80.301 l 124.352 80.449 l 124.852 80.301 l 125.352 80.449 l 125.852 
+80.301 l 126.352 80.5 l 126.852 80.398 l 127.352 80.551 l 127.898 80.5 
+l 128.398 80.648 l 128.898 80.602 l 129.398 80.801 l 129.898 80.801 l 
+130.398 81 l 130.898 80.949 l 131.398 81.148 l 131.949 81.148 l 132.449 
+81.352 l 132.949 81.352 l 133.449 81.602 l 133.949 81.602 l 134.449 
+81.801 l 134.949 81.801 l 135.449 82.051 l 136 82.051 l 136.5 82.25 l 
+137 82.25 l 137.5 82.5 l 138 82.5 l 138.5 82.699 l 139 82.699 l 139.5 
+82.898 l 140.051 82.898 l 140.551 83.102 l 141.051 83.102 l 141.551 
+83.25 l 142.051 83.25 l S
+[ 2 1] 0 d
+142.051 83.25 m 142.551 83.398 l 143.051 83.398 l 143.551 83.551 l 
+144.102 83.551 l 144.602 83.648 l 145.102 83.648 l 145.602 83.75 l 
+146.102 83.699 l 146.602 83.852 l 147.102 83.801 l 147.602 83.898 l 
+148.102 83.801 l 148.648 83.898 l 149.148 83.852 l 149.648 83.898 l 
+150.148 83.801 l 150.648 83.852 l 151.148 83.75 l 151.648 83.801 l 
+152.148 83.699 l 152.699 83.75 l 153.199 83.602 l 153.699 83.602 l 
+154.199 83.5 l 154.699 83.5 l 155.199 83.352 l 155.699 83.352 l 156.199 
+83.199 l 156.75 83.148 l 157.25 83 l 157.75 82.949 l 158.25 82.801 l 
+158.75 82.75 l 159.25 82.602 l 159.75 82.5 l 160.25 82.352 l 160.801 
+82.25 l 161.301 82.102 l 161.801 82 l 162.301 81.801 l 162.801 81.699 l 
+163.301 81.5 l 163.801 81.398 l 164.301 81.199 l 164.852 81.102 l 
+165.352 80.852 l 165.852 80.75 l 166.352 80.551 l 166.852 80.398 l 
+167.352 80.199 l 167.852 80.051 l 168.352 79.801 l 168.898 79.699 l 
+169.398 79.449 l 169.898 79.301 l 170.398 79.102 l 170.898 78.898 l 
+171.398 78.699 l 171.898 78.551 l 172.398 78.301 l 172.949 78.148 l 
+173.449 77.898 l 173.949 77.75 l 174.449 77.5 l 174.949 77.301 l 
+175.449 77.051 l 175.949 76.898 l 176.449 76.648 l 177 76.5 l 177.5 
+76.25 l 178 76.051 l 178.5 75.801 l 179 75.648 l 179.5 75.398 l 180 
+75.199 l 180.5 74.949 l 181 74.801 l 181.551 74.551 l 182.051 74.352 l 
+182.551 74.102 l 183.051 73.898 l 183.551 73.648 l 184.051 73.5 l 
+184.551 73.25 l 185.051 73.051 l 185.602 72.801 l 186.102 72.602 l 
+186.602 72.398 l 187.102 72.199 l 187.602 71.949 l 188.102 71.75 l 
+188.602 71.5 l 189.102 71.352 l 189.648 71.102 l 190.148 70.898 l 
+190.648 70.648 l 191.148 70.5 l 191.648 70.25 l 192.648 69.852 l 
+193.148 69.648 l 193.699 69.398 l 194.699 69 l S
+[ 2 1] 0 d
+194.699 69 m 195.699 68.602 l 196.199 68.398 l 196.699 68.148 l 197.199 
+68 l 197.75 67.75 l 198.25 67.602 l 198.75 67.352 l 199.25 67.199 l 
+199.75 66.949 l 200.25 66.801 l 200.75 66.551 l 201.25 66.398 l 201.801 
+66.148 l 202.301 66 l 203.301 65.602 l 203.801 65.398 l 204.801 65 l 
+205.301 64.852 l 205.852 64.648 l 206.852 64.25 l 207.352 64.102 l 
+207.852 63.898 l 208.852 63.5 l 209.352 63.352 l 209.898 63.148 l 
+210.398 63 l 210.898 62.801 l 211.398 62.648 l 212.398 62.25 l 212.898 
+62.102 l 213.398 61.898 l 213.898 61.75 l 214.449 61.602 l 214.949 
+61.398 l 215.449 61.25 l 215.949 61.051 l 216.449 60.898 l 216.949 
+60.699 l 217.449 60.551 l 217.949 60.398 l 218.5 60.25 l 219 60.051 l 
+219.5 59.898 l 220.5 59.602 l 221 59.398 l 222 59.102 l 222.551 58.949 
+l 223.051 58.801 l 223.551 58.648 l 224.551 58.352 l 225.051 58.199 l 
+225.551 58.051 l 226.051 57.898 l 226.602 57.75 l 227.102 57.602 l 
+227.602 57.449 l 228.102 57.301 l 228.602 57.148 l 229.602 56.852 l 
+230.102 56.699 l 230.648 56.551 l 231.148 56.398 l 231.648 56.301 l 
+232.148 56.148 l 233.148 55.852 l 233.648 55.75 l 234.148 55.602 l 
+234.699 55.449 l 235.199 55.352 l 235.699 55.199 l 236.199 55.051 l 
+236.699 54.949 l 237.199 54.801 l 237.699 54.648 l 238.199 54.551 l 
+238.75 54.398 l 239.25 54.301 l 239.75 54.148 l 240.25 54.051 l 240.75 
+53.898 l 241.25 53.801 l 241.75 53.648 l 242.25 53.551 l 242.801 53.398 
+l 243.301 53.301 l 243.801 53.199 l 244.301 53.051 l 244.801 52.949 l 
+245.301 52.801 l 245.801 52.699 l 246.301 52.602 l 246.801 52.449 l 
+247.352 52.352 l S
+[ 2 1] 0 d
+247.352 52.352 m 248.352 52.148 l 248.852 52 l 249.352 51.898 l 249.852 
+51.801 l 250.352 51.699 l 250.852 51.602 l 251.398 51.449 l 251.898 
+51.352 l 252.898 51.148 l 253.398 51.051 l 253.898 50.949 l 254.398 
+50.852 l 254.898 50.75 l 255.449 50.648 l 255.949 50.5 l 256.449 50.398 
+l 256.949 50.301 l 257.449 50.199 l 257.949 50.102 l 258.449 50.051 l 
+258.949 49.949 l 259.5 49.852 l 260.5 49.648 l 261 49.551 l 261.5 
+49.449 l 262 49.352 l 263 49.148 l 263.551 49.051 l 264.051 49 l 
+264.551 48.898 l 265.051 48.801 l 265.551 48.699 l 266.051 48.602 l 
+266.551 48.551 l 267.051 48.449 l 267.602 48.352 l 268.102 48.25 l 
+268.602 48.199 l 269.102 48.102 l 270.102 47.898 l 270.602 47.852 l 
+271.102 47.75 l 271.648 47.699 l 272.148 47.602 l 272.648 47.5 l 
+273.148 47.449 l 273.648 47.352 l 274.148 47.25 l 274.648 47.199 l 
+275.148 47.102 l 275.699 47.051 l 276.199 46.949 l 276.699 46.898 l 
+277.199 46.801 l 277.699 46.699 l 278.199 46.648 l 278.699 46.551 l 
+279.199 46.5 l 279.699 46.398 l 280.25 46.352 l 280.75 46.301 l 281.25 
+46.199 l 281.75 46.148 l 282.25 46.051 l 282.75 46 l 283.25 45.898 l 
+283.75 45.852 l 284.301 45.75 l 285.301 45.648 l 285.801 45.551 l 
+286.801 45.449 l 287.301 45.352 l 287.801 45.301 l 288.352 45.25 l 
+288.852 45.148 l 289.352 45.102 l 289.852 45.051 l 290.352 44.949 l 
+290.852 44.898 l 291.352 44.852 l 291.852 44.801 l 292.398 44.699 l 
+292.898 44.648 l 293.398 44.602 l 293.898 44.551 l 294.398 44.449 l 
+294.898 44.398 l 295.398 44.352 l 295.898 44.301 l 296.449 44.25 l 
+296.949 44.148 l 297.449 44.102 l 299.449 43.898 l 299.949 43.801 l S
+[ 2 1] 0 d
+299.949 43.801 m 300.5 43.75 l 301.5 43.648 l 302 43.602 l 304 43.398 l 
+304.551 43.352 l 305.051 43.301 l 305.551 43.199 l 306.051 43.148 l 
+306.551 43.102 l 308.051 42.949 l 308.602 42.898 l 309.102 42.852 l 
+311.102 42.648 l 311.602 42.602 l 312.602 42.5 l 313.148 42.449 l 
+313.648 42.398 l 314.148 42.398 l 314.648 42.352 l 316.648 42.148 l 
+317.199 42.102 l 319.199 41.898 l 319.699 41.898 l 320.199 41.852 l 
+320.699 41.801 l 321.25 41.75 l 322.25 41.648 l 322.75 41.602 l 323.25 
+41.602 l 324.75 41.449 l 325.301 41.398 l 325.801 41.398 l 326.301 
+41.352 l 327.801 41.199 l 328.301 41.199 l 328.801 41.148 l 329.352 
+41.102 l 329.852 41.051 l 330.352 41.051 l 331.852 40.898 l 332.352 
+40.898 l 332.852 40.852 l 333.398 40.801 l 333.898 40.75 l 334.398 
+40.75 l 335.398 40.648 l 335.898 40.648 l 336.398 40.602 l 336.898 
+40.551 l 337.449 40.5 l 337.949 40.5 l 338.949 40.398 l 339.449 40.398 
+l 339.949 40.352 l 340.449 40.301 l 340.949 40.301 l 341.5 40.25 l 342 
+40.199 l 342.5 40.199 l 343 40.148 l S
+0.368627 0.494118 0.603922 rg
+[ 2 1 0.5 1] 0 d
+10 M 300.75 175.148 m 330.301 175.148 l 90.398 38.102 m 90.949 41.801 l 
+91.449 41.801 l 91.949 41.898 l 92.449 41.898 l 92.949 42.051 l 93.449 
+42.051 l 93.949 42.199 l 94.449 42.25 l 95 42.398 l 95.5 42.449 l 96 
+42.602 l 96.5 42.648 l 97 42.801 l 97.5 42.852 l 98 43.051 l 98.5 
+43.051 l 99.051 43.25 l 99.551 43.25 l 100.051 43.449 l 100.551 43.449 
+l 101.051 43.602 l 101.551 43.602 l 102.051 43.801 l 102.551 43.75 l 
+103.102 43.949 l 103.602 43.898 l 104.102 44.051 l 104.602 44.051 l 
+105.102 44.148 l 105.602 44.102 l 106.102 44.25 l 106.602 44.199 l 
+107.148 44.301 l 107.648 44.25 l 108.148 44.352 l 108.648 44.301 l 
+109.148 44.398 l 109.648 44.301 l 110.148 44.398 l 110.648 44.301 l 
+111.199 44.352 l 111.699 44.25 l 112.199 44.301 l 112.699 44.199 l 
+113.199 44.25 l 113.699 44.102 l 114.199 44.148 l 114.699 44 l 115.199 
+44.051 l 115.75 43.898 l 116.25 43.949 l 116.75 43.801 l 117.25 43.801 
+l 117.75 43.648 l 118.25 43.648 l 118.75 43.5 l 119.25 43.5 l 119.801 
+43.301 l 120.301 43.301 l 120.801 43.102 l 121.301 43.102 l 121.801 
+42.949 l 122.301 42.898 l 122.801 42.699 l 123.301 42.699 l 123.852 
+42.5 l 124.352 42.5 l 124.852 42.301 l 125.352 42.25 l 125.852 42.051 l 
+126.352 42.051 l 126.852 41.852 l 127.352 41.801 l 127.898 41.602 l 
+128.398 41.551 l 128.898 41.398 l 129.398 41.352 l 129.898 41.148 l 
+130.398 41.102 l 130.898 40.949 l 131.398 40.852 l 131.949 40.699 l 
+132.449 40.648 l 132.949 40.5 l 133.449 40.398 l 133.949 40.301 l 
+134.449 40.199 l 134.949 40.102 l 135.449 40 l 136 39.898 l 136.5 
+39.801 l 137 39.699 l 137.5 39.602 l 138 39.5 l 138.5 39.449 l 139 
+39.352 l 139.5 39.25 l 140.051 39.148 l 140.551 39.102 l 141.051 39 l 
+142.051 38.898 l S
+[ 2 1 0.5 1] 0 d
+142.051 38.898 m 142.551 38.801 l 143.551 38.699 l 144.102 38.648 l 
+144.602 38.551 l 146.102 38.398 l 146.602 38.352 l 147.602 38.25 l 
+148.102 38.25 l 148.648 38.199 l 149.148 38.148 l 149.648 38.102 l 
+150.148 38.102 l 150.648 38.051 l 151.148 38.051 l 151.648 38 l 152.148 
+38 l 152.699 37.949 l 153.199 37.898 l 154.199 37.898 l 154.699 37.852 
+l 155.199 37.852 l 155.699 37.801 l 156.199 37.801 l 156.75 37.75 l 
+157.25 37.75 l 157.75 37.699 l 158.25 37.75 l 158.75 37.699 l 159.25 
+37.699 l 159.75 37.648 l 160.25 37.648 l 160.801 37.602 l 161.301 
+37.648 l 161.801 37.602 l 162.301 37.602 l 162.801 37.551 l 163.301 
+37.602 l 163.801 37.551 l 164.301 37.551 l 164.852 37.5 l 165.352 
+37.551 l 165.852 37.5 l 167.352 37.5 l 167.852 37.449 l 168.352 37.5 l 
+168.898 37.449 l 169.398 37.449 l 169.898 37.398 l 170.398 37.449 l 
+170.898 37.398 l 171.398 37.449 l 171.898 37.398 l 172.398 37.449 l 
+172.949 37.352 l 173.449 37.398 l 173.949 37.352 l 174.449 37.398 l 
+174.949 37.352 l 175.449 37.398 l 175.949 37.352 l 176.449 37.398 l 177 
+37.301 l 177.5 37.398 l 178 37.301 l 178.5 37.352 l 179 37.301 l 179.5 
+37.352 l 180 37.301 l 180.5 37.352 l 181 37.301 l 181.551 37.352 l 
+182.051 37.301 l 182.551 37.352 l 183.051 37.301 l 183.551 37.352 l 
+184.051 37.25 l 184.551 37.352 l 185.051 37.25 l 185.602 37.352 l 
+186.102 37.25 l 186.602 37.352 l 187.102 37.25 l 187.602 37.352 l 
+188.102 37.25 l 188.602 37.352 l 189.102 37.25 l 189.648 37.301 l 
+190.148 37.25 l 190.648 37.301 l 191.148 37.25 l 191.648 37.301 l 
+192.148 37.25 l 192.648 37.301 l 193.148 37.25 l 193.699 37.301 l 
+194.199 37.199 l 194.699 37.301 l S
+[ 2 1 0.5 1] 0 d
+194.699 37.301 m 195.199 37.199 l 195.699 37.301 l 196.199 37.199 l 
+196.699 37.301 l 197.199 37.199 l 197.75 37.301 l 198.25 37.199 l 
+198.75 37.301 l 199.25 37.199 l 199.75 37.25 l 200.25 37.199 l 200.75 
+37.25 l 201.25 37.199 l 201.801 37.25 l 202.301 37.148 l 202.801 37.25 
+l 203.301 37.148 l 203.801 37.25 l 204.301 37.148 l 204.801 37.25 l 
+205.301 37.148 l 205.852 37.199 l 206.352 37.148 l 206.852 37.199 l 
+207.352 37.102 l 207.852 37.199 l 208.352 37.102 l 208.852 37.199 l 
+209.352 37.102 l 209.898 37.199 l 210.398 37.102 l 210.898 37.148 l 
+211.398 37.102 l 211.898 37.148 l 212.398 37.051 l 212.898 37.148 l 
+213.398 37.051 l 213.898 37.148 l 214.449 37.051 l 214.949 37.102 l 
+215.449 37 l 215.949 37.102 l 216.449 37 l 216.949 37.102 l 217.449 37 
+l 217.949 37.051 l 218.5 37 l 219 37.051 l 219.5 36.949 l 220 37.051 l 
+220.5 36.949 l 221 37 l 221.5 36.949 l 222 37 l 222.551 36.898 l 
+223.051 37 l 223.551 36.898 l 224.051 36.949 l 224.551 36.898 l 225.051 
+36.949 l 225.551 36.852 l 226.051 36.949 l 226.602 36.852 l 227.102 
+36.898 l 227.602 36.852 l 228.102 36.898 l 228.602 36.801 l 229.102 
+36.852 l 229.602 36.801 l 230.102 36.852 l 230.648 36.75 l 231.148 
+36.852 l 231.648 36.75 l 232.148 36.801 l 232.648 36.75 l 233.148 
+36.801 l 233.648 36.699 l 234.148 36.75 l 234.699 36.699 l 235.199 
+36.75 l 235.699 36.699 l 236.199 36.75 l 236.699 36.648 l 237.199 
+36.699 l 237.699 36.648 l 238.199 36.699 l 238.75 36.602 l 239.25 
+36.648 l 239.75 36.602 l 240.25 36.648 l 240.75 36.602 l 241.25 36.648 
+l 241.75 36.551 l 242.25 36.602 l 242.801 36.551 l 243.301 36.602 l 
+243.801 36.5 l 244.301 36.551 l 244.801 36.5 l 245.301 36.551 l 245.801 
+36.5 l 246.301 36.551 l 246.801 36.449 l 247.352 36.5 l S
+[ 2 1 0.5 1] 0 d
+247.352 36.5 m 247.852 36.449 l 248.352 36.5 l 248.852 36.398 l 249.352 
+36.449 l 249.852 36.398 l 250.352 36.449 l 250.852 36.398 l 251.398 
+36.449 l 251.898 36.352 l 252.398 36.398 l 252.898 36.352 l 253.398 
+36.398 l 253.898 36.301 l 254.398 36.352 l 254.898 36.301 l 255.449 
+36.352 l 255.949 36.301 l 256.449 36.352 l 256.949 36.25 l 257.449 
+36.301 l 257.949 36.25 l 258.449 36.301 l 258.949 36.25 l 259.5 36.25 l 
+260 36.199 l 260.5 36.25 l 261 36.199 l 261.5 36.25 l 262 36.148 l 
+262.5 36.199 l 263 36.148 l 263.551 36.199 l 264.051 36.148 l 264.551 
+36.199 l 265.051 36.102 l 265.551 36.148 l 266.051 36.102 l 266.551 
+36.148 l 267.051 36.102 l 267.602 36.102 l 268.102 36.051 l 268.602 
+36.102 l 269.102 36.051 l 269.602 36.102 l 270.102 36.051 l 270.602 
+36.051 l 271.102 36 l 271.648 36.051 l 272.148 36 l 272.648 36.051 l 
+273.148 36 l 273.648 36 l 274.148 35.949 l 274.648 36 l 275.148 35.949 
+l 275.699 36 l 276.199 35.949 l 276.699 35.949 l 277.199 35.898 l 
+277.699 35.949 l 278.199 35.898 l 278.699 35.949 l 279.199 35.898 l 
+280.75 35.898 l 281.25 35.852 l 281.75 35.898 l 282.25 35.852 l 282.75 
+35.898 l 283.25 35.852 l 283.75 35.852 l 284.301 35.801 l 284.801 
+35.852 l 285.301 35.801 l 285.801 35.852 l 286.301 35.801 l 287.801 
+35.801 l 288.352 35.75 l 288.852 35.801 l 289.352 35.75 l 289.852 
+35.801 l 290.352 35.75 l 290.852 35.75 l 291.352 35.699 l 291.852 35.75 
+l 292.398 35.699 l 292.898 35.75 l 293.398 35.699 l 295.898 35.699 l 
+296.449 35.648 l 296.949 35.699 l 297.449 35.648 l 299.949 35.648 l S
+[ 2 1 0.5 1] 0 d
+299.949 35.648 m 300.5 35.602 l 301 35.648 l 301.5 35.602 l 302 35.648 
+l 302.5 35.602 l 305.051 35.602 l 305.551 35.551 l 306.051 35.602 l 
+306.551 35.551 l 307.051 35.602 l 307.551 35.551 l 310.102 35.551 l 
+310.602 35.5 l 311.102 35.551 l 311.602 35.5 l 312.102 35.551 l 312.602 
+35.5 l 316.148 35.5 l 316.648 35.449 l 317.199 35.5 l 317.699 35.449 l 
+318.199 35.5 l 318.699 35.449 l 324.25 35.449 l 324.75 35.398 l 325.301 
+35.449 l 325.801 35.398 l 333.398 35.398 l 333.898 35.352 l 334.398 
+35.398 l 334.898 35.352 l 343 35.352 l S
+0 g
+0.5 w
+[] 0.0 d
+80.301 238.801 263.199 -203.602 re S
+1 g
+1 w
+[ 2 1] 0 d
+0 252.184 359.402 -252.184 re S
+Q Q
 showpage
 %%Trailer
+count op_count sub {pop} repeat
+countdictstack dict_count sub {end} repeat
+cairo_eps_state restore
+%%EOF
