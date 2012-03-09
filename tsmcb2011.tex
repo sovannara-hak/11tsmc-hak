@@ -362,8 +362,8 @@ we rely on the control redundancy principles to recognize sets of parallel tasks
 Projections of the motion in the already-detected orthogonal task spaces
 ensure an efficient decoupling of the tasks performed
 by the robot.
-It has to be noted that our approach relies on some strong assumptions but they are
-related to the control framework.
+It has to be noted that our approach relies also on some strong assumptions. The difference is that those
+assumptions are directly related to the robot control framework.
 %The next section briefly reviews the mechanism of the task function approach used
 %throughout this paper.
 %
@@ -394,7 +394,7 @@ simulation in Section~\ref{sec:simu} and on the real HRP-2 robot in Section~\ref
 \label{sec:sot}
 The task-function framework~\cite{samson91} is an elegant approach to describe intuitively
 sensor-based control objectives. The advantage is that expressing the control law
-in the most suitable subspace with respect to a given objective simplifies its construction
+in the most suitable subspace, with respect to a given objective, simplifies its construction
 as well as its execution since the subspace is generally closely linked to the sensors of
 the robot. Based on the redundancy of the system, this
 approach can be extended to consider a hierarchical set of
@@ -849,7 +849,7 @@ of the robot reaches a point defined in the Cartesian space (3 DOF)
   \item \emph{Screw} : similar to the \emph{grab} task, but the desired position 
 has to be reached with a defined orientation (6 DOF)
   \item \emph{Head} : the head of the robot is constrained in position and orientation (6 DOF)
-  \item \emph{Chest} : the chest of the robot is constrained in orientation  (3DOF)
+  \item \emph{Chest} : the chest of the robot is constrained in orientation  (3 DOF)
 \end{itemize}
 \begin{table}[h]
   \centering
@@ -1567,7 +1567,7 @@ fixed in space due to the motion of the neck for balancing.
 In \emph{motion 2.b}, the candidate \emph{Head} task involves less motion
 than in \emph{motion 2.a}. The reason is that when the opposite end effectors
 of the robot are constrained, the chest is less used.
-However, the task \emph{Head} is not kept as a candidate for any of the two motion (the residue $r$ for the task is never the lowest).
+However, \emph{Head} task is not kept as a candidate for any of the two motion (the associated residue $r$ is never the lowest).
 
 The evolution of the motion projected into \emph{Left grab} and \emph{Right grab}
 spaces after the successive projections onto the automatically-selected nullspaces
