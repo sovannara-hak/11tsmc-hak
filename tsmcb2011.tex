@@ -1416,6 +1416,127 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   \caption{Markers set and virtual skeleton of HRP-2.}
   \label{fig:hrp2Markers}
 \end{figure}
+\begin{figure*}[hp]
+  \centering
+  \subfigure[Motion 2.a]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2a/taskHeadNormInvJerr_0.tex}
+  }
+  \label{fig:exp1:headFit:R}
+  }
+  \subfigure[Motion 2.b]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2b/taskHeadNormInvJerr_0.tex}
+  }
+  \label{fig:exp1:headFit:RL}
+  }
+  \caption{Fitting at the first iteration of the task selection algorithm
+  for \emph{head} task for \emph{motion 2.a} and \emph{motion 2.b} 
+  For both motion, $r$ is not the lowest residue amongst all the tasks fitting: \emph{Head} task, not active, is not selected.}
+  \label{fig:exp1:headFit}
+\end{figure*}
+\begin{figure*}[hp]
+  \centering
+  \subfigure[Motion 2.a]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2a/taskLhandNormInvJerr_0.tex}
+  }                           
+  \label{fig:exp1:taskLhand:R}
+  }
+  \subfigure[Motion 2.b]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2b/taskLhandNormInvJerr_0.tex}
+  }
+  \label{fig:exp1:taskLhand:RL}
+  }
+  \caption{Fitting at the first iteration of the task selection algorithm
+  for \emph{Left grab} task for \emph{motion 2.a} and \emph{motion 2.b} 
+  \emph{Left grab} task is not pertinent for \emph{motion 2.a}, but is selected for \emph{motion 2.b}.}
+  \label{fig:exp1:taskLhand}
+\end{figure*}
+\begin{figure*}[hp]
+  \centering
+  \subfigure[Motion 2.a]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2a/RevolutionLH.tex}
+  }                           
+  \label{fig:exp1:Evolution2L:a}
+  }
+  \subfigure[Motion 2.b]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2b/RevolutionLH.tex}
+  }
+  \label{fig:exp1:Evolution2L:b}
+  }
+  \caption{Norm of motions associated to \emph{Left grab} task (\emph{ie} motion of the left arm).
+  The motion is cancelled after removing the motion due to \emph{Com} task
+  in \emph{motion 2.a}. In that case, it means that the left arm motion was due to \emph{Com} task.
+  Whereas in \emph{motion 2.b}, the motion of the left arm is not cancelled after
+  removing \emph{Com} task, but is cancelled after removing
+  \emph{Left grab} task : the motion of the left arm was due
+  to \emph{Left grab} task.}
+  \label{fig:exp1:Evolution2L}
+\end{figure*}
+\begin{figure*}[p]
+  \centering
+  \subfigure[Motion 2.a]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2a/RevolutionRH.tex}
+  }                           
+  \label{fig:exp1:Evolution2R:a}
+  }
+  \subfigure[Motion 2.b]{
+  \resizebox{.46\textwidth}{!} {
+  \input{img/realRobot/2b/RevolutionRH.tex}
+  }
+  \label{fig:exp1:Evolution2R:b}
+  }
+  \caption{Quantity of motion in the right hand space after successive projection.
+    The quantity of motion in the right hand space is almost null
+      after the nullification of the tasks \emph{Right grab and Com}.
+  It means that the motion of the right arm is a consequence of 
+  \emph{Right grab} and \emph{Com} tasks. It is consistent with the fact that,
+  in order to maintain its balance, the right arm has to move.}
+  \label{fig:exp1:Evolution2R}
+\end{figure*}
+Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
+on the two motions. The quantity decreases after successive projections, until the remaining motion 
+is mainly sensor noise.
+\begin{figure*}[p]
+  \centering
+  \subfigure[Motion 2.a]{
+  \resizebox{.46\textwidth}{!} {
+    \input{img/realRobot/2a/PqdotNormsR}
+  }
+  \label{fig:exp1:PqdotNormsR}
+  }
+  \subfigure[Motion 2.b]{
+  \resizebox{.46\textwidth}{!} {
+    \input{img/realRobot/2b/PqdotNormsRL}
+  }
+\label{fig:exp1:PqdotNormsRL}
+}
+\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+\emph{motion 2.a} and \emph{motion 2.b}. The norm decreases iteratively during the recognition algorithm.}
+\label{fig:exp1:PqdotNorms}
+\end{figure*}
+\setcounter{figure}{16}
+\begin{figure*}[p]
+  \centering
+  \subfigure[Motion 5.a]{
+  \resizebox{.46\textwidth}{!} {
+    \input{img/realRobot/5a/PqdotNorms5a}
+  }
+  }
+  \subfigure[Motion 5.b]{
+  \resizebox{.46\textwidth}{!} {
+    \input{img/realRobot/5b/PqdotNorms5b}
+  }
+}
+\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+\emph{motion 5.a} and \emph{motion 5.b}. The norm decreases iteratively during the recognition algorithm.}
+\label{fig:exp6:PqdotNorms5}
+\end{figure*}
 The motion-capture system used is composed of 10 digital cameras and record data
 at 200Hz. 
 The motion-capture system provides the trajectory of each body of the robot.
@@ -1523,45 +1644,6 @@ Fig.~\ref{fig:exp1:headFit}-\ref{fig:exp1:taskLhand} show the
 fitting at the first iteration of the algorithm for \emph{Head} and \emph{Left grab} tasks. As expected,
 the fitting performs well only for \emph{Left grab} task in \emph{motion 2.b} while it is rejected for
 \emph{motion 2.a}.
-\begin{figure*}[hp]
-  \centering
-  \subfigure[Motion 2.a]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2a/taskHeadNormInvJerr_0.tex}
-  }
-  \label{fig:exp1:headFit:R}
-  }
-  \subfigure[Motion 2.b]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2b/taskHeadNormInvJerr_0.tex}
-  }
-  \label{fig:exp1:headFit:RL}
-  }
-  \caption{Fitting at the first iteration of the task selection algorithm
-  for \emph{head} task for \emph{motion 2.a} and \emph{motion 2.b} 
-  For both motion, $r$ is not the lowest residue amongst all the tasks fitting: \emph{Head} task, not active, is not selected.}
-  \label{fig:exp1:headFit}
-\end{figure*}
-\begin{figure*}[hp]
-  \centering
-  \subfigure[Motion 2.a]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2a/taskLhandNormInvJerr_0.tex}
-  }                           
-  \label{fig:exp1:taskLhand:R}
-  }
-  \subfigure[Motion 2.b]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2b/taskLhandNormInvJerr_0.tex}
-  }
-  \label{fig:exp1:taskLhand:RL}
-  }
-  \caption{Fitting at the first iteration of the task selection algorithm
-  for \emph{Left grab} task for \emph{motion 2.a} and \emph{motion 2.b} 
-  \emph{Left grab} task is not pertinent for \emph{motion 2.a}, but is selected for \emph{motion 2.b}.}
-  \label{fig:exp1:taskLhand}
-\end{figure*}
-
 Although no \emph{Head} task is involved in the two motions, the head is not 
 fixed in space due to the motion of the neck for balancing.
 In \emph{motion 2.b}, the candidate \emph{Head} task involves less motion
@@ -1573,78 +1655,12 @@ The evolution of the motion projected into \emph{Left grab} and \emph{Right grab
 spaces after the successive projections onto the automatically-selected nullspaces
 are shown in Fig.~\ref{fig:exp1:Evolution2L}. For \emph{motion 2.a},
 the motion of the left arm is cancelled after removing \emph{Com} task.
-\begin{figure*}[hp]
-  \centering
-  \subfigure[Motion 2.a]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2a/RevolutionLH.tex}
-  }                           
-  \label{fig:exp1:Evolution2L:a}
-  }
-  \subfigure[Motion 2.b]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2b/RevolutionLH.tex}
-  }
-  \label{fig:exp1:Evolution2L:b}
-  }
-  \caption{Norm of motions associated to \emph{Left grab} task (\emph{ie} motion of the left arm).
-  The motion is cancelled after removing the motion due to \emph{Com} task
-  in \emph{motion 2.a}. In that case, it means that the left arm motion was due to \emph{Com} task.
-  Whereas in \emph{motion 2.b}, the motion of the left arm is not cancelled after
-  removing \emph{Com} task, but is cancelled after removing
-  \emph{Left grab} task : the motion of the left arm was due
-  to \emph{Left grab} task.}
-  \label{fig:exp1:Evolution2L}
-\end{figure*}
 For \emph{motion 2.b} the motion of the left arm is
 not cancelled by \emph{Com} projection, but is cancelled after
 removing \emph{Left grab} task.
 Fig.~\ref{fig:exp1:Evolution2R} shows how the motion of the right arm evolves when removing
 motions due to a task. It can be seen that the right arm moves because of \emph{Right grab} and
 \emph{Com} task.
-\begin{figure*}[p]
-  \centering
-  \subfigure[Motion 2.a]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2a/RevolutionRH.tex}
-  }                           
-  \label{fig:exp1:Evolution2R:a}
-  }
-  \subfigure[Motion 2.b]{
-  \resizebox{.46\textwidth}{!} {
-  \input{img/realRobot/2b/RevolutionRH.tex}
-  }
-  \label{fig:exp1:Evolution2R:b}
-  }
-  \caption{Quantity of motion in the right hand space after successive projection.
-    The quantity of motion in the right hand space is almost null
-      after the nullification of the tasks \emph{Right grab and Com}.
-  It means that the motion of the right arm is a consequence of 
-  \emph{Right grab} and \emph{Com} tasks. It is consistent with the fact that,
-  in order to maintain its balance, the right arm has to move.}
-  \label{fig:exp1:Evolution2R}
-\end{figure*}
-Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
-on the two motions. The quantity decreases after successive projections, until the remaining motion 
-is mainly sensor noise.
-\begin{figure*}[p]
-  \centering
-  \subfigure[Motion 2.a]{
-  \resizebox{.46\textwidth}{!} {
-    \input{img/realRobot/2a/PqdotNormsR}
-  }
-  \label{fig:exp1:PqdotNormsR}
-  }
-  \subfigure[Motion 2.b]{
-  \resizebox{.46\textwidth}{!} {
-    \input{img/realRobot/2b/PqdotNormsRL}
-  }
-\label{fig:exp1:PqdotNormsRL}
-}
-\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
-\emph{motion 2.a} and \emph{motion 2.b}. The norm decreases iteratively during the recognition algorithm.}
-\label{fig:exp1:PqdotNorms}
-\end{figure*}
 
 \subsection{Gaze VS Chest}
 The considered motions are \emph{motion 5.a} and \emph{motion 5.b}.
@@ -1652,6 +1668,7 @@ In the first case, the robot is looking at its right hand while grabbing somethi
 In the second case, the robot is grabbing something with its right hand while
 maintaining its chest in its current orientation. Fig.~\ref{fig:motion5}
 shows the final posture of the robot for those motions.
+\setcounter{figure}{15}
 \begin{figure}[t]
   \centering
   \begin{tabular}{cc}
@@ -1717,22 +1734,6 @@ Fig.~\ref{fig:exp6:PqdotNorms5} shows the evolution of the norm of the motions a
 into the null space of the tasks : \emph{Right grab},  \emph{Gaze}, \emph{Twofeet} and \emph{Com} for
 \emph{motion 5.a}. And \emph{Right grab}, \emph{Twofeet}, \emph{Com} and \emph{Chest} for the
 \emph{motion 5.b}.
-\begin{figure*}[t]
-  \centering
-  \subfigure[Motion 5.a]{
-  \resizebox{.46\textwidth}{!} {
-    \input{img/realRobot/5a/PqdotNorms5a}
-  }
-  }
-  \subfigure[Motion 5.b]{
-  \resizebox{.46\textwidth}{!} {
-    \input{img/realRobot/5b/PqdotNorms5b}
-  }
-}
-\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
-\emph{motion 5.a} and \emph{motion 5.b}. The norm decreases iteratively during the recognition algorithm.}
-\label{fig:exp6:PqdotNorms5}
-\end{figure*}
 As in the previous experiments, the projection decreases strictly the quantity of movement
 at each algorithm iteration. The quantity of movement finally remaining at the end of 
 the algorithm loop is clearly mainly due to noise.
