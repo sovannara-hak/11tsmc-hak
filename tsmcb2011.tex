@@ -47,13 +47,11 @@
 \title{\LARGE Reverse Control for Humanoid Robot Task Recognition}
 
 \author{Sovannara Hak, Nicolas Mansard, Olivier Stasse, Jean Paul Laumond% <-this % stops a space
-  \thanks{S. Hak, N. Mansard and J.P. Laumond are with LAAS-CNRS (Laboratoire d'Analyse et d'Architecture
-  des Syst\`emes), 7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP, ISAE: {\tt\small sovannara.hak@laas.fr, nicolas.mansard@laas.fr, jpl@laas.fr}. 
-  Olivier Stasse is with CNRS-AIST, JRL (Joint Robotics Laboratory), UMI 3218/CRT,
-    Intelligent Systems Research Institute AIST Central 2, Umezono 1-1-1
-    Tsukuba, Ibaraki 305-8568 Japan: {\tt\small olivier.stasse@aist.go.jp}}
-  \thanks{This work was supported by a grant from the R-Blink Project, Contract
-  ANR-08JCJC-0075-01. A short version of this work has been published in~\cite{hak10}.}  }
+  \thanks{Authors are with LAAS-CNRS (Laboratoire d'Analyse et d'Architecture
+  des Syst\`emes), 7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP, ISAE: {\tt\small firstname.name@laas.fr}.
+This work was supported by a grant from the R-Blink Project, Contract
+  ANR-08JCJC-0075-01. A preliminary version of this work has been published in~\cite{hak10}.  }
+  }
 
 % The paper headers
 %\markboth{Submitted to IEEE Transaction on Systems, Man, and Cybernetics}{}%
@@ -72,7 +70,7 @@ When working with a humanoid robot, a motion can be decomposed into
 parallel sub-tasks. For example, in a waiter scenario,
 the robot has to keep some plates horizontal with one of its arms, while placing a plate
 on the table with its free hand.
-Recognition can thus not be limited to one task per consecutive segment of 
+Recognition can thus not be limited to one task per consecutive segment of
 time.
 The method presented in this paper
 takes advantage of the knowledge of what tasks the robot is able to do and how
@@ -94,7 +92,7 @@ different purposes.
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Humanoid robot, Inverse kinematic, Task function formalism, Task Recognition.
+Task Recognition, task-function formalism, Humanoid robot, Inverse kinematic.
 \end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
@@ -102,17 +100,17 @@ Humanoid robot, Inverse kinematic, Task function formalism, Task Recognition.
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-% 
+%
 % form to use if the first word consists of a single letter:
 % \IEEEPARstart{A}{demo} file is ....
-% 
+%
 % form to use if you need the single drop letter followed by
 % normal text (unknown if ever used by IEEE):
 % \IEEEPARstart{A}{}demo file is ....
-% 
+%
 % Some journals put the first two words in caps:
 % \IEEEPARstart{T}{his demo} file is ....
-% 
+%
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
 
@@ -181,12 +179,12 @@ functions.
   \label{fig:introExample}
 \end{figure*}
 For example, consider the \emph{Give me the purple ball} scenario~\cite{yoshida07}
-performed by the humanoid robot HRP-2 at LAAS-CNRS as shown in Fig.~\ref{fig:introExample:purpleBall}. 
+performed by the humanoid robot HRP-2 at LAAS-CNRS as shown in Fig.~\ref{fig:introExample:purpleBall}.
 To reach the assigned objective, HRP-2 decomposes its mission into elementary sub-tasks,
 each of them being addressed by a dedicated software module. For instance,
 to reach the ball, the robot has to walk to the ball. \emph{Walking} appears as an
 elementary action that is a resource to solve the problem that is processed by a
-dedicated locomotion module. 
+dedicated locomotion module.
 
 However, in the second scenario (Fig.~\ref{fig:introExample:graspFeet}),
 HRP-2 has to grasp the ball that is located between its feet~\cite{kanoun10}. To reach the
@@ -201,9 +199,9 @@ performs two grasping tasks in parallel. The ambiguity to distinguish both
 cases comes from the role played by the left arm. In the first case, the left
 arm contributes to the single grasping action by maintaining the balance of the
 robot. In the second one, the left arm performs another grasping task. Both
-motions are very similar. 
+motions are very similar.
 
-The works presented here tackles the problem of motion recognition and 
+The works presented here tackles the problem of motion recognition and
 shows that it is possible to disambiguate both cases by focusing
 the analysis of the motion in the task spaces and on
 the behaviors of the controllers of the robot.
@@ -234,11 +232,12 @@ The structure of a moving multi rigid body is a strong assumption, that
 can boost the performances when this knowledge is available. It is often the case in the robotic context. For example the
 estimation of a humanoid pose trajectory in~\cite{zordan03} is performed
 using optical motion-capture data to guide a known physical
-model. In the remainder of this paper, we will consider that
+model. Recent vision developments prove that the same knowledge could also be reliably be extracted using classical or RGB-D cameras~\cite{oikonomidis11}.
+In the remainder of this paper, we will consider that
 the motion of the rigid bodies is known. A typical use of a dedicated vision system to reconstruct the whole-body pose is presented in the experimental section.
 
 The question is now how to extract information of higher levels from supposedly-known human
-whole body movements. A direct example is signed languages which
+whole-body movements. A direct example is signed languages which
 provide a way to convey meaning through the combination
 of hands, arms and face movement and configuration. In the
 same way, human gait has been studied from an information
@@ -249,27 +248,27 @@ recognize emotions such as anger, sadness or happiness~\cite{karg10}.
 Statistics have been successfully applied
 to action recognition and motion analysis~\cite{schaal03}.
 Statistical tools are used to create symbols, and by extension, detect those
-symbols in a motion. For example, a method for behavior-based control 
-is proposed in~\cite{drumwright03, drumwright04}. Behaviors are defined 
-as a motion symbol (e.g. jab, hook, elbow, shield and uppercut). 
+symbols in a motion. For example, a method for behavior-based control
+is proposed in~\cite{drumwright03, drumwright04}. Behaviors are defined
+as a motion symbol (e.g. jab, hook, elbow, shield and uppercut).
 The behaviors are modeled by learning from series of examples.
 A dimensional reduction is then applied to have a significant
 clusterization.  The recognition part is handled by a Bayesian classifier which
 recognizes a trajectory in joint or Cartesian space. The extension to the recognition
 is to perform an imitation. This is performed by interpolating known examples to obtain
-feasible trajectories. 
+feasible trajectories.
 The introduction of partially-observable markov decision process or Bayesian inference~\cite{pearl88} has
 renewed the topic of action modeling~\cite{kaelbling98} in the last decade. Such
 techniques and related ones are now applied to motor skill learning in
-general~\cite{peters08}, and to motion segmentation~\cite{calinon10, inamura04} in particular. 
+general~\cite{peters08}, and to motion segmentation~\cite{calinon10, inamura04} in particular.
 Hidden Markov Models (HMMs) have been extensively used,
-for example, to perform action and gait recognition~\cite{gu10} or to generate 
-a human-like motions~\cite{kwon08}. In these works, human capture data 
-are used to build a basis elements in the joint space for each movement class 
+for example, to perform action and gait recognition~\cite{gu10} or to generate
+a human-like motions~\cite{kwon08}. In these works, human capture data
+are used to build a basis elements in the joint space for each movement class
 using a dimension reduction technique. At the same time,
 HMMs are trained to capture the features of a movement class in the task space. The generation
 is obtained by finding the optimal linear combination of basis elements that maximize
-the probability of a trained HMM. Although the task space is considered to be 
+the probability of a trained HMM. Although the task space is considered to be
 the space where movement features have to be extracted, the method is limited to one
 specific task space per movement generated.
 In~\cite{liang09} variable-length markov models are used to learn atomic human actions. A sequence
@@ -281,48 +280,48 @@ the invariants that will discriminate the tasks. The sparsity of the demonstrati
 can also limit the efficiency of the recognition. Finally, the sets of demonstrations
 have to be associated with the correct symbols, which are generally given to the learning algorithm.
 
-Alternatively, recognition can be based on specific criteria that are a priori given 
+Alternatively, recognition can be based on specific criteria that are a priori given
 to the system. In~\cite{nakaoka07}, only the robot trajectories
 are used to distinguish between various phases of motion. A task is
 a complete whole body motion within a temporal segment. The global motion
 is a sequence of tasks. Each task has its own
-parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps: 
+parameters called \emph{skills parameters}. The task recognition method is decomposed in two steps:
 first, for each tasks, find all the temporal segments in the observed motion
 corresponding to that task.
 The second step is the estimation of the skill parameters for each segment.
 Each task is detected by the analysis of a trajectory projected in a specific space.
-For example, the stepping task is detected by analyzing the trajectory 
+For example, a stepping task is detected by analyzing the trajectory
 of a foot; a squatting task is detected by analyzing the vertical trajectory of the waist.
 The criteria used for detection and the associated dedicated projection spaces
-are ad-hoc, built manually for a particular motion that has to be imitated by the robot.
+are built manually for a particular motion that has to be imitated by the robot.
 Similarly,~\cite{muhlig09} uses a set of specific spaces
-in which the observed motion is projected. Ad-hoc criteria
+in which the observed motion is projected. Each task is associated with a specific criterion. These criteria
 %Observations of a movement from sensors (camera, or motion capture system)
-are used to automatically choose the set of task spaces that will best 
+are used to automatically choose the set of task spaces that will best
 represent and generalize a given movement, in order to focus
 a learning technique into that new space. The criteria used for the task-space selection
 are expressed by some score functions inspired from neuroscience:
 the saliency of the object that is manipulated, a variance of the dimension
 of a space during several demonstrations, and some heuristics that express that
-uncomfortable or exhausting motions reveal the presence of a task. Those heuristics
+uncomfortable or exhausting motions reveal the presence of a task. Those decision tests
 address the problem of how to spot tasks that involve no motion. The method
 adds some higher level information to a purely statistical analysis and relies
 on task spaces as an appropriate space to represent movements. However
 the efficiency of the task space selection depends on the strength
-of the heuristics.
+of the chosen decision tests.
 
 The common approach of these last works are to project the observed motion in some specific reduced spaces,
-where the recognition is easier. These spaces can be chosen arbitrary~\cite{nakaoka07}, 
+where the recognition is easier. These spaces can be chosen arbitrary~\cite{nakaoka07},
 automatically selected~\cite{muhlig09} or learned~\cite{peters08}. Similarly, in control,
 smaller-size spaces are used to define the control objectives and modulate the robot behavior.
-For example the task function approach~\cite{samson91} expresses generic control objectives in
+For example the task-function approach~\cite{samson91} expresses generic control objectives in
 given n-dimensional task spaces.
 The approach has been extended to handle a hierarchical set of tasks~\cite{siciliano91, nakamura87}
 using the redundancy of a system.
 \medskip
 %In this work the control law is obtained by a \emph{stack of tasks}
 %(SoT)~\cite{mansard07} ie hierarchical inverse kinematics
-%\cite{siciliano91}.\\                                       
+%\cite{siciliano91}.\\
 
 %In this paper another point of view is taken: the control theory based
 %one. Control theory constitutes the second corpus that accompanies
@@ -344,26 +343,26 @@ using the redundancy of a system.
 %(eg. exponential decrease to zero) and by the differential link between
 %the task space and the actuator space, typically the task Jacobian.
 %Given a set of active task, the corresponding control law can be
-%obtained by inverting the equation of motion of the robot. 
+%obtained by inverting the equation of motion of the robot.
 
 %In this work, the analyzed motion is not seen as a sequence of motion primitives but as a
 %superimposition of controllers. The recognition of sequences
 %is out of the scope of the paper.
 %The task-function is generally used to generate a motion\cite{siciliano91, mansard07}, and
 The originality of the method presented in this paper is to use the properties of the
-task function to perform a task-recognition. The main idea is
-to perform a reverse engineering of an observed motion, knowing the set of all possible tasks that can appear 
-and using the control law in the task space as characteristic trajectories. 
+task-function to perform a task recognition. The main idea is
+to perform a reverse engineering of an observed motion, knowing the set of all possible tasks that can appear
+and using the control law in the task space as characteristic trajectories.
 Under the hypothesis that the motion has been generated by stacking a set of controllers,
-the motion is processed in order to seek the known behaviors in each task spaces. 
+the motion is processed in order to seek the known behaviors in each task spaces.
 We named this reverse engineering algorithm approach \emph{reverse control}.
 While all the approaches presented above can only recognize non-parallel task,
 we rely on the control redundancy principles to recognize sets of parallel tasks.
 Projections of the motion in the already-detected orthogonal task spaces
 ensure an efficient decoupling of the tasks performed
 by the robot.
-It has to be noted that our approach relies also on some strong assumptions. The difference is that those
-assumptions are directly related to the robot control framework.
+It has to be noted that our approach relies also on some strong assumptions, listed explicitly below,
+but that are directly related to the robot control framework.
 %The next section briefly reviews the mechanism of the task function approach used
 %throughout this paper.
 %
@@ -385,10 +384,10 @@ assumptions are directly related to the robot control framework.
 %by concluding remarks.
 
 We introduce in Section~\ref{sec:sot} the basics of what the work presented here
-relies on: the task function formalism. The proposed algorithm to perform the 
+relies on: the task-function approach. The proposed algorithm to perform the
 motion analysis is presented in Section~\ref{sec:detect}.
-Finally, experimentations that validate the method are presented in 
-simulation in Section~\ref{sec:simu} and on the real HRP-2 robot in Section~\ref{sec:real}.
+Finally, experimentations that validate the method are presented in
+simulation in Section~\ref{sec:simu} and with the real HRP-2 robot in Section~\ref{sec:real}.
 
 \section{Tasks and stack of tasks}
 \label{sec:sot}
@@ -404,10 +403,10 @@ sequencing offers a real versatility: subparts of the motion can be used in
 very different situations without redesigning them for each case.
 
 In the following, we consider that the robot input is the velocity $\mbf{\dot{q}}$,
-where $\mbf{q}$ is the robot configuration vector.                   
-A task is defined by a vector space 
+where $\mbf{q}$ is the robot configuration vector.
+A task is defined by a vector space
 $\mbf{e}$ and by the reference behavior $\mbf{\dot{e}^*}$ to be
-executed in the task space.  
+executed in the task space.
 The differential link between the error and the robot configuration is
 the Jacobian of the task and is noted
 $\mbf{J}=\dpartial{\mbf{e}}{\mbf{q}}$.
@@ -421,8 +420,8 @@ where $\mbf{e} = \mbf{s} - \mbf{s^*}$ is the error between a current
 observed value of a signal $\mbf{s}$ and its arbitrary reference $\mbf{s^*}$,
 and $\lambda>0$ is the gain that tunes the speed of the regulation of $\mbf{e}$ to $0$.
 For example, the observed feature can be a 3D position $\mbf{p}$ of one of
-the robot's end-effectors, to be brought to a chosen position $\mbf{p^*}$ 
-%In that case differential link between the error and the robot configuration is 
+the robot end-effectors, to be brought to a chosen position $\mbf{p^*}$
+%In that case differential link between the error and the robot configuration is
 and the Jacobian $\mbf{J} = \dpartial{\mbf{p}}{\mbf{q}}$.
 
 The control law is given by the least-square solution~\cite{liegeois77}:
@@ -433,11 +432,11 @@ The control law is given by the least-square solution~\cite{liegeois77}:
 where $\mbf{J}^+$ is the least-square inverse of $\mbf{J}$,
 $\mbf{P} = \mbf{I} - \mbf{J}^+ \mbf{J}$ is the projection operator onto the null space
 of $\mbf{J}$ and $\mbf{z}$ is any secondary criterion. $\mbf{P}$ ensures
-a decoupling of the task with respect to $\mbf{z}$. 
+a decoupling of the task with respect to $\mbf{z}$.
 Using $\mbf{z}$ as a secondary input, the control can be extended
 recursively to a set of \emph{n} tasks. Those \emph{n} tasks
 are ordered by priority : task number 1 being the highest priority task,
-and task number \emph{n}, the lowest priority,
+and task number \emph{n} the lowest priority,
 $task_i$ should not disturb $task_j$ if $i>j$.
 The recursive formulation of the control law is proposed by~\cite{siciliano91} :
 \begin{equation}
@@ -446,18 +445,18 @@ The recursive formulation of the control law is proposed by~\cite{siciliano91} :
 \end{equation}
 \noindent with $\dot{\mbf{q}}_0 = 0$ and $\mbf{P}_{i-1}^{\mbf{A}}$ is
 the projector onto the null space of the augmented Jacobian
-$\mbf{J}_i^{\mbf{A}} = (\mbf{J}_1, \ldots \mbf{J}_i)$. Joint velocities realizing all 
+$\mbf{J}_i^{\mbf{A}} = (\mbf{J}_1, \ldots \mbf{J}_i)$. Joint velocities realizing all
 the tasks is $\dot{\mbf{q}}^* = \dot{\mbf{q}}_n$.
 Each task can be used to generate a common pattern of motion in various situation.
 In that sense, a task is at the same time the controller that can
 generate a motion, as well as a descriptor of the motion that is currently executed.
 This descriptor is quasi symbolic, but comes also with additional parameters
-that characterize the way it is executed: for example, for exponential-decrease tasks,
-they come with the parameters $\lambda$ that characterize their decrease speed. 
+that characterize the way it is executed: for example, an exponential-decrease task
+comes with the parameters $\lambda$ that characterize its decrease speed.
 A complete implementation of this approach is proposed in~\cite{mansard07} under the
-name \emph{Stack of Tasks} (SoT). 
+name \emph{Stack of Tasks} (SoT).
 
-\section{Motion analysis for task recognition} 
+\section{Motion analysis for task recognition}
 \label{sec:detect}
 \label{section:algorithm}
 In the previous section the classical widely-used task-function formalism was recalled.
@@ -470,17 +469,17 @@ example, to distinguish between similar-looking movements.
 
 \subsection{Hypothesis}
 It is assumed that the behavior model $\mbf{\dot{e}^*}$ of every
-possibly-used tasks is known. The kinematic model of the robot and all tasks that may appear in a 
-motion are known. 
+possibly-used tasks is known. The kinematic model of the robot and all the tasks that may appear in a
+motion are known.
 The kinematic model is
-required to compute the Jacobian and the null space projector that are used in the recognition part.
+required to compute the Jacobian and the null-space projector that are used in the recognition part.
 As a consequence, uncertainties in the kinematic model will affect the performance of the method.
 The tasks that may appear in a motion have to be known because the considered approach
-of the recognition is to consider the recognition problem 
+of the recognition is to consider the recognition problem
 as a selection in a finite set problem.
 The set of possible tasks is called the \emph{task pool}.
-Possible tasks may for example be end-effector, center of mass, visual or posture servoing.
-The approach considered handles tasks executed in parallel because
+Possible tasks may for example be end effector, center of mass, visual or posture servoing.
+The considered approach handles tasks executed in parallel because
 it allows a good expressivity of movements thanks to the different
 possible tasks combination.
 The observed motion is supposed to have been generated using an unknown sub-set of the task pool.
@@ -490,7 +489,7 @@ in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
 of active tasks is constant during the motion and the tasks start and finish at the same time.
 That last assumption discards sequential movements and all inequalities and conditional constraints because
 such constraints involves a change in the stack of tasks used to generate the movement.
-It also discards non consistent motions which appear when not trying to 
+It also discards non consistent motions which appear when not trying to
 avoid singularities.
 Another consequence of that assumption is that the hierarchy of the tasks are not considered
 since all tasks are assumed to be completely fulfilled and
@@ -501,15 +500,15 @@ capture system as shown in Section~\ref{sec:xpset}.}.
 
 \subsection{Overview}
 \label{sec:alg1:selec}
-The input of the algorithm is joint trajectories and
+The input of the algorithm is the joint trajectories and
 the task pool. The algorithm is iterative: at each iteration of the algorithm, the task that seems the
 most relevant is selected. The selection of a task relies
 on a curve-fitting score, obtained by projecting the joint-angle trajectory in each task space.
 Assuming that the kinematic model of the robot is known,
 the projection of the motion in each task space reconstructs the trajectory in that space.
-For example, the trajectory of the center of mass (\emph{Com} task) is 
+For example, the trajectory of the center of mass (\emph{Com} task) is
 recovered from the joint trajectories by the projection
-of the joint trajectories into \emph{Com} task space. 
+of the joint trajectories into the \emph{Com} task space.
 The projected trajectories are
 compared to the theoretical trajectories which are characteristic
 of the execution of a task.
@@ -549,9 +548,9 @@ $\mbf{P\dot{q}}(t)$ denotes the successive projections of the reference
 motion. Before the first iteration, $\mbf{P\dot{q}}(t)$ is set to the reference motion.
 Then, each iteration projects it in the selected task null space.
 $r_i$ denotes the score of the cost function of the curve fitting optimization. $activePool$ denotes
-the set of tasks selected during the algorithm. 
+the set of tasks selected during the algorithm.
 
-If the observed motion is exactly generated by a SoT, 
+If the observed motion is exactly generated by a SoT,
 the resulting trajectory $\mathbf{P\dot{q}}$ after projection
 onto all the active-task spaces is null. However, in presence of noise (\emph{ie} when
 acquiring motion through real sensors)
@@ -576,7 +575,7 @@ In order to cancel the effect of a detected task $i_{select}$, the joint traject
 of that task by multiplying it with the projector onto the null space of all tasks to cancel.
 For every time $t$ of the motion time interval:
 \begin{equation}
-  \mbf{P\dot{q}}(t) \leftarrow \mbf{P^A_{i\mathrm{select}}}(t) \mbf{P\dot{q}}(t) 
+  \mbf{P\dot{q}}(t) \leftarrow \mbf{P^A_{i\mathrm{select}}}(t) \mbf{P\dot{q}}(t)
   \label{eq:projection}
 \end{equation}
 where $ \mbf{P^A}(t)$ is jointly updated:
@@ -595,7 +594,7 @@ independent with regard to the other tasks; on the other hand, it modifies by
 the way the part of the motion that is coupled with the effect of the remaining
 tasks. The first effect is beneficial because it avoids future false
 detection that could be caused by non-linear reflection of the
-currently-selected task in the remaining task space. However, care has to be taken with the modification of the coupled part, as explained by the following example:
+currently-selected task in the remaining task space. However, care has to be taken with the modification of the coupled part, as explained by the following example.
 
 %\medskip
 %\subsubsection{Example with two tasks}
@@ -610,25 +609,25 @@ If $\mbf{e}_a$ is detected first, \eqref{eq:projection} is applied with
 $i_{select} = a$. Multiplying~(\ref{eq:controlLaw2Tasks}) by $\mbf{P}_a$
 cancels the motion in the Task $a$ space:
 \begin{equation}
-  \mbf{P}_a \mbf{\dot{q}} = \underbrace{\mbf{P}_a \mbf{J}_a^+\mbf{\dot{e}}_a^*}_{\mbf{0}} + \mbf{P}_a (\mbf{J}_b\mbf{P}_a)^+ (\mbf{\dot{e}}_b^* - \mbf{J}_b\mbf{J}_a^+\mbf{\dot{e}}_a^*)  
+  \mbf{P}_a \mbf{\dot{q}} = \underbrace{\mbf{P}_a \mbf{J}_a^+\mbf{\dot{e}}_a^*}_{\mbf{0}} + \mbf{P}_a (\mbf{J}_b\mbf{P}_a)^+ (\mbf{\dot{e}}_b^* - \mbf{J}_b\mbf{J}_a^+\mbf{\dot{e}}_a^*)
   \label{eq:cancel1_2:1}
 \end{equation}
 The first term is null by definition of $\mbf{P}_a$.
 The motion due to $\mbf{P}_a \mbf{\dot{q}}$ in the Task $b$ space is obtained by multiplying by $\mbf{J}_b$:
 \begin{equation}
   \mbf{J}_b \mbf{P}_a \mbf{\dot{q}} = \mbf{\dot{e}}_b^* -
-  \mbf{J}_b  \mbf{J}_a^+ \mbf{\dot{e}}_a^*  
+  \mbf{J}_b  \mbf{J}_a^+ \mbf{\dot{e}}_a^*
   \label{eq:J2P1q}
 \end{equation}
 since $\mbf{J}_b\mbf{P}_a(\mbf{J}_b\mbf{P}_a)^+ = \mbf{I}$ by hypothesis.
 The first term is the
 independent component of the second task, and the second term
-is the component coupled with Task $a$. 
-Therefore, the projection onto the null space of the discovered task  at the 
+is the component coupled with Task $a$.
+Therefore, the projection onto the null space of the discovered task  at the
 first iteration will induce a coupling effect that has to be handled when trying to discover another task.
 This coupling will be handled in the next section.
 %First, we will show what are the effects of the cancellation of Task 1 and Task 2.
-%Second, we will show what are the effects of the cancellation of the task 2 and the task 1. 
+%Second, we will show what are the effects of the cancellation of the task 2 and the task 1.
 
 
 \newcommand{\medot}[1]{\mbf{\dot{e}}_{#1}}
@@ -653,7 +652,7 @@ the reference behavior of a task over the unknown parameters:
 \end{equation}
 
 \noindent where $\medoth{}(t)$ is the observed trajectory and $\medot{\mbf{x}}(t)$ is the trajectory
-generated by the model using the parameters $\mbf{x}$. The model is generic and an example 
+generated by the model using the parameters $\mbf{x}$. The model is generic and an example
 of a behavior model is an exponential decrease with the parameters $\mbf{x} = [x_1, x_2, x_3]$:
 \begin{equation*}
 p_x(t) = x_1 \mathrm{e}^{-x_2 t} + x_3
@@ -662,12 +661,12 @@ p_x(t) = x_1 \mathrm{e}^{-x_2 t} + x_3
 The score will thus be the residue after trying to obtain the best correspondence with the given
 model in the task space.
 
-In some cases, the trajectory $\medoth{}$ can be observed directly. For example, if the task space 
+In some cases, the trajectory $\medoth{}$ can be observed directly. For example, if the task space
 is the 3D position of the hand, a direct observation is possible.
 However, in general, a direct observation is not possible. For example,
-the center of mass of the robot is difficult to observe directly. 
-In addition, it is not possible to observe directly the effect of the successive projection. 
-$\medoth{}$ is then obtained by the kinematic model and 
+the center of mass of the robot is difficult to observe directly.
+In addition, it is not possible to observe directly the effect of the successive projection.
+$\medoth{}$ is then obtained by the kinematic model and
 joint trajectories of the robot: $\mbf{J}_i\mbf{\hat{\dot{q}}}$.
 However, proceeding so would lead to~(\ref{eq:J2P1q}), where the coupling with previously
 selected tasks appears. The projected motion is then augmented with coupling compensation.
@@ -679,12 +678,12 @@ where $\mbf{A}$ is the set of tasks that have already been detected and $i$ is t
 All the terms corresponding to $\mbf{A}$ are known since identified in the previous
 iteration of the algorithm.
 
-%In order to cancel the second task, the projector onto the null-space of both 
+%In order to cancel the second task, the projector onto the null-space of both
 %tasks $\mbf{P_{2, 1}}$ is computed, and multiplied with the new control law
 %~(\ref{eq:cancel1_2:1}).
 %\begin{equation}
 %  \mbf{P_{2, 1}}\mbf{P_1} \mbf{\dot{q}} = \mbf{P_{2, 1}} (\mbf{J_2} \mbf{P_1})^+ \mbf{\dot{e_2}^*} +
-%  \mbf{P_{2, 1}}(\mbf{J_2} \mbf{P_1})^+  \mbf{J_2}  \mbf{J_1^+} \mbf{\dot{e_1^*}} 
+%  \mbf{P_{2, 1}}(\mbf{J_2} \mbf{P_1})^+  \mbf{J_2}  \mbf{J_1^+} \mbf{\dot{e_1^*}}
 %  \label{eq:P2P1q}
 %\end{equation}
 %Then the obtained control law
@@ -711,7 +710,7 @@ it numerically, the CFSQP solver has been used~\cite{lawrence97}. The result of 
 
 \subsection{Order of the nullification}
 
-The previous composition of detection-projection enables to remove the side effects of the previously detected tasks without introducing any coupling in the non-detected tasks. We show now that the order of the detected tasks and the subsequent projection does not affect the detection of the remaining tasks.
+The previous composition of detection-projection enables to remove the side effects of the previously detected tasks without introducing any coupling in the non-detected tasks. We prove now that the order of the detected tasks and the subsequent projection does not affect the detection of the remaining tasks.
 
 Consider the observed motion to have been generated by a two-stages
 SoT~(\ref{eq:controlLaw2Tasks}). The reference motion in Task $i$
@@ -720,7 +719,7 @@ original motion $\mqdot$ is denoted $\medoth{i}$, while the motion induced in
 Task $j$ after removing the motion from Task $i$ $\mP{j} \mqdot$ is denoted~$\medothp{j}{i}$.
 
 We prove that both tasks can be detected (and removed)
-in arbitrary orders. 
+in arbitrary orders.
 
 \begin{proposition}
   Consider a motion generated by a two-stage SoT. Then
@@ -731,7 +730,7 @@ $\medoth{i} = \medothp{i}{j} = \medotc{i}$, for $i=a$ and $j=b$, and reciprocall
   \subsubsection{Detecting Task $a$, then Task $b$}
 The direct implication is straight forward.
 At iteration 1, the observation in Task $a$ space is directly
-$\medoth{a} = \mbf{J}_a\mbf{\hat{\dot{q}}} = \medotc{a}$.  
+$\medoth{a} = \mbf{J}_a\mbf{\hat{\dot{q}}} = \medotc{a}$.
 After the removal of Task $a$, the observation in Task $b$ space
 is obtained from \eqref{eq:compensation}:
 \begin{align*}
@@ -754,7 +753,7 @@ which implies $\medoth{b} = \medotc{b}$ since $\mJ{b} ( \mJ{b} \mP{a} )^+ = \mbf
 Projecting the original motion~(\ref{eq:controlLaw2Tasks}) in the null space of Task $b$ at the
 end of the first iteration results in the following Task $a$ observation:
 %\begin{equation}
-%  \mbf{P}_b \mbf{\hat{\dot{q}}} = \mbf{P}_b \mbf{J}_a^+\mbf{\hat{\dot{e}}}_a + 
+%  \mbf{P}_b \mbf{\hat{\dot{q}}} = \mbf{P}_b \mbf{J}_a^+\mbf{\hat{\dot{e}}}_a +
 %  \mbf{P}_b (\mbf{J}_b \mbf{P}_a)^+ (\mbf{\hat{\dot{e}}}_b - \mbf{J}_b \mbf{J}_a^+ \mbf{\hat{e}}_a)
 %  \label{eq:proof:P2q}
 %\end{equation}
@@ -768,44 +767,44 @@ end of the first iteration results in the following Task $a$ observation:
 We show that this complex sum is in fact simply $\medotc{a}$ (see Appendix~\ref{sec:appx}).
 %
 This proves that the same fitting is obtained independently of what task is
-detected first. \QED 
+detected first. \QED
 
 %\end{proof}
 
 \medskip
  The proof can be extended using exactly the same arguments for
 a set of $n$ tasks.
-Similarly, it is straightforward to prove that whatever the order of detection, 
+Similarly, it is straightforward to prove that whatever the order of detection,
 the resulting motion after all the projections is null.
 
 \section{Results in simulation}
 \label{sec:simu}
 This section details a series of experimentation in simulation to validate the recognition algorithm.
-Simulation allows us to emphasize the nominal behavior of the algorithm without 
+Simulation allows us to emphasize the nominal behavior of the algorithm without
 any sensor noise.
-The first experiment simply validates the projection of the motion~(section \ref{sec:prelimValid}). 
+The first experiment simply validates the projection of the motion~(section \ref{sec:prelimValid}).
 %Fig.~\ref{fig:snapshotXpqdot} and Fig.~\ref{fig:xp3Pqdot} illustrate the effect of the projections.
 The second part compiles a set of experiments that validate the task recognition algorithm~(section \ref{sec:distinc}).
-%Fig.~\ref{fig:XP2RFit} and Fig.~\ref{fig:XP2RLFit} shows how the fitting behaves. 
+%Fig.~\ref{fig:XP2RFit} and Fig.~\ref{fig:XP2RLFit} shows how the fitting behaves.
 %Fig.~\ref{fig:RbeforeAfterProj} shows how a projected trajectory evolves after other projections.
-For each experiment of that set, the task recognition algorithm 
+For each experiment of that set, the task recognition algorithm
 is applied to two similar-looking motions:
-the two motions have been artificially built to be ambiguous when 
-compared to each other, in order to illustrate the 
+the two motions have been artificially built to be ambiguous when
+compared to each other, in order to illustrate the
 efficiency of the algorithm regarding the precision of the recognition.
+Fig.~\ref{fig:spotDiff1},
+Fig.~\ref{fig:spotDiff2} and Fig.~\ref{fig:spotDiff3} show the final posture of the ambiguous motions used in those
+experiments.
 All motions involved in the experiments are summed up in Table~\ref{tab:motion}.
 The description of the tasks used to build these motions are detailed below.
 
 \subsection{Set-up}
-The reference motions have been generated by using the model of the humanoid robot HRP-2 
+The reference motions have been generated by using the model of the humanoid robot HRP-2
 having 30 actuated degrees of freedom plus six degrees of freedom on the
 freeflyer. Every motions start from the half-sitting pose.
 %showed in Fig.~\ref{fig:halfSit}.
 As classically done in inverse kinematics, the under-actuation of the freeflyer is resolved by constraining
-the left foot to be on the ground. 
-Fig.~\ref{fig:spotDiff1},
-Fig.~\ref{fig:spotDiff2} and Fig.~\ref{fig:spotDiff3} show the final posture of the ambiguous motions used in those
-experiments.
+the left foot to be on the ground.
 %\begin{figure}[t]
 %\begin{center}
 %\includegraphics[width=0.3\linewidth]{img/halfSit.ps}
@@ -838,20 +837,7 @@ the right hand is parallel to the ground.}
 \label{fig:spotDiff3}
 \end{figure}
 
-The set of tasks considered in those experiments are :
-
-\begin{itemize}
-  \item \emph{Com} : the center of mass of the robot is constraint to maintain the static balance (3 DOF)
-  \item \emph{Gaze} : the robot looks at one point in the Cartesian space (2 DOF)
-  \item \emph{Twofeet}: both feet stay flat with regard to each other (6 DOF)
-  \item \emph{Left/Right grab} : either the left or right hand
-of the robot reaches a point defined in the Cartesian space (3 DOF)
-  \item \emph{Screw} : similar to the \emph{grab} task, but the desired position 
-has to be reached with a defined orientation (6 DOF)
-  \item \emph{Head} : the head of the robot is constrained in position and orientation (6 DOF)
-  \item \emph{Chest} : the chest of the robot is constrained in orientation  (3 DOF)
-\end{itemize}
-\begin{table}[h]
+\begin{table}[h!]
   \centering
     \begin{tabular}{|c|c|c|}
       \hline
@@ -859,7 +845,7 @@ has to be reached with a defined orientation (6 DOF)
       \hline
       & &
       \\
-      Motion 1 & 
+      Motion 1 &
 	\begin{tabular}{|c|}
           \hline
           \emph{Right grab}\\
@@ -878,7 +864,7 @@ has to be reached with a defined orientation (6 DOF)
       \hline
       & &
       \\
-      Motion 2 & 
+      Motion 2 &
         \begin{tabular}{|c|}
           \hline
           \emph{Right grab}\\
@@ -887,7 +873,7 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
-	\end{tabular}  
+	\end{tabular}
     &
 	\begin{tabular}{|c|}
 	  \hline
@@ -899,14 +885,14 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
-	\end{tabular}  
+	\end{tabular}
     \\
     & &
     \\
     \hline
     & &
     \\
-    Motion 3 & 
+    Motion 3 &
         \begin{tabular}{|c|}
 	  \hline
 	  \emph{Gaze}\\
@@ -917,7 +903,7 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
           \hline
-        \end{tabular}  
+        \end{tabular}
     &
 	\begin{tabular}{|c|}
 	  \hline
@@ -929,14 +915,14 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
-	\end{tabular}  
+	\end{tabular}
     \\
     & &
     \\
     \hline
     & &
     \\
-    Motion 4 & 
+    Motion 4 &
 	\begin{tabular}{|c|}
 	  \hline
 	  \emph{Gaze}\\
@@ -945,7 +931,7 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
-	\end{tabular}  
+	\end{tabular}
     &
 	\begin{tabular}{|c|}
 	  \hline
@@ -955,7 +941,7 @@ has to be reached with a defined orientation (6 DOF)
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
-	\end{tabular} 
+	\end{tabular}
       \\
     & &
     \\
@@ -994,10 +980,23 @@ has to be reached with a defined orientation (6 DOF)
   \caption{The table of considered motions and tasks.}
   \label{tab:motion}
 \end{table}
+The set of tasks considered in those experiments are :
+
+\begin{itemize}
+  \item \emph{Com} : the center of mass of the robot is constraint to maintain the static balance (3 DOF)
+  \item \emph{Gaze} : the robot looks at one point in the Cartesian space (2 DOF)
+  \item \emph{Twofeet}: both feet stay flat with regard to each other (6 DOF)
+  \item \emph{Left/Right grab} : either the left or right hand
+of the robot reaches a point defined in the Cartesian space (3 DOF)
+  \item \emph{Screw} : similar to the \emph{grab} task, but the desired position
+has to be reached with a defined orientation (6 DOF)
+  \item \emph{Head} : the head of the robot is constrained in position and orientation (6 DOF)
+  \item \emph{Chest} : the chest of the robot is constrained in orientation  (3 DOF)
+\end{itemize}
 
 \subsection{Experiment 1 : Preliminary validation}
 \label{sec:prelimValid}
-In this experiment, a basic motion is generated. Then the recognition by fitting
+In this experiment, a basic motion is generated. Then the recognition by fitting, the projection
 and the termination condition of the algorithm are validated.
 The reference motion is \emph{motion 1.a} (see Table~\ref{tab:motion}).
 The motion is given to the detection program
@@ -1063,7 +1062,7 @@ which means that all relevant tasks have been detected.
 \\
 Iteration & 0 & 99 & 199 & 299 & 399 & 499\\
 \end{tabular}
-\caption{The motion generated by a stack of tasks involving :
+\caption{Experiment 1: The motion generated by a stack of tasks involving :
 \emph{Right and Left grab}, \emph{Com}, \emph{Gaze}, \emph{Twofeet} is represented in the row (a).
 The remaining rows represent the successive projections of the motion in the null spaces of the tasks,
 (b) Right grab, (c) Com, (d) Gaze, (e) Twofeet, (f) Left grab.}
@@ -1071,7 +1070,7 @@ The remaining rows represent the successive projections of the motion in the nul
 \end{figure*}
 As we can see in the second line, the movement of the right hand is nullified. The cancellation of
 the \emph{Com} from the third line is more difficult to perceive. On the forth line, the cancellation
-of the head movement due to the gaze is very clear. On the fifth line, the cancellation of the task \emph{Twofeet} 
+of the head movement due to the gaze is very clear. On the fifth line, the cancellation of the task \emph{Twofeet}
 removes the compensation done with the right leg. Finally, as shown on the last line,
 the cancellation of all tasks leads to a null motion.
 Fig.~\ref{fig:xp3Pqdot} shows the evolution of the norm of the motion,
@@ -1083,7 +1082,7 @@ defined by the sum square of the joint-angle velocities of the robot.
       \input{img/PqdotNormsProjection.tex}
     }
 \end{center}
-\caption{Evolution of the norm of the motion after successively projecting the motion in the
+\caption{Experiment 1: Evolution of the norm of the motion after successively projecting the motion in the
 	tasks null spaces.}
 \label{fig:xp3Pqdot}
 \end{figure}
@@ -1116,12 +1115,12 @@ The final states of the robot for the two motions are shown in the Fig.~\ref{fig
 A video showing those two motions on the HRP-2 is available\footnote{{http://homepages.laas.fr/shak/videos/}}.
 The two motions look very similar, and it is very difficult to the human eye
 to tell which motion involves a left and right hand task without the context.
-In the first case, the motion of the left hand is due to \emph{Com} and \emph{Right Hand} task, 
-as it is a side effect to compensate the balance of the right hand.
+In the first case, the motion of the left hand is due to \emph{Com} and \emph{Right Hand} task,
+as it is a side effect to compensate the balance perturbation induced by the right hand.
 In the second case, the motion of the left hand is decoupled,
 since the left hand has been driven by its own goal.
 However, in the proper task spaces, those motions appear clearly different.
-Fig.~\ref{fig:XP2RFit} shows an example of the result of the task fitting of 
+Fig.~\ref{fig:XP2RFit} shows an example of the result of the task fitting of
 \emph{Right Hand} and \emph{Left Hand} task applied to \emph{motion 2.a}.
 \begin{figure*}[p]
 \centering
@@ -1134,16 +1133,16 @@ Fig.~\ref{fig:XP2RFit} shows an example of the result of the task fitting of
       \input{img/simu/2a/taskLhandNormInvJerr_0}
     }\\
 \end{tabular*}
-\caption{Task fitting on \emph{motion 2.a} on the right and the Left grab tasks. Variable $r$ is the residue,
+\caption{Experiment 2: Task fitting on \emph{motion 2.a} on the right and the Left grab tasks. Variable $r$ is the residue,
 \emph{ie} the distance between the two curves. \emph{Right Hand} motion is properly fitted by
-the task model, showing that the task is active. \emph{Left Hand} is not fitted properly, since the task is 
+the task model, showing that the task is active. \emph{Left Hand} is not fitted properly, since the task is
 not active. The values of the residues show that the task \emph{Right grab}
-is a better explanation for the movement than the task \emph{Left grab}.} 
+is a better explanation for the movement than the task \emph{Left grab}.}
 \label{fig:XP2RFit}
 \end{figure*}
-The residue of the optimization for \emph{Left Hand} is higher than 
+The residue of the optimization for \emph{Left Hand} is higher than
 the residue for \emph{Right Hand}. At this step, the movements
-analyzed is better explained by \emph{Right Hand} than by \emph{Left Hand}. 
+analyzed is better explained by \emph{Right Hand} than by \emph{Left Hand}.
 The results of the detection algorithm
 are showed in Table~\ref{tab:spotDiff1}.
 \begin{table}[t]
@@ -1218,11 +1217,11 @@ Finally Fig.~\ref{fig:RbeforeAfterProj} shows how the norm of joint-angle veloci
   }
   \label{fig:RbeforeAfterProj:2b}
   }
-  \caption{Evolution of the trajectory $\dot{\mbf{q}}$ projected in the spaces of
-  \emph{Right grab} (in solid lines) and 
+  \caption{Experiment 2: Evolution of the trajectory $\dot{\mbf{q}}$ projected in the spaces of
+  \emph{Right grab} (in solid lines) and
   \emph{Left grab} (in dashed lines) after
   successive projection of the motion in the nullspace of the task \emph{Right grab} and in the nullspace
-  of the task \emph{Com}. In \emph{motion 2.a}, a great part of the motion of the left arm is due to 
+  of the task \emph{Com}. In \emph{motion 2.a}, a great part of the motion of the left arm is due to
   \emph{Com} task: removing \emph{Com} task will cancel almost all motion in the left arm.
   In \emph{motion 2.b}, the motion of the left arm is not only involved by \emph{Com} task
   but mainly by \emph{Left grab} task. Removing \emph{Com} task will only
@@ -1232,21 +1231,21 @@ Finally Fig.~\ref{fig:RbeforeAfterProj} shows how the norm of joint-angle veloci
 Projecting \emph{motion 2.a} onto the null spaces of
 \emph{Right grab} task will decrease its associated theoretical joint-angle velocities while leaving the
 \emph{Left grab} one unchanged. Fig.~\ref{fig:RbeforeAfterProj:2a} shows
-that the theoretical joint-angle velocities associated to 
+that the theoretical joint-angle velocities associated to
 \emph{Left grab} task is decreased after the projection of the motion in
-the nullspace of \emph{Com} task.  That explicits that
+the null space of \emph{Com} task.  That explicits that
 the left arm of the robot was moved by \emph{Com} task.
 By the way, the projection prevent the left task to be detected at any further iteration of
 the algorithm.
 But, when projecting \emph{motion 2.b} into the nullspace of \emph{Right grab}
 and \emph{Com} task the joint-angle velocities associated to \emph{Left grab} task
-is still significant (Fig.~\ref{fig:RbeforeAfterProj:2b}). That means that 
+is still significant (Fig.~\ref{fig:RbeforeAfterProj:2b}). That means that
 \emph{Com} task has a little influence on the
 motion of the left arm, and that motion on the left arm is due
 to another task. Therefore, the task selection algorithm will keep looking
 for the task that has controlled the left arm.
 After the detection of the two (for \emph{motion 2.a}) and three (for \emph{motion 2.b}) main tasks,
-the norm of the last joint-angle velocities are not null, because 
+the norm of the last joint-angle velocities are not null, because
 the task selection algorithm has not finished and other tasks have not been selected yet.
 \emph{Twofeet} task is then detected but the projection is not displayed on the figure for the sake of clarity.
 On the other hand Fig.~\ref{fig:XP2RLFit} shows the task fitting for \emph{motion 2.b}.
@@ -1262,7 +1261,7 @@ On the other hand Fig.~\ref{fig:XP2RLFit} shows the task fitting for \emph{motio
       \input{img/simu/2b/taskLhandNormInvJerr_0}
     }\\
 \end{tabular*}
-\caption{Task fitting on \emph{motion 2.b} on the right and the left hand tasks. Both motion of the right
+\caption{Experiment 2: Task fitting on \emph{motion 2.b} on the right and the left hand tasks. Both motion of the right
 and left hand are fitted by the model, with small residue: the tasks are detected.}
 \label{fig:XP2RLFit}
 \end{figure*}
@@ -1319,8 +1318,8 @@ Table~\ref{tab:spotDiff2} shows the results of the task-selection algorithm whic
   \vspace{-3pt}
 \end{table}
 As in the previous experiments, the task \emph{Screw} can not be properly fitted on the trajectory
-generated on \emph{motion~3.a}. 
-In \emph{motion 3.b}, both tasks \emph{Grab} and \emph{Screw} are detected, whereas 
+generated on \emph{motion~3.a}.
+In \emph{motion 3.b}, both tasks \emph{Grab} and \emph{Screw} are detected, whereas
 the task \emph{Screw} is not selected in \emph{motion~3.a}. The selection of both tasks
 in \emph{motion 3.b} is explained by the fact that \emph{Grab} is actually a sub-task of \emph{Screw}.
 The residual motion after successive projections is finally very close to 0, which proved that
@@ -1335,7 +1334,7 @@ all tasks were properly detected.
 The two motions considered are \emph{motion 4.a} and \emph{motion 4.b}.
 \emph{motion 4.a} can be described by the following scenario :
 an object is in front of the robot, and creates an occlusion in the vision of the robot.
-To get rid of this occlusion, the robot can lean on its right. 
+To get rid of this occlusion, the robot can lean on its right.
 While the robot leans, the left hand is dragged by the chest as an involuntary side effect.
 The position and orientation of that hand is recorded as a desired state of the
 hand for the first \emph{motion 4.b} task.
@@ -1396,17 +1395,17 @@ realistic cases of noisy signals acquired by real sensors.
 
 \section{Experimentation on the robot}
 \label{sec:real}
-In this section, we experimentally demonstrate the validity of the task-recognition algorithm
-in realistic situation in presence of noise. This time, the reference motion 
-is demonstrated by the real HRP-2 and observed 
+In this section, we experimentally demonstrate the validity of the task recognition algorithm
+in realistic situation in presence of noise. This time, the reference motion
+is demonstrated by the real HRP-2 and observed
 using a motion-capture system. (Fig.~\ref{fig:hrp2Markers}).
 As previously, the task recognition algorithm is applied to two pairs of similar looking motions.
-First, we briefly explain how the motion-capture system is used to record the joint-angle 
+First, we briefly explain how the motion-capture system is used to record the joint-angle
 trajectory. Then two pairs of motions are observed and provided to the recognition algorithm.
 
 \subsection{Experimental setup}\label{sec:xpset}
-A motion is executed with \emph{SoT} on the HRP-2 robot equipped with markers on each
-body part (see Fig.~\ref{fig:hrp2Markers}).
+A motion is executed with the \emph{SoT} framework on the HRP-2 robot equipped with markers on each
+body part.
 \begin{figure}[t]
   \centering
   \begin{tabular}{cc}
@@ -1430,8 +1429,8 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   }
   \label{fig:exp1:headFit:RL}
   }
-  \caption{Fitting at the first iteration of the task selection algorithm
-  for \emph{head} task for \emph{motion 2.a} and \emph{motion 2.b} 
+  \caption{Experiment 3: Fitting at the first iteration of the task selection algorithm
+  for \emph{head} task for \emph{motion 2.a} and \emph{motion 2.b}
   For both motion, $r$ is not the lowest residue amongst all the tasks fitting: \emph{Head} task, not active, is not selected.}
   \label{fig:exp1:headFit}
 \end{figure*}
@@ -1440,7 +1439,7 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   \subfigure[Motion 2.a]{
   \resizebox{.46\textwidth}{!} {
   \input{img/realRobot/2a/taskLhandNormInvJerr_0.tex}
-  }                           
+  }
   \label{fig:exp1:taskLhand:R}
   }
   \subfigure[Motion 2.b]{
@@ -1449,8 +1448,8 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   }
   \label{fig:exp1:taskLhand:RL}
   }
-  \caption{Fitting at the first iteration of the task selection algorithm
-  for \emph{Left grab} task for \emph{motion 2.a} and \emph{motion 2.b} 
+  \caption{Experiment 3: Fitting at the first iteration of the task selection algorithm
+  for \emph{Left grab} task for \emph{motion 2.a} and \emph{motion 2.b}
   \emph{Left grab} task is not pertinent for \emph{motion 2.a}, but is selected for \emph{motion 2.b}.}
   \label{fig:exp1:taskLhand}
 \end{figure*}
@@ -1459,7 +1458,7 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   \subfigure[Motion 2.a]{
   \resizebox{.46\textwidth}{!} {
   \input{img/realRobot/2a/RevolutionLH.tex}
-  }                           
+  }
   \label{fig:exp1:Evolution2L:a}
   }
   \subfigure[Motion 2.b]{
@@ -1468,7 +1467,7 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   }
   \label{fig:exp1:Evolution2L:b}
   }
-  \caption{Norm of motions associated to \emph{Left grab} task (\emph{ie} motion of the left arm).
+  \caption{Experiment 3: Norm of motions associated to \emph{Left grab} task (\emph{ie} motion of the left arm).
   The motion is cancelled after removing the motion due to \emph{Com} task
   in \emph{motion 2.a}. In that case, it means that the left arm motion was due to \emph{Com} task.
   Whereas in \emph{motion 2.b}, the motion of the left arm is not cancelled after
@@ -1482,7 +1481,7 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   \subfigure[Motion 2.a]{
   \resizebox{.46\textwidth}{!} {
   \input{img/realRobot/2a/RevolutionRH.tex}
-  }                           
+  }
   \label{fig:exp1:Evolution2R:a}
   }
   \subfigure[Motion 2.b]{
@@ -1491,17 +1490,14 @@ body part (see Fig.~\ref{fig:hrp2Markers}).
   }
   \label{fig:exp1:Evolution2R:b}
   }
-  \caption{Quantity of motion in the right hand space after successive projection.
+  \caption{Experiment 3: Quantity of motion in the right hand space after successive projection.
     The quantity of motion in the right hand space is almost null
       after the nullification of the tasks \emph{Right grab and Com}.
-  It means that the motion of the right arm is a consequence of 
+  It means that the motion of the right arm is a consequence of
   \emph{Right grab} and \emph{Com} tasks. It is consistent with the fact that,
   in order to maintain its balance, the right arm has to move.}
   \label{fig:exp1:Evolution2R}
 \end{figure*}
-Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
-on the two motions. The quantity decreases after successive projections, until the remaining motion 
-is mainly sensor noise.
 \begin{figure*}[p]
   \centering
   \subfigure[Motion 2.a]{
@@ -1516,7 +1512,7 @@ is mainly sensor noise.
   }
 \label{fig:exp1:PqdotNormsRL}
 }
-\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+\caption{Experiment 3: Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
 \emph{motion 2.a} and \emph{motion 2.b}. The norm decreases iteratively during the recognition algorithm.}
 \label{fig:exp1:PqdotNorms}
 \end{figure*}
@@ -1533,35 +1529,35 @@ is mainly sensor noise.
     \input{img/realRobot/5b/PqdotNorms5b}
   }
 }
-\caption{Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
+\caption{Experiment 4: Evolution of the norm of the motion after successively projecting the motion in the tasks null space for
 \emph{motion 5.a} and \emph{motion 5.b}. The norm decreases iteratively during the recognition algorithm.}
 \label{fig:exp6:PqdotNorms5}
 \end{figure*}
 The motion-capture system used is composed of 10 digital cameras and record data
-at 200Hz. 
+at 200Hz.
 The motion-capture system provides the trajectory of each body of the robot.
 The data collected from those markers
 are used to build a virtual skeleton that match the kinematic hierarchy of the robot (Fig.~\ref{fig:hrp2Markers}).
 The result of this process is the 6D trajectories of all the bodies in space, without any joint constraints.
-
+\medskip
 The analysis of the motion is performed on the joint-angle trajectories.
 Therefore, a joint-angle trajectories have to be computed from the motion-capture data.
 The joint-angle trajectories are computed as classically done by optimizing the distance
-between the transformation matrix $\tensor[^{W}]{\mathbf{R}}{_{q_i}}(\mbf{q})$ from the 
+between the transformation matrix $\tensor[^{W}]{\mathbf{R}}{_{q_i}}(\mbf{q})$ from the
 robot origin to each joint of the robot and the measured
-transformation matrix $\tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}(t)$ using the robot's joint limits
-as constraints. 
+transformation matrix $\tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}(t)$ using the robot joint limits
+as constraints.
 \begin{eqnarray}
   \mbf{\hat{q}}(t) =  & \underset{\mbf{q}}\argmin & \sum_i^n \Vert \tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}(t) \ominus \tensor[^{W}]{\mathbf{R}}{_{q_i}}(\mbf{q}) \Vert ^2\\
     & \text{s.t.} & q_{i\mathrm{min}} \leq q_i \leq q_{i\mathrm{max}}, \; i = 1..n
   \label{mocapOpti}
 \end{eqnarray}
 where $\mbf{q}$ is the robot joint configuration vector,
-$\ominus$ is the distance operator in SO(3), 
+$\ominus$ is the distance operator in SO(3),
 $\tensor[^{W}]{\mathbf{R}}{_{q_i}}(\mbf{q})$ is computed using the kinematic
 model of the robot, and $\tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}$ is obtained by:
 \begin{equation}
-  \tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}(t) = \tensor[^{W}]{\mathbf{R}}{_{W_{C}}} \times \tensor[^{W_{C}}]{\mathbf{\hat{R}}}{_{M_i}}(t) \times \tensor[^{M_i}]{\mathbf{R}}{_{q_i}}    
+  \tensor[^{W}]{\mathbf{\hat{R}}}{_{q_i}}(t) = \tensor[^{W}]{\mathbf{R}}{_{W_{C}}} \times \tensor[^{W_{C}}]{\mathbf{\hat{R}}}{_{M_i}}(t) \times \tensor[^{M_i}]{\mathbf{R}}{_{q_i}}
   \label{mocapMatrix}
 \end{equation}
 where $\tensor[^{W}]{\mathbf{R}}{_{W_{C}}}$ and $\tensor[^{M_i}]{\mathbf{R}}{_{q_i}}$ are the constants
@@ -1569,23 +1565,23 @@ displacement due to the differences between an arbitrary skeleton model of the m
 computed in a calibration step.
 $\tensor[^{W_{C}}]{\mathbf{\hat{R}}}{_{M_i}}$
 is the measured transformation matrix from the origin of the motion-capture reference frame
-to the virtual body $i$. 
+to the virtual body $i$.
 
-The obtained joint-angle trajectories are then used for the reverse-engineering task-recognition.\\
+The obtained joint-angle trajectories are then used for the reverse-engineering task recognition.\\
 
-On the robot, a flexibility, due to the mechanical design, is introduced after the ankle joint that
+On the robot, the mechanical design includes a flexibility after the ankle joint that
 interferes with the motion at the very beginning as the acceleration
-of the joint-angle increases quickly. The flexibility is not modeled 
+of the joint-angle increases quickly. The flexibility is not modeled
 neither in the control algorithm nor the detection method.
 In order to bypass the influence of the flexibility, the motion analysis is done after the first 100ms
 where the influence of the flexibility is predominant.
 In the following two sections, we consider that the measures are directly the $\mbf{\hat{q}}$ trajectories
 given by~(\ref{mocapMatrix}).
 
-\subsection{Grabbing VS Maintaining balance}
+\subsection{Experiment 3: Grabbing VS Maintaining balance}
 This experiment corresponds to the one realized in simulation in section~\ref{sec:distinc1}:
 the first motion is a motion of the left arm induced by the coupling between a far reaching of the right hand,
-and the balancing \emph{Com} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be 
+and the balancing \emph{Com} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be
 ambiguous with regard to the first motion~(\emph{motion 2.b} in Table~\ref{tab:motion}).
 Table~\ref{tab:spotDiffReal1} shows the result of the identification algorithm for
 \emph{motion 2.a} and \emph{motion 2.b} with a termination threshold set to $ \epsilon = 0.09$.
@@ -1644,7 +1640,7 @@ Fig.~\ref{fig:exp1:headFit}-\ref{fig:exp1:taskLhand} show the
 fitting at the first iteration of the algorithm for \emph{Head} and \emph{Left grab} tasks. As expected,
 the fitting performs well only for \emph{Left grab} task in \emph{motion 2.b} while it is rejected for
 \emph{motion 2.a}.
-Although no \emph{Head} task is involved in the two motions, the head is not 
+Although no \emph{Head} task is involved in the two motions, the head is not
 fixed in space due to the motion of the neck for balancing.
 In \emph{motion 2.b}, the candidate \emph{Head} task involves less motion
 than in \emph{motion 2.a}. The reason is that when the opposite end effectors
@@ -1659,10 +1655,13 @@ For \emph{motion 2.b} the motion of the left arm is
 not cancelled by \emph{Com} projection, but is cancelled after
 removing \emph{Left grab} task.
 Fig.~\ref{fig:exp1:Evolution2R} shows how the motion of the right arm evolves when removing
-motions due to a task. It can be seen that the right arm moves because of \emph{Right grab} and
-\emph{Com} task.
+motions due to a task. It can be seen that the right arm moves because of the \emph{Right grab} and
+\emph{Com} tasks.
+Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
+on the two motions. The quantity decreases after successive projections, until the remaining motion
+is mainly sensor noise.
 
-\subsection{Gaze VS Chest}
+\subsection{Experiment 4: Gaze VS Chest}
 The considered motions are \emph{motion 5.a} and \emph{motion 5.b}.
 In the first case, the robot is looking at its right hand while grabbing something.
 In the second case, the robot is grabbing something with its right hand while
@@ -1682,7 +1681,7 @@ shows the final posture of the robot for those motions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 Table~\ref{tab:result5} summarizes the results of the task-selection algorithm.
 Despite noise, the active tasks are detected. The two motions are
-properly disambiguated. Finally, all tasks are properly discovered, as proved by the 
+properly disambiguated. Finally, all tasks are properly discovered, as proved by the
 very small residue.
 \begin{table}[t]
   \centering
@@ -1735,19 +1734,19 @@ into the null space of the tasks : \emph{Right grab},  \emph{Gaze}, \emph{Twofee
 \emph{motion 5.a}. And \emph{Right grab}, \emph{Twofeet}, \emph{Com} and \emph{Chest} for the
 \emph{motion 5.b}.
 As in the previous experiments, the projection decreases strictly the quantity of movement
-at each algorithm iteration. The quantity of movement finally remaining at the end of 
+at each algorithm iteration. The quantity of movement finally remaining at the end of
 the algorithm loop is clearly mainly due to noise.
 
 \section{Conclusion}
 This article describes a complete method to identify which tasks are involved in an observed movement
 based uniquely on the observed trajectory.
 The analysis is driven by the knowledge
-of what a task is and how it behaves (for example with an exponential decrease). 
-The analyzed movement is supposed to be generated by a set of 
-controllers belonging to a known pool of tasks. 
+of what a task is and how it behaves.
+The analyzed movement is supposed to be generated by a set of
+controllers belonging to a known pool of tasks.
 The task recognition problem is then tackled by reverse engineering the motion.
 The observed trajectory is analyzed
-in each known task space to decide which are active tasks.
+in each known task space to decide which are the active tasks.
 The method does not rely on the nature of the behavior of a task. Therefore
 any control laws used to generate a motion can be similarly
 used to characterize an observed movement.
@@ -1840,7 +1839,7 @@ As previously, the first term is null, this $(\mJ{b} \mP{a} )^+$ is a generalize
 \bibliography{biblio}
 
 % biography section
-% 
+%
 % If you have an EPS/PDF photo (graphicx package needed) extra braces are
 % needed around the contents of the optional argument to biography to prevent
 % the LaTeX parser from getting confused when it sees the complicated
