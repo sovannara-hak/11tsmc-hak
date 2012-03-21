@@ -466,34 +466,33 @@ by identifying the set of tasks that have been used to
 generate the observed motion.
 The identified task set can then be used to characterize the observed motion, for
 example, to distinguish between similar-looking movements.
+In the following we list and justify the hypothesis considered, then we
+present an overview of the task recognition method and finally detail the main step
+of the method.
 
 \subsection{Hypothesis}
-It is assumed that the behavior model $\mbf{\dot{e}^*}$ of every
-possibly-used tasks is known. The kinematic model of the robot and all the tasks that may appear in a
+The kinematic model of the robot and all the tasks that may appear in a
 motion are known.
 The kinematic model is
 required to compute the Jacobian and the null-space projector that are used in the recognition part.
 As a consequence, uncertainties in the kinematic model will affect the performance of the method.
-The tasks that may appear in a motion have to be known because the considered approach
-of the recognition is to consider the recognition problem
+The observed motion is supposed to have been generated using an unknown stack of tasks.
+However the tasks that may appear in a motion have to belong to a known set of tasks because the considered approach
+for the recognition is to consider the recognition problem
 as a selection in a finite set problem.
-The set of possible tasks is called the \emph{task pool}.
-Possible tasks may for example be end effector, center of mass, visual or posture servoing.
-The considered approach handles tasks executed in parallel because
-it allows a good expressivity of movements thanks to the different
-possible tasks combination.
-The observed motion is supposed to have been generated using an unknown sub-set of the task pool.
-It is also assumed that all the tasks involved in the demonstration are compatible
+We call the set of possible tasks the \emph{task pool} and we assume that the behavior model $\mbf{\dot{e}^*}$ of each tasks is known.
+%Possible tasks may for example be end effector, center of mass, visual or posture servoing.
+The fact that the task pool has to be known does not dramatically impact on the expressivity
+of movements because we consider that tasks can be executed in parallel. The expressivity will
+be reflected by the different possible tasks combination, as long as all the tasks involved in the demonstration
+generate a consistent movement and are compatible
 in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
-(no algorithmic singularities~\cite{chiaverini97}), that the set
-of active tasks is constant during the motion and the tasks start and finish at the same time.
-That last assumption discards sequential movements and all inequalities and conditional constraints because
-such constraints involves a change in the stack of tasks used to generate the movement.
-It also discards non consistent motions which appear when not trying to
-avoid singularities.
-Another consequence of that assumption is that the hierarchy of the tasks are not considered
-since all tasks are assumed to be completely fulfilled and
+(no algorithmic singularities~\cite{chiaverini97}).
+The set of active tasks has to be constant during the motion and the tasks start and complete at the same time.
+As a consequence the hierarchical and
 concurrent tasks with fuzzy or weighted levels of importance are not considered.
+Another consequence is that sequential movements and all inequalities and conditional constraints are not considered because
+such constraints involves a change in the stack of tasks used to generate the movement.
 Finally, the observed motion is given through
 joint trajectories\footnote{The joint-angle trajectories are observed using a motion
 capture system as shown in Section~\ref{sec:xpset}.}.
