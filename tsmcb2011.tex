@@ -47,8 +47,7 @@
 \title{\LARGE Reverse Control for Humanoid Robot Task Recognition}
 
 \author{Sovannara Hak, Nicolas Mansard, Olivier Stasse, Jean Paul Laumond% <-this % stops a space
-  \thanks{Authors are with LAAS-CNRS (Laboratoire d'Analyse et d'Architecture
-  des Syst\`emes), 7 av col Roche, F-31077 Toulouse, France, Universit\'e de Toulouse; UPS, INSA, INP, ISAE: {\tt\small firstname.name@laas.fr}.
+  \thanks{Authors are with CNRS, Universtit\'e de Toulouse, LAAS, 7, avenue du Colonel Roche, F-31400 Toulouse, France ({\tt\small firstname.lastname@laas.fr}).
 This work was supported by a grant from the R-Blink Project, Contract
   ANR-08JCJC-0075-01. A preliminary version of this work has been published in~\cite{hak10}.  }
   }
@@ -92,7 +91,7 @@ different purposes.
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Task Recognition, task-function formalism, Humanoid robot, Inverse kinematic.
+Task recognition, task-function formalism, humanoid robot, inverse kinematic.
 \end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
@@ -471,31 +470,35 @@ present an overview of the task recognition method and finally detail the main s
 of the method.
 
 \subsection{Hypothesis}
-The kinematic model of the robot and all the tasks that may appear in a
-motion are known.
-The kinematic model is
-required to compute the Jacobian and the null-space projector that are used in the recognition part.
-As a consequence, uncertainties in the kinematic model will affect the performance of the method.
-The observed motion is supposed to have been generated using an unknown stack of tasks.
-However the tasks that may appear in a motion have to belong to a known set of tasks because the considered approach
-for the recognition is to consider the recognition problem
-as a selection in a finite set problem.
-We call the set of possible tasks the \emph{task pool} and we assume that the behavior model $\mbf{\dot{e}^*}$ of each tasks is known.
-%Possible tasks may for example be end effector, center of mass, visual or posture servoing.
-The fact that the task pool has to be known does not dramatically impact on the expressivity
-of movements because we consider that tasks can be executed in parallel. The expressivity will
-be reflected by the different possible tasks combination, as long as all the tasks involved in the demonstration
-generate a consistent movement and are compatible
+The observed motion is given through
+joint trajectories\footnote{The joint-angle trajectories are observed using a motion
+capture system as shown in Section~\ref{sec:xpset}.}.
+It is supposed to have been generated using an unknown stack of tasks.
+However the tasks that may appear in a motion are known.
+
+All the tasks involved in the demonstration are supposed compatible
 in the sense of the projection $\mbf{P}$ defined in (\ref{eq:ltsq})
 (no algorithmic singularities~\cite{chiaverini97}).
+
+We call the set of possible tasks the \emph{task pool} and we assume that the behavior model $\mbf{\dot{e}^*}$ of each tasks is known.
+However, the parameters of the behaviors (like the velocity of movement, or the desired
+position) are not known. The knowledge of this set
+allows to turn the recognition problem into a selection in a finite set problem.
+Limiting the possible tasks to a finite pool does not dramatically
+impact on the expressiveness of motion because tasks can be executed
+in parallel. The expressiveness is then reflected by the different possible
+task combinations.\\
+
 The set of active tasks has to be constant during the motion and the tasks start and complete at the same time.
 As a consequence the hierarchical and
 concurrent tasks with fuzzy or weighted levels of importance are not considered.
 Another consequence is that sequential movements and all inequalities and conditional constraints are not considered because
-such constraints involves a change in the stack of tasks used to generate the movement.
-Finally, the observed motion is given through
-joint trajectories\footnote{The joint-angle trajectories are observed using a motion
-capture system as shown in Section~\ref{sec:xpset}.}.
+such constraints involves a change in the stack of tasks used to generate the movement.\\
+
+Finally, the kinematic model of the robot is supposed known:
+it is required to compute the Jacobian and the null-space projector that are used in the recognition part.
+As a consequence, uncertainties in the kinematic model will affect the performance of the method.
+%Possible tasks may for example be end effector, center of mass, visual or posture servoing.
 
 \subsection{Overview}
 \label{sec:alg1:selec}
@@ -505,9 +508,9 @@ most relevant is selected. The selection of a task relies
 on a curve-fitting score, obtained by projecting the joint-angle trajectory in each task space.
 Assuming that the kinematic model of the robot is known,
 the projection of the motion in each task space reconstructs the trajectory in that space.
-For example, the trajectory of the center of mass (\emph{Com} task) is
+For example, the trajectory of the center of mass (\emph{CoM} task) is
 recovered from the joint trajectories by the projection
-of the joint trajectories into the \emph{Com} task space.
+of the joint trajectories into the \emph{CoM} task space.
 The projected trajectories are
 compared to the theoretical trajectories which are characteristic
 of the execution of a task.
@@ -853,7 +856,7 @@ the right hand is parallel to the ground.}
           \hline
           \emph{Gaze}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -868,7 +871,7 @@ the right hand is parallel to the ground.}
           \hline
           \emph{Right grab}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -880,7 +883,7 @@ the right hand is parallel to the ground.}
 	  \hline
 	  \emph{Right grab}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -898,7 +901,7 @@ the right hand is parallel to the ground.}
 	  \hline
 	  \emph{Right grab}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
           \hline
@@ -910,7 +913,7 @@ the right hand is parallel to the ground.}
 	  \hline
 	  \emph{Right Screw}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -926,7 +929,7 @@ the right hand is parallel to the ground.}
 	  \hline
 	  \emph{Gaze}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -936,7 +939,7 @@ the right hand is parallel to the ground.}
 	  \hline
 	  \emph{Left Screw}\\
 	  \hline
-	  \emph{Com}\\
+	  \emph{CoM}\\
 	  \hline
 	  \emph{Twofeet}\\
 	  \hline
@@ -954,7 +957,7 @@ the right hand is parallel to the ground.}
       \hline
       \emph{Gaze}\\
       \hline
-      \emph{Com}\\
+      \emph{CoM}\\
       \hline
       \emph{Twofeet}\\
       \hline
@@ -966,7 +969,7 @@ the right hand is parallel to the ground.}
       \hline
       \emph{Chest}\\
       \hline
-      \emph{Com}\\
+      \emph{CoM}\\
       \hline
       \emph{Twofeet}\\
       \hline
@@ -982,7 +985,7 @@ the right hand is parallel to the ground.}
 The set of tasks considered in those experiments are :
 
 \begin{itemize}
-  \item \emph{Com} : the center of mass of the robot is constraint to maintain the static balance (3 DOF)
+  \item \emph{CoM} : the center of mass of the robot is constraint to maintain the static balance (3 DOF)
   \item \emph{Gaze} : the robot looks at one point in the Cartesian space (2 DOF)
   \item \emph{Twofeet}: both feet stay flat with regard to each other (6 DOF)
   \item \emph{Left/Right grab} : either the left or right hand
@@ -1004,7 +1007,7 @@ which selects the tasks that fit the most closely by the optimization.
 Fig.~\ref{fig:snapshotXpqdot} shows snapshots of the original motion
 and of the motions after successive projections
 in the null spaces of the detected
-tasks : \emph{Right grab}, \emph{Com}, \emph{Gaze}, \emph{Twofeet} and \emph{Left grab}.
+tasks : \emph{Right grab}, \emph{CoM}, \emph{Gaze}, \emph{Twofeet} and \emph{Left grab}.
 Each projection cancels a part of the motion, and the robots motion becomes null when all
 projections are applied,
 which means that all relevant tasks have been detected.
@@ -1062,13 +1065,13 @@ which means that all relevant tasks have been detected.
 Iteration & 0 & 99 & 199 & 299 & 399 & 499\\
 \end{tabular}
 \caption{Experiment 1: The motion generated by a stack of tasks involving :
-\emph{Right and Left grab}, \emph{Com}, \emph{Gaze}, \emph{Twofeet} is represented in the row (a).
+\emph{Right and Left grab}, \emph{CoM}, \emph{Gaze}, \emph{Twofeet} is represented in the row (a).
 The remaining rows represent the successive projections of the motion in the null spaces of the tasks,
-(b) Right grab, (c) Com, (d) Gaze, (e) Twofeet, (f) Left grab.}
+(b) Right grab, (c) CoM, (d) Gaze, (e) Twofeet, (f) Left grab.}
 \label{fig:snapshotXpqdot}
 \end{figure*}
 As we can see in the second line, the movement of the right hand is nullified. The cancellation of
-the \emph{Com} from the third line is more difficult to perceive. On the forth line, the cancellation
+the \emph{CoM} from the third line is more difficult to perceive. On the forth line, the cancellation
 of the head movement due to the gaze is very clear. On the fifth line, the cancellation of the task \emph{Twofeet}
 removes the compensation done with the right leg. Finally, as shown on the last line,
 the cancellation of all tasks leads to a null motion.
@@ -1104,7 +1107,7 @@ are presented to illustrate this capability.
 \label{sec:distinc1}
 In this section, two motions are considered: \emph{motion 2.a} and \emph{motion 2.b}.
 The first one is a far-reaching motion with the right hand.
-The reaching motion of the right hand has an influence on the left arm through the \emph{Com} task:
+The reaching motion of the right hand has an influence on the left arm through the \emph{CoM} task:
 to regulate its balance, the robot puts its left arm behind.
 The second motion is the same reaching task for the right hand, added with a
 second reaching task on the left hand. The desired position of the left
@@ -1114,7 +1117,7 @@ The final states of the robot for the two motions are shown in the Fig.~\ref{fig
 A video showing those two motions on the HRP-2 is available\footnote{{http://homepages.laas.fr/shak/videos/}}.
 The two motions look very similar, and it is very difficult to the human eye
 to tell which motion involves a left and right hand task without the context.
-In the first case, the motion of the left hand is due to \emph{Com} and \emph{Right Hand} task,
+In the first case, the motion of the left hand is due to \emph{CoM} and \emph{Right Hand} task,
 as it is a side effect to compensate the balance perturbation induced by the right hand.
 In the second case, the motion of the left hand is decoupled,
 since the left hand has been driven by its own goal.
@@ -1151,7 +1154,7 @@ are showed in Table~\ref{tab:spotDiff1}.
 Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
 \hline
 \begin{tabular}{c}
-Com\\
+CoM\\
 Right Hand\\
 Twofeet\\
 \end{tabular}
@@ -1159,7 +1162,7 @@ Twofeet\\
 &
 
 \begin{tabular}{c}
-Com\\
+CoM\\
 Right Hand\\
 Twofeet\\
 \end{tabular}
@@ -1167,7 +1170,7 @@ Twofeet\\
 & 0.364398 & 0.00159355 \\
 \hline
 \begin{tabular}{c}
-Com\\
+CoM\\
 Left Hand\\
 Right Hand\\
 Twofeet\\
@@ -1175,7 +1178,7 @@ Twofeet\\
 
 &
 \begin{tabular}{c}
-Com\\
+CoM\\
 Left Hand\\
 Right Hand\\
 Twofeet\\
@@ -1220,10 +1223,10 @@ Finally Fig.~\ref{fig:RbeforeAfterProj} shows how the norm of joint-angle veloci
   \emph{Right grab} (in solid lines) and
   \emph{Left grab} (in dashed lines) after
   successive projection of the motion in the nullspace of the task \emph{Right grab} and in the nullspace
-  of the task \emph{Com}. In \emph{motion 2.a}, a great part of the motion of the left arm is due to
-  \emph{Com} task: removing \emph{Com} task will cancel almost all motion in the left arm.
-  In \emph{motion 2.b}, the motion of the left arm is not only involved by \emph{Com} task
-  but mainly by \emph{Left grab} task. Removing \emph{Com} task will only
+  of the task \emph{CoM}. In \emph{motion 2.a}, a great part of the motion of the left arm is due to
+  \emph{CoM} task: removing \emph{CoM} task will cancel almost all motion in the left arm.
+  In \emph{motion 2.b}, the motion of the left arm is not only involved by \emph{CoM} task
+  but mainly by \emph{Left grab} task. Removing \emph{CoM} task will only
   cancel a small part of the motion of the left arm.}
 \label{fig:RbeforeAfterProj}
 \end{figure*}
@@ -1232,14 +1235,14 @@ Projecting \emph{motion 2.a} onto the null spaces of
 \emph{Left grab} one unchanged. Fig.~\ref{fig:RbeforeAfterProj:2a} shows
 that the theoretical joint-angle velocities associated to
 \emph{Left grab} task is decreased after the projection of the motion in
-the null space of \emph{Com} task.  That explicits that
-the left arm of the robot was moved by \emph{Com} task.
+the null space of \emph{CoM} task.  That explicits that
+the left arm of the robot was moved by \emph{CoM} task.
 By the way, the projection prevent the left task to be detected at any further iteration of
 the algorithm.
 But, when projecting \emph{motion 2.b} into the nullspace of \emph{Right grab}
-and \emph{Com} task the joint-angle velocities associated to \emph{Left grab} task
+and \emph{CoM} task the joint-angle velocities associated to \emph{Left grab} task
 is still significant (Fig.~\ref{fig:RbeforeAfterProj:2b}). That means that
-\emph{Com} task has a little influence on the
+\emph{CoM} task has a little influence on the
 motion of the left arm, and that motion on the left arm is due
 to another task. Therefore, the task selection algorithm will keep looking
 for the task that has controlled the left arm.
@@ -1280,14 +1283,14 @@ Table~\ref{tab:spotDiff2} shows the results of the task-selection algorithm whic
     Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
     \hline
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Grab\\
       Twofeet\\
     \end{tabular}
     &
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Grab\\
       Twofeet\\
@@ -1295,14 +1298,14 @@ Table~\ref{tab:spotDiff2} shows the results of the task-selection algorithm whic
     & 0.619266 & 0.00245631 \\
     \hline
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Screw\\
       Twofeet\\
     \end{tabular}
     &
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Grab\\
       Screw\\
@@ -1348,7 +1351,7 @@ and the analysis results are summarized in Table~\ref{tab:spotDiff3}.
 Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
 \hline
 \begin{tabular}{c}
-Com\\
+CoM\\
 Gaze\\
 Twofeet\\
 \end{tabular}
@@ -1356,7 +1359,7 @@ Twofeet\\
 &
 
 \begin{tabular}{c}
-Com\\
+CoM\\
 Gaze\\
 Twofeet\\
 \end{tabular}
@@ -1364,14 +1367,14 @@ Twofeet\\
 & 0.534478 & 0.0545944 \\
 \hline
 \begin{tabular}{c}
-Com\\
+CoM\\
 Screw\\
 Twofeet\\
 \end{tabular}
 
 &
 \begin{tabular}{c}
-Com\\
+CoM\\
 Screw\\
 Twofeet\\
 \end{tabular}
@@ -1467,10 +1470,10 @@ body part.
   \label{fig:exp1:Evolution2L:b}
   }
   \caption{Experiment 3: Norm of motions associated to \emph{Left grab} task (\emph{ie} motion of the left arm).
-  The motion is cancelled after removing the motion due to \emph{Com} task
-  in \emph{motion 2.a}. In that case, it means that the left arm motion was due to \emph{Com} task.
+  The motion is cancelled after removing the motion due to \emph{CoM} task
+  in \emph{motion 2.a}. In that case, it means that the left arm motion was due to \emph{CoM} task.
   Whereas in \emph{motion 2.b}, the motion of the left arm is not cancelled after
-  removing \emph{Com} task, but is cancelled after removing
+  removing \emph{CoM} task, but is cancelled after removing
   \emph{Left grab} task : the motion of the left arm was due
   to \emph{Left grab} task.}
   \label{fig:exp1:Evolution2L}
@@ -1491,9 +1494,9 @@ body part.
   }
   \caption{Experiment 3: Quantity of motion in the right hand space after successive projection.
     The quantity of motion in the right hand space is almost null
-      after the nullification of the tasks \emph{Right grab and Com}.
+      after the nullification of the tasks \emph{Right grab and CoM}.
   It means that the motion of the right arm is a consequence of
-  \emph{Right grab} and \emph{Com} tasks. It is consistent with the fact that,
+  \emph{Right grab} and \emph{CoM} tasks. It is consistent with the fact that,
   in order to maintain its balance, the right arm has to move.}
   \label{fig:exp1:Evolution2R}
 \end{figure*}
@@ -1580,7 +1583,7 @@ given by~(\ref{mocapMatrix}).
 \subsection{Experiment 3: Grabbing VS Maintaining balance}
 This experiment corresponds to the one realized in simulation in section~\ref{sec:distinc1}:
 the first motion is a motion of the left arm induced by the coupling between a far reaching of the right hand,
-and the balancing \emph{Com} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be
+and the balancing \emph{CoM} task (\emph{motion 2.a}). The second motion is a reaching of both hands, built to be
 ambiguous with regard to the first motion~(\emph{motion 2.b} in Table~\ref{tab:motion}).
 Table~\ref{tab:spotDiffReal1} shows the result of the identification algorithm for
 \emph{motion 2.a} and \emph{motion 2.b} with a termination threshold set to $ \epsilon = 0.09$.
@@ -1592,7 +1595,7 @@ This threshold was chosen to handle the noise introduced in the motion capture d
     Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
     \hline
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Right grab\\
       Twofeet\\
     \end{tabular}
@@ -1600,7 +1603,7 @@ This threshold was chosen to handle the noise introduced in the motion capture d
     &
 
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Right grab\\
       Twofeet\\
     \end{tabular}
@@ -1608,7 +1611,7 @@ This threshold was chosen to handle the noise introduced in the motion capture d
     & 0.104835 & 0.0482885 \\
     \hline
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Left grab\\
       Right grab\\
       Twofeet\\
@@ -1616,7 +1619,7 @@ This threshold was chosen to handle the noise introduced in the motion capture d
 
     &
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Left grab\\
       Right grab\\
       Twofeet\\
@@ -1631,9 +1634,9 @@ This threshold was chosen to handle the noise introduced in the motion capture d
 \end{table}
 
 For \emph{motion 2.a}, the order of the task extraction is :
-\emph{Right grab}, \emph{Twofeet} and \emph{Com} task.
+\emph{Right grab}, \emph{Twofeet} and \emph{CoM} task.
 Whereas for \emph{motion 2.b},
-the extracted tasks are : \emph{Right grab},  \emph{Com}, \emph{Twofeet} and \emph{Left grab}.
+the extracted tasks are : \emph{Right grab},  \emph{CoM}, \emph{Twofeet} and \emph{Left grab}.
 
 Fig.~\ref{fig:exp1:headFit}-\ref{fig:exp1:taskLhand} show the
 fitting at the first iteration of the algorithm for \emph{Head} and \emph{Left grab} tasks. As expected,
@@ -1649,13 +1652,13 @@ However, \emph{Head} task is not kept as a candidate for any of the two motion (
 The evolution of the motion projected into \emph{Left grab} and \emph{Right grab}
 spaces after the successive projections onto the automatically-selected nullspaces
 are shown in Fig.~\ref{fig:exp1:Evolution2L}. For \emph{motion 2.a},
-the motion of the left arm is cancelled after removing \emph{Com} task.
+the motion of the left arm is cancelled after removing \emph{CoM} task.
 For \emph{motion 2.b} the motion of the left arm is
-not cancelled by \emph{Com} projection, but is cancelled after
+not cancelled by \emph{CoM} projection, but is cancelled after
 removing \emph{Left grab} task.
 Fig.~\ref{fig:exp1:Evolution2R} shows how the motion of the right arm evolves when removing
 motions due to a task. It can be seen that the right arm moves because of the \emph{Right grab} and
-\emph{Com} tasks.
+\emph{CoM} tasks.
 Fig.~\ref{fig:exp1:PqdotNorms} shows the evolution of the quantity of motion after each task selection
 on the two motions. The quantity decreases after successive projections, until the remaining motion
 is mainly sensor noise.
@@ -1689,7 +1692,7 @@ very small residue.
     Reference & Detected & $\int \Vert \dot{q}(t) \Vert ^2 dt$ & $\int \Vert P\dot{q}(t) \Vert ^2 dt$ \\
     \hline
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Right grab\\
       Twofeet\\
@@ -1698,7 +1701,7 @@ very small residue.
     &
 
     \begin{tabular}{c}
-      Com\\
+      CoM\\
       Gaze\\
       Right grab\\
       Twofeet\\
@@ -1708,7 +1711,7 @@ very small residue.
     \hline
     \begin{tabular}{c}
       Chest\\
-      Com\\
+      CoM\\
       Right grab\\
       Twofeet\\
     \end{tabular}
@@ -1716,7 +1719,7 @@ very small residue.
     &
     \begin{tabular}{c}
       Chest\\
-      Com\\
+      CoM\\
       Right grab\\
       Twofeet\\
     \end{tabular}
@@ -1729,8 +1732,8 @@ very small residue.
 \end{table}
 
 Fig.~\ref{fig:exp6:PqdotNorms5} shows the evolution of the norm of the motions after the projection
-into the null space of the tasks : \emph{Right grab},  \emph{Gaze}, \emph{Twofeet} and \emph{Com} for
-\emph{motion 5.a}. And \emph{Right grab}, \emph{Twofeet}, \emph{Com} and \emph{Chest} for the
+into the null space of the tasks : \emph{Right grab},  \emph{Gaze}, \emph{Twofeet} and \emph{CoM} for
+\emph{motion 5.a}. And \emph{Right grab}, \emph{Twofeet}, \emph{CoM} and \emph{Chest} for the
 \emph{motion 5.b}.
 As in the previous experiments, the projection decreases strictly the quantity of movement
 at each algorithm iteration. The quantity of movement finally remaining at the end of
