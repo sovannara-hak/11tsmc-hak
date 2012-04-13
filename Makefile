@@ -1,10 +1,8 @@
-all: tsmcb2011 reply
+all: tsmcb2011
 default: tsmcb2011
 
 FILE  = tsmcb2011
 TEX_FILE = $(FILE).tex
-REPLY = reply
-REPLY_FILE = $(REPLY).tex
 
 
 RM:=rm -f
@@ -17,16 +15,6 @@ tsmcb2011: $(TEX_FILE)
 	bibtex $(FILE)
 	latex -file-line-error -halt-on-error -interaction=batchmode $(TEX_FILE)
 	dvips -Ppdf -G0 -t letter -q $(FILE).dvi -o $@.ps
-	$(PS2PDF) $@.ps $@.pdf
-
-reply: $(REPLY_FILE)
-	latex -file-line-error -halt-on-error  $(REPLY_FILE)
-	latex -file-line-error -halt-on-error -interaction=batchmode $(REPLY_FILE)
-	bibtex $(REPLY)
-	latex -file-line-error -halt-on-error -interaction=batchmode $(REPLY_FILE)
-	bibtex $(REPLY)
-	latex -file-line-error -halt-on-error -interaction=batchmode $(REPLY_FILE)
-	dvips -Ppdf -G0 -t letter -q $(REPLY).dvi -o $@.ps
 	$(PS2PDF) $@.ps $@.pdf
 
 clean:
